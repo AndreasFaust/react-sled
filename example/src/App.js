@@ -24,9 +24,6 @@ const App = () => {
           <img
             src={page}
             alt='Hallo!'
-            style={{
-              pointerEvents: 'none'
-            }}
           />
         </div>
       ))}
