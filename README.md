@@ -11,9 +11,9 @@
 - Ready for server-side-rendering
 - (Should be) Compatible with older Browsers from Internet Explorer 11 (Needs testing!)
 
-🛷 [Have a look to the demo-example!](https://andreasfaust.github.io/react-sled/)
+🛷 [Have a look at the example!](https://andreasfaust.github.io/react-sled/)
 
-**This Project is under development!**
+**This Project is under development. Please join and contribute!**
 
 ## Install
 
