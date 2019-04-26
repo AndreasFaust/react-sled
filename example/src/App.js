@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './index.css'
 import { Sled, Views, Progress, Control } from 'react-sled'
 
-import image1 from './image-1.jpg'
-import image2 from './image-2.jpg'
-import image3 from './image-3.jpg'
-import image4 from './image-4.jpg'
-import image5 from './image-5.jpg'
+import image1 from './images/image-1.jpg'
+import image2 from './images/image-2.jpg'
+import image3 from './images/image-3.jpg'
+import image4 from './images/image-4.jpg'
+import image5 from './images/image-5.jpg'
 
 const pages = [
   image1,
@@ -17,14 +17,19 @@ const pages = [
 ]
 
 const App = () => {
+  const [index, setIndex] = useState(0)
+
   return (
-    <>
+    <div className='content'>
       <h1><span role='img' aria-label='sled-emoji'>🛷</span> react-sled Example</h1>
       <Sled
         autoPlay={3000}
         dragDistance='50ow'
       >
-        <Views height='50ow'>
+        <Views
+          height='50ow'
+          goto={index}
+        >
           {pages.map((page) => (
             <div
               key={page}
@@ -47,7 +52,17 @@ const App = () => {
           <Control type='next' />
         </div>
       </Sled>
-    </>
+      <div className='goto'>
+        <h2>Go to:</h2>
+        <input
+          type='text'
+          size={4}
+          className='goto__input'
+          value={index}
+          onChange={(event) => setIndex(event.target.value)}
+        />
+      </div>
+    </div>
   )
 }
 

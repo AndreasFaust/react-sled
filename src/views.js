@@ -8,6 +8,7 @@ import useCSSHeight from './utils/useCSSHeight'
 import useDimensions from './utils/useDimensions'
 import useKeyboard from './utils/useKeyboard'
 import useMouse from './utils/useMouse'
+import useGoto from './utils/useGoto'
 // import useFocus from './utils/useFocus'
 import { useStateContext } from './utils/state'
 
@@ -19,7 +20,7 @@ const StyledDiv = styled.div`
   ${props => props.styles}
 `
 
-const SledViews = ({ width, height, children, style }) => {
+const SledViews = ({ width, height, goto, children, style }) => {
   const [{ hasFocus, keyboard }, dispatch] = useStateContext()
 
   const viewsRef = useRef()
@@ -29,6 +30,7 @@ const SledViews = ({ width, height, children, style }) => {
   // useFocus(viewsRef)
   useKeyboard(keyboard, hasFocus, dispatch)
   useMouse(viewsRef, dispatch)
+  useGoto(goto)
 
   useEffect(() => {
     dispatch({ type: 'ELEMENT_COUNT', count: React.Children.toArray(children).length })
@@ -54,14 +56,16 @@ SledViews.propTypes = {
   children: PropTypes.node,
   style: PropTypes.string,
   width: PropTypes.string,
-  height: PropTypes.string
+  height: PropTypes.string,
+  goto: PropTypes.number
 }
 
 SledViews.defaultProps = {
   children: null,
   style: '',
   width: undefined,
-  height: '50ow'
+  height: '50ow',
+  goto: undefined
 }
 
 export default SledViews

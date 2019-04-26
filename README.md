@@ -89,6 +89,9 @@ List of all props:
   // Allowed units:
   // – all CSS-units
   // – 'ow' ("own width": percent of viewpager’s width)
+  goto
+  // Type: Number. Default: undefined
+  // Got to view.
   style
   // Type: String. Default: ''
   // Optional. Add styles to the view-wrapper (via styled-components template-string).

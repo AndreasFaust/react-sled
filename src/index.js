@@ -10,19 +10,19 @@ const reducer = (state, action) => {
       ...state,
       currentIndex: (state.currentIndex + 1) % state.elementCount,
       prevIndex: state.currentIndex,
-      pause: action.pause || state.pauses
+      pause: action.pause || state.pause
     }
     case 'PREV': return {
       ...state,
       currentIndex: (state.currentIndex - 1 + state.elementCount) % state.elementCount,
       prevIndex: state.currentIndex,
-      pause: action.pause || state.pauses
+      pause: action.pause || state.pause
     }
     case 'GOTO': return {
       ...state,
       currentIndex: action.index,
       prevIndex: state.currentIndex,
-      pause: action.pause || state.pauses
+      pause: action.pause || state.pause
     }
     case 'SET_PAUSE': return {
       ...state,
@@ -72,7 +72,6 @@ Sled.propTypes = {
   children: PropTypes.node,
   autoPlay: PropTypes.number,
   config: PropTypes.object,
-  goTo: PropTypes.number,
   keyboard: PropTypes.bool,
   pauseOnMouseOver: PropTypes.bool,
   dragDistance: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
@@ -82,7 +81,6 @@ Sled.defaultProps = {
   children: null,
   autoPlay: undefined,
   config: { mass: 1, tension: 210, friction: 20, clamp: true },
-  goTo: undefined,
   keyboard: true,
   pauseOnMouseOver: true,
   dragDistance: '25ow'

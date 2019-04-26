@@ -3,6 +3,10 @@ body {
   padding: 0;
 }
 
+.content {
+  margin-bottom: 50vh;
+}
+
 h1 {
   text-align: center;
 }
@@ -24,33 +28,22 @@ img {
   justify-content: center;
 }
 
-.Box {
+.goto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
 }
 
-.Box--1 .Box__inner {
-  background: lightgrey;
-  opacity: 0.5;
-}
-.Box--2 .content {
-  /* background: lightblue; */
-  opacity: 0.5;
-}
-.Box--3 .content {
-  /* background: pink; */
-  opacity: 0.5;
-}
-.Box--4 .content {
-  background: lightcoral;
-  opacity: 0.5;
-}
-.Box--5 .content {
-  background: lightcyan;
-  opacity: 0.5;
+h2 {
+  font-size: 20px;
+  margin: 0 1em 0 0;
 }
 
-.content {
-  width: 100%;
-  height: 50vh;
-  background: pink;
-  /* background: rgba(255, 0, 0, 0.5); */
+.goto__input {
+  font-size: 20px;
+  font-family: serif;
+  text-align: center;
+  padding: 5px;
+  font-weight: bold;
 }
