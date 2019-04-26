@@ -3,12 +3,19 @@ body {
   padding: 0;
 }
 
-img {
-  width: 100%;
+h1 {
+  text-align: center;
 }
 
-.slide {
-  width: ;
+img {
+  width: 100%;
+  user-select: none;
+  pointer-events: none;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
 }
 
 .Box {

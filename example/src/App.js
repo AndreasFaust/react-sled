@@ -1,6 +1,6 @@
 import React from 'react'
 import './index.css'
-import Viewpager from 'react-spring-viewpager'
+import { Viewpager, Views, Progress, Control } from 'react-spring-viewpager'
 
 const pages = [
   'https://images.pexels.com/photos/62689/pexels-photo-62689.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
@@ -12,22 +12,37 @@ const pages = [
 
 const App = () => {
   return (
-    <Viewpager
-      wrapperHeight='50%'
-      auto={1000}
-    >
-      {pages.map((page) => (
-        <div
-          key={page}
-          className='slide'
-        >
-          <img
-            src={page}
-            alt='Hallo!'
-          />
+    <>
+      <h1>react-spring-viewpage Example</h1>
+      <Viewpager
+        wrapperHeight='50ow'
+        auto={3000}
+        dragDistance='25ow'
+      >
+        <Views>
+          {pages.map((page) => (
+            <div
+              key={page}
+              style={{
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                backgroundImage: `url(${page})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
+            />
+          ))}
+        </Views>
+        <Progress />
+        <div className='controls'>
+          <Control type='prev' />
+          <Control type='next' />
         </div>
-      ))}
-    </Viewpager>
+      </Viewpager>
+    </>
   )
 }
 
