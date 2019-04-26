@@ -1,6 +1,6 @@
 {
-  "short_name": "react-spring-viewpager",
-  "name": "react-spring-viewpager",
+  "short_name": "react-sled",
+  "name": "react-sled",
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",
