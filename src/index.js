@@ -40,7 +40,7 @@ const reducer = (state, action) => {
   }
 }
 
-const Viewpager = (props) => {
+const Sled = (props) => {
   const { children, ...rest } = props
   return (
     <StateProvider reducer={reducer} initialState={{
@@ -56,7 +56,7 @@ const Viewpager = (props) => {
   )
 }
 
-Viewpager.propTypes = {
+Sled.propTypes = {
   children: PropTypes.node,
   wrapperWidth: PropTypes.number,
   wrapperHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -68,7 +68,7 @@ Viewpager.propTypes = {
   dragDistance: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 }
 
-Viewpager.defaultProps = {
+Sled.defaultProps = {
   children: null,
   wrapperWidth: undefined,
   wrapperHeight: '50%',
@@ -80,7 +80,7 @@ Viewpager.defaultProps = {
   dragDistance: '25ow'
 }
 
-export { Viewpager }
+export { Sled }
 export { default as Views } from './views'
 export { default as Control } from './control'
 export { default as Progress } from './progress'

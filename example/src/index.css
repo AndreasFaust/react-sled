@@ -7,6 +7,12 @@ h1 {
   text-align: center;
 }
 
+h1 span {
+  font-size: 2em;
+  position: relative;
+  top: 0.25em;
+}
+
 img {
   width: 100%;
   user-select: none;

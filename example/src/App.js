@@ -1,6 +1,6 @@
 import React from 'react'
 import './index.css'
-import { Viewpager, Views, Progress, Control } from 'react-spring-viewpager'
+import { Sled, Views, Progress, Control } from 'react-sled'
 
 import image1 from './image-1.jpg'
 import image2 from './image-2.jpg'
@@ -19,8 +19,8 @@ const pages = [
 const App = () => {
   return (
     <>
-      <h1>react-spring-viewpage Example</h1>
-      <Viewpager
+      <h1><span>🛷</span> react-sled Example</h1>
+      <Sled
         wrapperHeight='50vw'
         auto={3000}
         dragDistance='50ow'
@@ -47,7 +47,7 @@ const App = () => {
           <Control type='prev' />
           <Control type='next' />
         </div>
-      </Viewpager>
+      </Sled>
     </>
   )
 }

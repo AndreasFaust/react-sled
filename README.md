@@ -1,13 +1,13 @@
-**react-spring-viewpager** is a Gallery-module made with **react-spring**. 😽
+**react-sled** is a Gallery-module made with **react-spring**. 😽
 
-[![NPM](https://img.shields.io/npm/v/react-raster.svg)](https://www.npmjs.com/package/react-spring-slides) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-raster.svg)](https://www.npmjs.com/package/react-sled) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 - Lightweight and performant architecture
 - Touch- and Mousedrag
 - Easy to style with thanks to **styled-components**
 - Ready for server-side-rendering
 
-🛷 [Have a look to the demo-example!](https://andreasfaust.github.io/react-spring-viewpager/)
+🛷 [Have a look to the demo-example!](https://andreasfaust.github.io/react-sled/)
 
 **This Project is under development!**
 
@@ -16,18 +16,18 @@
 Install all dependencies via Yarn or NPM.
 
 ```bash
-yarn add react-spring-viewpager react-spring react-with-gesture styled-components react react-dom
+yarn add react-sled react-spring react-with-gesture styled-components react react-dom
 ```
 
 ## Usage
 
 ```jsx
 import React from "react";
-import { Viewpager, Views, Progress, Control } from "react-spring-viewpager";
+import { Sled, Views, Progress, Control } from "react-sled";
 
 const App = () => {
   return (
-    <Viewpager wrapperHeight="50ow">
+    <Sled wrapperHeight="50ow">
       <Views>
         <img src="my-image-1.jpg" alt="My Image" />
         <img src="my-image-2.jpg" alt="My Image" />
@@ -37,7 +37,7 @@ const App = () => {
         <Control type="prev" />
         <Control type="next" />
       </div>
-    </Viewpager>
+    </Sled>
   );
 };
 
@@ -49,7 +49,7 @@ export default App;
 List of all props:
 
 ```jsx
-<Viewpager
+<Sled
   wrapperWidth
   // Type: Number. Default: undefined
   // Optional. Sets the viewpager’s width.
@@ -124,7 +124,7 @@ List of all props:
 
 Every contribution is very much appreciated.
 
-**If you like react-spring-viewpager, don't hesitate to star it on [GitHub](https://github.com/AndreasFaust/react-spring-viewpager).**
+**If you like react-sled, don't hesitate to star it on [GitHub](https://github.com/AndreasFaust/react-sled).**
 
 ## License
 

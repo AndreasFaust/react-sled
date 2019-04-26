@@ -1,6 +1,6 @@
 {
-  "name": "react-spring-viewpager-example",
-  "homepage": "https://AndreasFaust.github.io/react-spring-viewpager",
+  "name": "react-sled-example",
+  "homepage": "https://AndreasFaust.github.io/react-sled",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -12,7 +12,7 @@
     "react-with-gesture": "link:../node_modules/react-with-gesture",
     "styled-components": "link:../node_modules/styled-components",
     "react-scripts": "^2.1.3",
-    "react-spring-viewpager": "link:.."
+    "react-sled": "link:.."
   },
   "scripts": {
     "start": "react-scripts start",
