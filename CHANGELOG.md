@@ -1,3 +1,13 @@
+### 0.1.0 (2019-04-26)
+
+##### New Features
+
+*  Getting close to version 1. (c2bf2baf)
+
+##### Other Changes
+
+*  Add some features. (7a382afe)
+
 #### 0.0.1 (2019-04-24)
 
 #### 1.4.8 (2019-04-15)
