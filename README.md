@@ -1,6 +1,6 @@
 ![react-sled Logo](https://raw.github.com/andreasfaust/react-sled/master/react-sled-logo.png)
 
-**react-sled** is a Gallery-module made with **react-spring**.
+**react-sled** is a carousel made with **react-spring**.
 
 [![NPM](https://img.shields.io/npm/v/react-raster.svg)](https://www.npmjs.com/package/react-sled) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
