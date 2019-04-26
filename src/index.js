@@ -36,6 +36,10 @@ const reducer = (state, action) => {
       ...state,
       hasFocus: action.focus
     }
+    case 'SET_MOUSEOVER': return {
+      ...state,
+      mouseover: action.mouseover
+    }
     default: return state
   }
 }
@@ -49,6 +53,8 @@ const Sled = (props) => {
       pause: false,
       elementCount: 0,
       hasFocus: true,
+      mouseover: false,
+      onMouseLeave: () => { console.log('MOUSE LEAVE!') },
       ...rest
     }}>
       {children}

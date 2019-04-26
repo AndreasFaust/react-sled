@@ -5,32 +5,56 @@ import { useSpring, animated } from 'react-spring'
 
 import { useStateContext } from '../utils/useState'
 
-const ProgressBar = () => {
-  const [{ currentIndex, prevIndex, elementCount, auto, pause }] = useStateContext()
+const springConfig = { mass: 1, tension: 210, friction: 20, clamp: true }
 
-  const config = { mass: 1, tension: 210, friction: 20, clamp: true }
+const ProgressBar = () => {
+  const [{
+    currentIndex,
+    prevIndex,
+    elementCount,
+    mouseover,
+    // onMouseLeave,
+    auto,
+    pause
+  }] = useStateContext()
+
+  // useEffect(() => {
+  //   dispatch({type: "ON_MOUSE_LEAVE"}, () => {
+  //     set({
+  //       config: auto && !pause && !mouseover ? { duration: auto } : springConfig ,
+  //       from: 100 - ((100 / elementCount) * (currentIndex)),
+  //       x: 100 - ((100 / elementCount) * (currentIndex + 1)),
+  //       reset: false,
+  //       immediate: false
+  //     })
+  //   })
+  // , []}
 
   const [props, set] = useSpring(() => ({
     from: { x: 100 }
   }))
 
   useEffect(() => {
+    const config = auto && !pause && !mouseover ? { duration: auto } : springConfig
+    const xCalc = 100 - ((100 / elementCount) * (currentIndex + 1))
+
     if (currentIndex === 0) {
       set({
-        config: auto && !pause ? { duration: auto } : config,
+        config,
         from: { x: 100 },
-        x: 100 - ((100 / elementCount) * (currentIndex + 1)),
-        reset: true,
+        x: xCalc,
+        reset: !mouseover,
         immediate: prevIndex === 1
       })
     } else {
       set({
-        config: auto && !pause ? { duration: auto } : config,
-        x: 100 - ((100 / elementCount) * (currentIndex + 1)),
-        reset: false
+        config,
+        x: xCalc,
+        reset: false,
+        immediate: false
       })
     }
-  }, [currentIndex, prevIndex, pause])
+  }, [currentIndex, prevIndex, pause, mouseover])
 
   return (
     <animated.div

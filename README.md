@@ -6,6 +6,7 @@
 - Touch- and Mousedrag
 - Easy to style with thanks to **styled-components**
 - Ready for server-side-rendering
+- (Should be) Compatible with older Browsers from Internet Explorer 11 (Needs testing!)
 
 🛷 [Have a look to the demo-example!](https://andreasfaust.github.io/react-sled/)
 
@@ -27,6 +28,7 @@ import { Sled, Views, Progress, Control } from "react-sled";
 
 const App = () => {
   return (
+    // 'ow' is percent of the sled's own width. So the ratio is 2:1.
     <Sled wrapperHeight="50ow">
       <Views>
         <img src="my-image-1.jpg" alt="My Image" />

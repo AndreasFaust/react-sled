@@ -9,7 +9,7 @@ const ViewpagerSprings = ({
   width,
   height
 }) => {
-  const [{ currentIndex, prevIndex, auto, pause, config, dragDistance }, dispatch] = useStateContext()
+  const [{ currentIndex, prevIndex, auto, pause, mouseover, config, dragDistance }, dispatch] = useStateContext()
   const indexRef = useRef(0)
   const widthRef = useRef(width)
   const distanceRef = useRef()
@@ -42,7 +42,7 @@ const ViewpagerSprings = ({
 
   useInterval(() => {
     dispatch({ type: 'NEXT' })
-  }, !pause ? auto : null)
+  }, !pause && !mouseover ? auto : null)
 
   function setX () {
     set(i => ({
