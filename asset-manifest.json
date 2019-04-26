@@ -1,13 +1,13 @@
 {
-  "main.css": "/react-viewpager-example/static/css/main.32e854c8.chunk.css",
-  "main.js": "/react-viewpager-example/static/js/main.6a631373.chunk.js",
-  "main.js.map": "/react-viewpager-example/static/js/main.6a631373.chunk.js.map",
-  "runtime~main.js": "/react-viewpager-example/static/js/runtime~main.6771d369.js",
-  "runtime~main.js.map": "/react-viewpager-example/static/js/runtime~main.6771d369.js.map",
-  "static/js/2.29609c4c.chunk.js": "/react-viewpager-example/static/js/2.29609c4c.chunk.js",
-  "static/js/2.29609c4c.chunk.js.map": "/react-viewpager-example/static/js/2.29609c4c.chunk.js.map",
-  "index.html": "/react-viewpager-example/index.html",
-  "precache-manifest.bd8ec264ba14ef8d059a2d7b0e46acce.js": "/react-viewpager-example/precache-manifest.bd8ec264ba14ef8d059a2d7b0e46acce.js",
-  "service-worker.js": "/react-viewpager-example/service-worker.js",
-  "static/css/main.32e854c8.chunk.css.map": "/react-viewpager-example/static/css/main.32e854c8.chunk.css.map"
+  "main.css": "/react-spring-viewpager/static/css/main.32e854c8.chunk.css",
+  "main.js": "/react-spring-viewpager/static/js/main.6a631373.chunk.js",
+  "main.js.map": "/react-spring-viewpager/static/js/main.6a631373.chunk.js.map",
+  "runtime~main.js": "/react-spring-viewpager/static/js/runtime~main.b2d0c9d6.js",
+  "runtime~main.js.map": "/react-spring-viewpager/static/js/runtime~main.b2d0c9d6.js.map",
+  "static/js/2.3a9b57c9.chunk.js": "/react-spring-viewpager/static/js/2.3a9b57c9.chunk.js",
+  "static/js/2.3a9b57c9.chunk.js.map": "/react-spring-viewpager/static/js/2.3a9b57c9.chunk.js.map",
+  "index.html": "/react-spring-viewpager/index.html",
+  "precache-manifest.a0eb2e74c51d56302fae5d028018c2ec.js": "/react-spring-viewpager/precache-manifest.a0eb2e74c51d56302fae5d028018c2ec.js",
+  "service-worker.js": "/react-spring-viewpager/service-worker.js",
+  "static/css/main.32e854c8.chunk.css.map": "/react-spring-viewpager/static/css/main.32e854c8.chunk.css.map"
 }

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/react-viewpager-example/precache-manifest.bd8ec264ba14ef8d059a2d7b0e46acce.js"
+  "/react-spring-viewpager/precache-manifest.a0eb2e74c51d56302fae5d028018c2ec.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/react-viewpager-example/index.html", {
+workbox.routing.registerNavigationRoute("/react-spring-viewpager/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
