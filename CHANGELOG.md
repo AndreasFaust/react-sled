@@ -1,3 +1,9 @@
+### 0.2.0 (2019-04-26)
+
+##### New Features
+
+*  Add new name. (6b86f188)
+
 ### 0.1.0 (2019-04-26)
 
 ##### New Features
