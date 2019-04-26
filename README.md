@@ -1,10 +1,13 @@
-**react-sled** is a Gallery-module made with **react-spring**. 😽
+![react-sled Logo](https://raw.github.com/andreasfaust/react-sled/master/react-sled-logo.png)
+
+**react-sled** is a Gallery-module made with **react-spring**.
 
 [![NPM](https://img.shields.io/npm/v/react-raster.svg)](https://www.npmjs.com/package/react-sled) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+- Super-smooth spring animations (thanks to **react-spring**)
 - Lightweight and performant architecture
-- Touch- and Mousedrag
-- Easy to style with thanks to **styled-components**
+- Touch- and Mousedrag (thanks to **react-with-gesture**)
+- Easy to style (thanks to **styled-components**)
 - Ready for server-side-rendering
 - (Should be) Compatible with older Browsers from Internet Explorer 11 (Needs testing!)
 
@@ -56,7 +59,7 @@ List of all props:
   // Type: Number. Default: undefined
   // Optional. Sets the viewpager’s width.
   wrapperHeight
-  // Type: Number or String. Default: "50%"
+  // Type: Number or String. Default: "50vh"
   // Set the viewpager’s height. A number is pixels.
   // Allowed units: ol ("own width": percent of viewpager’s width), vw, vh, rem, em, px
   auto
@@ -65,13 +68,16 @@ List of all props:
   // Time in Milliseconds
   config
   // Type: Object. Default: { mass: 1, tension: 210, friction: 20, clamp: true }
-  // Animation settings.
+  // react-spring animation-settings.
   keys
   // Type: Boolean. Default: true
   // Keyboard controls.
   dragDistance
   // Type: String. Default: 25ow
   // Distance, the user has to drag the slider to trigger action.
+  pauseOnMouseOver
+  // Type: Boolean. Default: true
+  // The autoslide (if activated) gets paused, as long as the User hovers over the sled.
 />
 ```
 

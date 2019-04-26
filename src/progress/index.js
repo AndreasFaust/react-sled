@@ -13,26 +13,27 @@ const ProgressBar = () => {
     prevIndex,
     elementCount,
     mouseover,
-    // onMouseLeave,
     auto,
     pause
   }] = useStateContext()
 
-  // useEffect(() => {
-  //   dispatch({type: "ON_MOUSE_LEAVE"}, () => {
-  //     set({
-  //       config: auto && !pause && !mouseover ? { duration: auto } : springConfig ,
-  //       from: 100 - ((100 / elementCount) * (currentIndex)),
-  //       x: 100 - ((100 / elementCount) * (currentIndex + 1)),
-  //       reset: false,
-  //       immediate: false
-  //     })
-  //   })
-  // , []}
-
   const [props, set] = useSpring(() => ({
     from: { x: 100 }
   }))
+
+  useEffect(() => {
+    if (!auto || pause) return
+
+    const xStart = 100 - ((100 / elementCount) * (currentIndex))
+    const xEnd = 100 - ((100 / elementCount) * (currentIndex + 1))
+
+    set({
+      config: mouseover ? springConfig : { duration: auto },
+      from: mouseover ? {} : { x: xStart },
+      x: xEnd,
+      reset: !mouseover
+    })
+  }, [mouseover])
 
   useEffect(() => {
     const config = auto && !pause && !mouseover ? { duration: auto } : springConfig
@@ -43,18 +44,16 @@ const ProgressBar = () => {
         config,
         from: { x: 100 },
         x: xCalc,
-        reset: !mouseover,
-        immediate: prevIndex === 1
+        reset: prevIndex !== 1
       })
     } else {
       set({
         config,
         x: xCalc,
-        reset: false,
-        immediate: false
+        reset: false
       })
     }
-  }, [currentIndex, prevIndex, pause, mouseover])
+  }, [currentIndex, prevIndex, pause])
 
   return (
     <animated.div

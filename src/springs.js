@@ -55,7 +55,8 @@ const ViewpagerSprings = ({
     x: i * width,
     sc: 1,
     immediate: true,
-    config
+    config,
+    cursor: 'grab'
   }))
 
   const bind = useGesture(({
@@ -72,12 +73,12 @@ const ViewpagerSprings = ({
     set(i => {
       const x = (i - indexRef.current) * widthRef.current + (down ? xDelta : 0)
       // const sc = down ? 1 - distance / widthRef.current / 2 : 1
-      return { x, immediate: false }
+      return { x, immediate: false, cursor: down ? 'grabbing' : 'grab' }
     })
     dispatch({ type: 'SET_PAUSE', pause: true })
   })
 
-  return props.map(({ x }, index) => (
+  return props.map(({ x, cursor }, index) => (
     <animated.div
       {...bind()}
       key={index}
@@ -88,7 +89,8 @@ const ViewpagerSprings = ({
         width: '100%',
         height: '100%',
         willChange: 'transform',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        cursor
       }}
       tabIndex={index + 1}
     >

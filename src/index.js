@@ -54,7 +54,6 @@ const Sled = (props) => {
       elementCount: 0,
       hasFocus: true,
       mouseover: false,
-      onMouseLeave: () => { console.log('MOUSE LEAVE!') },
       ...rest
     }}>
       {children}
@@ -77,7 +76,7 @@ Sled.propTypes = {
 Sled.defaultProps = {
   children: null,
   wrapperWidth: undefined,
-  wrapperHeight: '50%',
+  wrapperHeight: '50vh',
   auto: undefined,
   config: { mass: 1, tension: 210, friction: 20, clamp: true },
   goTo: undefined,

@@ -26,7 +26,7 @@ const ViewpagerViews = ({ children, style }) => {
 
   // useFocus(wrapperRef)
   useKeys(keys, hasFocus, dispatch)
-  // useMouse(wrapperRef, dispatch)
+  useMouse(wrapperRef, dispatch)
 
   useEffect(() => {
     dispatch({ type: 'ELEMENT_COUNT', count: React.Children.toArray(children).length })
