@@ -7,7 +7,7 @@ import { useStateContext } from '../utils/useState'
 
 const springConfig = { mass: 1, tension: 210, friction: 20, clamp: true }
 
-const ProgressBar = () => {
+const SledProgressBar = () => {
   const [{
     currentIndex,
     prevIndex,
@@ -70,7 +70,7 @@ const ProgressBar = () => {
   )
 }
 
-const StyledProgress = styled.div`
+const StyledSledProgress = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -95,16 +95,16 @@ const StyledProgress = styled.div`
   ${props => props.styles}
 `
 
-const Progress = ({ style }) => {
+const SledProgress = ({ style }) => {
   const [{ elementCount }] = useStateContext()
 
   return elementCount && (
-    <StyledProgress
+    <StyledSledProgress
       className='viewpager-progress'
       styles={style}
       tabIndex={-1}
     >
-      <ProgressBar />
+      <SledProgressBar />
       {[...Array(elementCount - 1)].map((_, index) => (
         <div
           key={index}
@@ -116,16 +116,16 @@ const Progress = ({ style }) => {
           }}
         />
       ))}
-    </StyledProgress>
+    </StyledSledProgress>
   )
 }
 
-Progress.propTypes = {
+SledProgress.propTypes = {
   style: PropTypes.string
 }
 
-Progress.defaultProps = {
+SledProgress.defaultProps = {
   style: ''
 }
 
-export default Progress
+export default SledProgress

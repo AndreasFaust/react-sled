@@ -82,6 +82,14 @@ List of all props:
 ```
 
 ```jsx
+<Views
+  style
+  // Type: String. Default: ''
+  // Optional. Add styles to the view-wrapper (via styled-components template-string).
+/>
+```
+
+```jsx
 <Progress
   style
   // Type: String.

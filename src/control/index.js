@@ -36,12 +36,12 @@ const StyledButton = styled.button`
   ${props => props.styles}
 `
 
-const Control = ({ children, type, style }) => {
+const SledControl = ({ children, type, style }) => {
   const [, dispatch] = useStateContext()
 
   return (
     <StyledButton
-      className={`viewpager-control--${type}`}
+      className={`sled__control sled__control--${type}`}
       type={type}
       styles={style || defaultStyle}
       onClick={() => {
@@ -53,14 +53,14 @@ const Control = ({ children, type, style }) => {
   )
 }
 
-Control.propTypes = {
+SledControl.propTypes = {
   type: PropTypes.oneOf(['next', 'prev']),
   style: PropTypes.string
 }
 
-Control.defaultProps = {
+SledControl.defaultProps = {
   type: 'next',
   style: ''
 }
 
-export default Control
+export default SledControl

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import ViewpagerSprings from './springs'
@@ -13,12 +14,12 @@ import { useStateContext } from './utils/useState'
 const StyledDiv = styled.div`
   position: relative;
   overflow: hidden;
-  width: ${props => props.wrapperWidth && props.wrapperWidth + 'px'};
+  width: ${props => props.wrapperWidth ? props.wrapperWidth + 'px' : '100%'};
   height: ${props => props.heightNormalized};
   ${props => props.styles}
 `
 
-const ViewpagerViews = ({ children, style }) => {
+const SledViews = ({ children, style }) => {
   const [{ wrapperWidth, wrapperHeight, hasFocus, keys }, dispatch] = useStateContext()
   const wrapperRef = useRef()
   const width = useWidth(wrapperRef, wrapperWidth)
@@ -34,7 +35,7 @@ const ViewpagerViews = ({ children, style }) => {
 
   return (
     <StyledDiv
-      className='viewpager'
+      className='sled'
       ref={wrapperRef}
       styles={style}
       wrapperWidth={wrapperWidth}
@@ -53,4 +54,14 @@ const ViewpagerViews = ({ children, style }) => {
   )
 }
 
-export default ViewpagerViews
+SledViews.propTypes = {
+  children: PropTypes.node,
+  style: PropTypes.string
+}
+
+SledViews.defaultProps = {
+  children: null,
+  style: ''
+}
+
+export default SledViews

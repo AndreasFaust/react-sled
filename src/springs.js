@@ -4,7 +4,7 @@ import { useGesture } from 'react-with-gesture'
 import useInterval from './utils/useInterval'
 import { useStateContext } from './utils/useState'
 
-const ViewpagerSprings = ({
+const SledSprings = ({
   children,
   width,
   height
@@ -99,4 +99,4 @@ const ViewpagerSprings = ({
   ))
 }
 
-export default ViewpagerSprings
+export default SledSprings
