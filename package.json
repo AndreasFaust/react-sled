@@ -33,7 +33,8 @@
     "Slideshow",
     "Spring",
     "Animation",
-    "react-spring"
+    "react-spring",
+    "styled-components"
   ],
   "peerDependencies": {
     "react": "^16.8.5",
