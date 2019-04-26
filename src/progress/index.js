@@ -53,7 +53,7 @@ const SledProgressBar = () => {
         reset: false
       })
     }
-  }, [currentIndex, prevIndex, pause])
+  }, [elementCount, currentIndex, prevIndex, pause])
 
   return (
     <animated.div
@@ -98,14 +98,14 @@ const StyledSledProgress = styled.div`
 const SledProgress = ({ style }) => {
   const [{ elementCount }] = useStateContext()
 
-  return elementCount && (
+  return (
     <StyledSledProgress
       className='viewpager-progress'
       styles={style}
       tabIndex={-1}
     >
       <SledProgressBar />
-      {[...Array(elementCount - 1)].map((_, index) => (
+      {[...Array(elementCount ? elementCount - 1 : 1)].map((_, index) => (
         <div
           key={index}
           className='viewpager-progress-separator'

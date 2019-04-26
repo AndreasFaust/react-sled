@@ -1,24 +1,27 @@
 
 import { useState, useEffect } from 'react'
 
-export default (customHeight, width) => {
-  const [height, setHeight] = useState(customHeight)
+function getHeight (customHeight) {
+  if (typeof customHeight === 'number' || customHeight.indexOf('ow') < 0) {
+    return `height: ${customHeight};`
+  }
+  return `
+    :after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 0;
+      padding-top: ${+customHeight.replace('ow', '')}%;
+    }
+  `
+}
+
+export default (customHeight) => {
+  const [height, setHeight] = useState(getHeight(customHeight))
 
   useEffect(() => {
-    switch (typeof customHeight) {
-      case 'number':
-        setHeight(`${customHeight}px`)
-        break
-      case 'string':
-        if (customHeight.indexOf('ow') >= 0) {
-          const inPx = (width / 100) * +customHeight.replace('ow', '')
-          setHeight(`${inPx}px`)
-        } else {
-          setHeight(customHeight)
-        }
-        break
-    }
-  }, [width])
+    setHeight(getHeight(customHeight))
+  }, [customHeight])
 
   return height
 }

@@ -21,11 +21,10 @@ const App = () => {
     <>
       <h1><span>🛷</span> react-sled Example</h1>
       <Sled
-        wrapperHeight='50vw'
         auto={3000}
         dragDistance='50ow'
       >
-        <Views>
+        <Views height='50ow'>
           {pages.map((page) => (
             <div
               key={page}

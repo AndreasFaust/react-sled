@@ -14,20 +14,21 @@ import { useStateContext } from './utils/useState'
 const StyledDiv = styled.div`
   position: relative;
   overflow: hidden;
-  width: ${props => props.wrapperWidth ? props.wrapperWidth + 'px' : '100%'};
-  height: ${props => props.heightNormalized};
+  width: ${props => props.viewsWidth ? props.viewsWidth + 'px' : '100%'};
+  ${props => props.viewsHeight}
   ${props => props.styles}
 `
 
-const SledViews = ({ children, style }) => {
-  const [{ wrapperWidth, wrapperHeight, hasFocus, keys }, dispatch] = useStateContext()
-  const wrapperRef = useRef()
-  const width = useWidth(wrapperRef, wrapperWidth)
-  const height = useHeight(wrapperHeight, width)
+const SledViews = ({ children, width, height, style }) => {
+  const [{ hasFocus, keys }, dispatch] = useStateContext()
 
-  // useFocus(wrapperRef)
+  const viewsRef = useRef()
+  const viewsWidth = useWidth(viewsRef, width)
+  const viewsHeight = useHeight(height)
+
+  // useFocus(viewsRef)
   useKeys(keys, hasFocus, dispatch)
-  useMouse(wrapperRef, dispatch)
+  useMouse(viewsRef, dispatch)
 
   useEffect(() => {
     dispatch({ type: 'ELEMENT_COUNT', count: React.Children.toArray(children).length })
@@ -36,16 +37,16 @@ const SledViews = ({ children, style }) => {
   return (
     <StyledDiv
       className='sled'
-      ref={wrapperRef}
+      ref={viewsRef}
       styles={style}
-      wrapperWidth={wrapperWidth}
-      heightNormalized={height}
+      viewsWidth={viewsWidth}
+      viewsHeight={viewsHeight}
       tabIndex={-1}
     >
-      {height && (
+      {viewsHeight && (
         <ViewpagerSprings
-          width={width}
-          height={height}
+          width={viewsWidth}
+          height={viewsHeight}
         >
           {children}
         </ViewpagerSprings>
@@ -56,12 +57,16 @@ const SledViews = ({ children, style }) => {
 
 SledViews.propTypes = {
   children: PropTypes.node,
-  style: PropTypes.string
+  style: PropTypes.string,
+  width: PropTypes.number,
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 }
 
 SledViews.defaultProps = {
   children: null,
-  style: ''
+  style: '',
+  width: undefined,
+  height: '50ow'
 }
 
 export default SledViews

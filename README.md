@@ -14,6 +14,7 @@
 🛷 [Have a look at the example!](https://andreasfaust.github.io/react-sled/)
 
 **This Project is under development. Please join and contribute!**
+**Beware:** Until version 1.0.0 the API can and does change (constantly). Any (breaking-)changes are expressed in minor-updates and will be noted in the docs immediatedly.
 
 ## Install
 
@@ -55,13 +56,6 @@ List of all props:
 
 ```jsx
 <Sled
-  wrapperWidth
-  // Type: Number. Default: undefined
-  // Optional. Sets the viewpager’s width.
-  wrapperHeight
-  // Type: Number or String. Default: "50vh"
-  // Set the viewpager’s height. A number is pixels.
-  // Allowed units: ol ("own width": percent of viewpager’s width), vw, vh, rem, em, px
   auto
   // Type: Number. Default: undefined
   // Activates automatic Sliding.
@@ -83,6 +77,14 @@ List of all props:
 
 ```jsx
 <Views
+  width
+  // Type: Number. Default: undefined
+  // Optional. Sets the viewpager’s width.
+  // Allowed units: ow ("own width": percent of viewpager’s width), vw, vh, rem, em, px
+  height
+  // Type: Number or String. Default: "50vh"
+  // Set the viewpager’s height. A number is pixels.
+  // Allowed units: ow ("own width": percent of viewpager’s width), vw, vh, rem, em, px
   style
   // Type: String. Default: ''
   // Optional. Add styles to the view-wrapper (via styled-components template-string).

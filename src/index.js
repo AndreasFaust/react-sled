@@ -63,8 +63,6 @@ const Sled = (props) => {
 
 Sled.propTypes = {
   children: PropTypes.node,
-  wrapperWidth: PropTypes.number,
-  wrapperHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   auto: PropTypes.number,
   config: PropTypes.object,
   goTo: PropTypes.number,
@@ -75,8 +73,6 @@ Sled.propTypes = {
 
 Sled.defaultProps = {
   children: null,
-  wrapperWidth: undefined,
-  wrapperHeight: '50vh',
   auto: undefined,
   config: { mass: 1, tension: 210, friction: 20, clamp: true },
   goTo: undefined,
