@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/react-viewpager-example/static/js/2.29609c4c.chunk.js"
   },
   {
-    "revision": "8eecb447680860ea5583c6d8b5856a08",
+    "revision": "8ac03973ca7e8a7476cc2090298bd079",
     "url": "/react-viewpager-example/index.html"
   }
 ];
