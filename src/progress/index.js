@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { useSpring, animated } from 'react-spring'
 
-import { useStateContext } from '../utils/useState'
+import { useStateContext } from '../utils/state'
 
 const springConfig = { mass: 1, tension: 210, friction: 20, clamp: true }
 

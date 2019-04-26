@@ -78,13 +78,17 @@ List of all props:
 ```jsx
 <Views
   width
-  // Type: Number. Default: undefined
+  // Type: String. Default: '100%'
   // Optional. Sets the viewpager’s width.
-  // Allowed units: ow ("own width": percent of viewpager’s width), vw, vh, rem, em, px
+  // Allowed units:
+  // – all CSS-units
+  // – 'ow' ("own width": percent of viewpager’s width)
   height
-  // Type: Number or String. Default: "50vh"
-  // Set the viewpager’s height. A number is pixels.
-  // Allowed units: ow ("own width": percent of viewpager’s width), vw, vh, rem, em, px
+  // Type: String. Default: "50vh"
+  // Set the viewpager’s height.
+  // Allowed units:
+  // – all CSS-units
+  // – 'ow' ("own width": percent of viewpager’s width)
   style
   // Type: String. Default: ''
   // Optional. Add styles to the view-wrapper (via styled-components template-string).

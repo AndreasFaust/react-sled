@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useStateContext } from '../utils/useState'
+import { useStateContext } from '../utils/state'
 import styled from 'styled-components'
 
 const ArrowRight = () => (

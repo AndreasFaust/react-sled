@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StateProvider } from './utils/useState'
+import { StateProvider } from './utils/state'
 
 // import Wrapper from './wrapper'
 
@@ -40,6 +40,11 @@ const reducer = (state, action) => {
       ...state,
       mouseover: action.mouseover
     }
+    case 'SET_DIMENSIONS': return {
+      ...state,
+      width: action.width,
+      height: action.height
+    }
     default: return state
   }
 }
@@ -54,6 +59,8 @@ const Sled = (props) => {
       elementCount: 0,
       hasFocus: true,
       mouseover: false,
+      width: 0,
+      height: 0,
       ...rest
     }}>
       {children}

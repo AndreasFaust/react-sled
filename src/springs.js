@@ -2,14 +2,21 @@ import React, { useEffect, useRef } from 'react'
 import { useSprings, animated } from 'react-spring'
 import { useGesture } from 'react-with-gesture'
 import useInterval from './utils/useInterval'
-import { useStateContext } from './utils/useState'
+import { useStateContext } from './utils/state'
 
-const SledSprings = ({
-  children,
-  width,
-  height
-}) => {
-  const [{ currentIndex, prevIndex, auto, pause, mouseover, config, dragDistance }, dispatch] = useStateContext()
+const SledSprings = ({ children }) => {
+  const [{
+    currentIndex,
+    prevIndex,
+    width,
+    height,
+    auto,
+    pause,
+    mouseover,
+    config,
+    dragDistance
+  }, dispatch] = useStateContext()
+
   const indexRef = useRef(0)
   const widthRef = useRef(width)
   const distanceRef = useRef()
@@ -32,8 +39,11 @@ const SledSprings = ({
 
   useEffect(() => {
     widthRef.current = width
-    setX()
-  }, [width])
+    set(i => ({
+      x: (i - currentIndex) * width,
+      immediate: true
+    }))
+  }, [width, height])
 
   useEffect(() => {
     setX()

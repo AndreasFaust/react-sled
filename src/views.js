@@ -4,27 +4,27 @@ import styled from 'styled-components'
 
 import ViewpagerSprings from './springs'
 
-import useWidth from './utils/useWidth'
-import useHeight from './utils/useHeight'
+import useCSSHeight from './utils/useCSSHeight'
+import useDimensions from './utils/useDimensions'
 import useKeys from './utils/useKeys'
 import useMouse from './utils/useMouse'
 // import useFocus from './utils/useFocus'
-import { useStateContext } from './utils/useState'
+import { useStateContext } from './utils/state'
 
 const StyledDiv = styled.div`
   position: relative;
   overflow: hidden;
-  width: ${props => props.viewsWidth ? props.viewsWidth + 'px' : '100%'};
-  ${props => props.viewsHeight}
+  width: ${props => props.cssWidth || '100%'};
+  ${props => props.cssHeight}
   ${props => props.styles}
 `
 
-const SledViews = ({ children, width, height, style }) => {
+const SledViews = ({ width, height, children, style }) => {
   const [{ hasFocus, keys }, dispatch] = useStateContext()
 
   const viewsRef = useRef()
-  const viewsWidth = useWidth(viewsRef, width)
-  const viewsHeight = useHeight(height)
+  const cssHeight = useCSSHeight(height)
+  useDimensions(viewsRef, width, height, cssHeight)
 
   // useFocus(viewsRef)
   useKeys(keys, hasFocus, dispatch)
@@ -39,18 +39,13 @@ const SledViews = ({ children, width, height, style }) => {
       className='sled'
       ref={viewsRef}
       styles={style}
-      viewsWidth={viewsWidth}
-      viewsHeight={viewsHeight}
+      cssWidth={width}
+      cssHeight={cssHeight}
       tabIndex={-1}
     >
-      {viewsHeight && (
-        <ViewpagerSprings
-          width={viewsWidth}
-          height={viewsHeight}
-        >
-          {children}
-        </ViewpagerSprings>
-      )}
+      <ViewpagerSprings>
+        {children}
+      </ViewpagerSprings>
     </StyledDiv>
   )
 }
@@ -58,8 +53,8 @@ const SledViews = ({ children, width, height, style }) => {
 SledViews.propTypes = {
   children: PropTypes.node,
   style: PropTypes.string,
-  width: PropTypes.number,
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  width: PropTypes.string,
+  height: PropTypes.string
 }
 
 SledViews.defaultProps = {

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useStateContext } from './useState'
+import { useStateContext } from './state'
 
 const useMouse = (ref) => {
   const [{ pauseOnMouseOver }, dispatch] = useStateContext()
