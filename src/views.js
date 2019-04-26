@@ -14,7 +14,7 @@ const StyledDiv = styled.div`
   position: relative;
   overflow: hidden;
   width: ${props => props.wrapperWidth && props.wrapperWidth + 'px'};
-  height: ${props => props.heightNormalized}px;
+  height: ${props => props.heightNormalized};
   ${props => props.styles}
 `
 
@@ -26,7 +26,7 @@ const ViewpagerViews = ({ children, style }) => {
 
   // useFocus(wrapperRef)
   useKeys(keys, hasFocus, dispatch)
-  useMouse(wrapperRef, dispatch)
+  // useMouse(wrapperRef, dispatch)
 
   useEffect(() => {
     dispatch({ type: 'ELEMENT_COUNT', count: React.Children.toArray(children).length })

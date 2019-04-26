@@ -1,114 +1,95 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { useSpring, animated } from 'react-spring'
 
 import { useStateContext } from '../utils/useState'
 
-const StyledSegment = styled.div`        
-  width: ${props => props.segmentWidth};
-  background: black;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  
-  div {
-    background: red;
-  }
-  ${props => props.styles}
-`
+const ProgressBar = () => {
+  const [{ currentIndex, elementCount, auto, pause }] = useStateContext()
 
-const hidden = `translateX(-100%)`
-const visible = `translateX(0%)`
-
-const Segment = ({ index, width, styleSegment }) => {
-  const [{ currentIndex, auto, pause }, dispatch] = useStateContext()
+  const config = { mass: 1, tension: 210, friction: 20, clamp: true }
 
   const [props, set] = useSpring(() => ({
-    from: { transform: hidden }
+    from: { x: 100 }
   }))
 
   useEffect(() => {
-    if (index === currentIndex) {
+    if (currentIndex === 0) {
       set({
-        config: { duration: !pause && auto ? auto : undefined },
-        transform: visible,
-        reset: true,
-        immediate: false
+        config: auto && !pause ? { duration: auto } : config,
+        from: { x: 100 },
+        x: 100 - ((100 / elementCount) * (currentIndex + 1)),
+        reset: true
       })
-    }
-    if (index > currentIndex) {
+    } else {
       set({
-        transform: hidden,
-        config: {},
-        reset: false,
-        immediate: true
-      })
-    }
-    if (index < currentIndex) {
-      set({
-        transform: visible,
-        config: {},
-        reset: false,
-        immediate: true
+        config: auto && !pause ? { duration: auto } : config,
+        x: 100 - ((100 / elementCount) * (currentIndex + 1)),
+        reset: false
       })
     }
   }, [currentIndex, pause])
 
   return (
-    <StyledSegment
-      segmentWidth={width}
-      styles={styleSegment}
-      onClick={() => {
-        dispatch({ type: 'GOTO', index, pause: true })
+    <animated.div
+      className='viewpager-progress-bar'
+      style={{
+        position: 'absolute',
+        left: 0,
+        width: '100%',
+        top: 0,
+        bottom: 0,
+        transform: props.x.interpolate(x => `translateX(-${x}%)`)
       }}
-      tabIndex={index + 1}
-    >
-      <animated.div
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          transform: props.transform
-        }}
-      />
-    </StyledSegment>
+    />
   )
 }
 
 const StyledProgress = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   height: 4px;
+  background: black;
   margin: 10px 0;
+
+  // Mimic "justify-content: space-evenly;"
+  :before,
+  :after {
+    content: '';
+    display: block;
+    height: 100%;
+  }
+  .viewpager-progress-bar {
+    background: red;
+  }
+  .viewpager-progress-separator {
+    width: 4px;
+    background: white;
+  }
   ${props => props.styles}
 `
 
-const Progress = ({ style, color, colorBackground, gutter }) => {
-  const [width, setWidth] = useState(0)
+const Progress = ({ style }) => {
   const [{ elementCount }] = useStateContext()
 
-  useEffect(() => {
-    setWidth(`calc(((100% - ${gutter}) / ${elementCount}) - ${gutter})`)
-  }, [elementCount])
-
-  return (
+  return elementCount && (
     <StyledProgress
       className='viewpager-progress'
       styles={style}
       tabIndex={-1}
     >
-      {[...Array(elementCount)].map((_, index) => (
-        <Segment
+      <ProgressBar />
+      {[...Array(elementCount - 1)].map((_, index) => (
+        <div
           key={index}
-          width={width}
-          index={index}
-          color={color}
-          colorBackground={colorBackground}
-          gutter={gutter}
+          className='viewpager-progress-separator'
+          style={{
+            position: 'relative',
+            zIndex: 100,
+            height: '100%'
+          }}
         />
       ))}
     </StyledProgress>
@@ -116,15 +97,11 @@ const Progress = ({ style, color, colorBackground, gutter }) => {
 }
 
 Progress.propTypes = {
-  style: PropTypes.string,
-  styleSegment: PropTypes.string,
-  gutter: PropTypes.string
+  style: PropTypes.string
 }
 
 Progress.defaultProps = {
-  style: '',
-  styleSegment: '',
-  gutter: '5px'
+  style: ''
 }
 
 export default Progress

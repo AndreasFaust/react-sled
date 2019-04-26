@@ -5,6 +5,8 @@
 - Lightweight and performant architecture
 - Ready for server-side-rendering
 
+**This Project is under development!**
+
 ## Install
 
 Install all dependencies via Yarn or NPM.
@@ -17,14 +19,20 @@ yarn add react-spring-viewpager react-spring react-with-gesture react react-dom
 
 ```jsx
 import React from "react";
-import Viewpager from "react-spring-viewpager";
+import { Viewpager, Views, Progress, Control } from "react-spring-viewpager";
 
 const App = () => {
   return (
-    <Viewpager>
-      <img src="my-image-1.jpg" alt="Hallo!" />
-      <img src="my-image-2.jpg" alt="Hallo!" />
-      <img src="my-image-3.jpg" alt="Hallo!" />
+    <Viewpager wrapperHeight="50ow">
+      <Views>
+        <img src="my-image-1.jpg" alt="My Image" />
+        <img src="my-image-2.jpg" alt="My Image" />
+      </Views>
+      <Progress />
+      <div className="controls">
+        <Control type="prev" />
+        <Control type="next" />
+      </div>
     </Viewpager>
   );
 };
@@ -43,12 +51,41 @@ List of all props:
   // Optional. Sets the viewpager’s width.
   wrapperHeight
   // Type: Number or String. Default: "50%"
-  // Set the viewpager’s height. A number is Pixels.
-  // Allowed units: % (of viewpager’s width), vw, vh
+  // Set the viewpager’s height. A number is pixels.
+  // Allowed units: ol ("own width": percent of viewpager’s width), vw, vh, rem, em, px
   auto
   // Type: Number. Default: undefined
   // Activates automatic Sliding.
   // Time in Milliseconds
+  config
+  // Type: Object. Default: { mass: 1, tension: 210, friction: 20, clamp: true }
+  // Animation settings.
+  keys
+  // Type: Boolean. Default: true
+  // Keyboard controls.
+  dragDistance
+  // Type: String. Default: 25ow
+  // Distance, the user has to drag the slider to trigger action.
+/>
+```
+
+```jsx
+<Progress
+  style
+  // Type: String.
+  // Default: `
+  //   height: 4px;
+  //   background: black;
+  //   margin: 10px 0;
+
+  //   .viewpager-progress-bar {
+  //     background: red;
+  //   }
+  //   .viewpager-progress-separator {
+  //     width: 4px;
+  //     background: white;
+  //   }
+  // `
 />
 ```
 

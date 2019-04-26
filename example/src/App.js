@@ -15,7 +15,7 @@ const App = () => {
     <>
       <h1>react-spring-viewpage Example</h1>
       <Viewpager
-        wrapperHeight='50ow'
+        wrapperHeight='50vw'
         auto={3000}
         dragDistance='25ow'
       >
