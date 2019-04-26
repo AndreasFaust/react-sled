@@ -56,14 +56,14 @@ List of all props:
 
 ```jsx
 <Sled
-  auto
+  autoPlay
   // Type: Number. Default: undefined
   // Activates automatic Sliding.
   // Time in Milliseconds
   config
   // Type: Object. Default: { mass: 1, tension: 210, friction: 20, clamp: true }
   // react-spring animation-settings.
-  keys
+  keyboard
   // Type: Boolean. Default: true
   // Keyboard controls.
   dragDistance

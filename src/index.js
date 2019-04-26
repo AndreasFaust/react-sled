@@ -70,20 +70,20 @@ const Sled = (props) => {
 
 Sled.propTypes = {
   children: PropTypes.node,
-  auto: PropTypes.number,
+  autoPlay: PropTypes.number,
   config: PropTypes.object,
   goTo: PropTypes.number,
-  keys: PropTypes.bool,
+  keyboard: PropTypes.bool,
   pauseOnMouseOver: PropTypes.bool,
   dragDistance: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 }
 
 Sled.defaultProps = {
   children: null,
-  auto: undefined,
+  autoPlay: undefined,
   config: { mass: 1, tension: 210, friction: 20, clamp: true },
   goTo: undefined,
-  keys: true,
+  keyboard: true,
   pauseOnMouseOver: true,
   dragDistance: '25ow'
 }

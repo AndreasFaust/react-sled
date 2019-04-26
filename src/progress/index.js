@@ -13,7 +13,7 @@ const SledProgressBar = () => {
     prevIndex,
     elementCount,
     mouseover,
-    auto,
+    autoPlay,
     pause
   }] = useStateContext()
 
@@ -22,13 +22,13 @@ const SledProgressBar = () => {
   }))
 
   useEffect(() => {
-    if (!auto || pause) return
+    if (!autoPlay || pause) return
 
     const xStart = 100 - ((100 / elementCount) * (currentIndex))
     const xEnd = 100 - ((100 / elementCount) * (currentIndex + 1))
 
     set({
-      config: mouseover ? springConfig : { duration: auto },
+      config: mouseover ? springConfig : { duration: autoPlay },
       from: mouseover ? {} : { x: xStart },
       x: xEnd,
       reset: !mouseover
@@ -36,7 +36,7 @@ const SledProgressBar = () => {
   }, [mouseover])
 
   useEffect(() => {
-    const config = auto && !pause && !mouseover ? { duration: auto } : springConfig
+    const config = autoPlay && !pause && !mouseover ? { duration: autoPlay } : springConfig
     const xCalc = 100 - ((100 / elementCount) * (currentIndex + 1))
 
     if (currentIndex === 0) {
@@ -57,7 +57,7 @@ const SledProgressBar = () => {
 
   return (
     <animated.div
-      className='viewpager-progress-bar'
+      className='sled-progress-bar'
       style={{
         position: 'absolute',
         left: 0,
@@ -85,10 +85,10 @@ const StyledSledProgress = styled.div`
     display: block;
     height: 100%;
   }
-  .viewpager-progress-bar {
+  .sled-progress-bar {
     background: red;
   }
-  .viewpager-progress-separator {
+  .sled-progress-separator {
     width: 4px;
     background: white;
   }
@@ -100,7 +100,7 @@ const SledProgress = ({ style }) => {
 
   return (
     <StyledSledProgress
-      className='viewpager-progress'
+      className='sled-progress'
       styles={style}
       tabIndex={-1}
     >
@@ -108,7 +108,7 @@ const SledProgress = ({ style }) => {
       {[...Array(elementCount ? elementCount - 1 : 1)].map((_, index) => (
         <div
           key={index}
-          className='viewpager-progress-separator'
+          className='sled-progress-separator'
           style={{
             position: 'relative',
             zIndex: 100,

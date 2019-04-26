@@ -19,9 +19,9 @@ const pages = [
 const App = () => {
   return (
     <>
-      <h1><span>🛷</span> react-sled Example</h1>
+      <h1><span role='img' aria-label='sled-emoji'>🛷</span> react-sled Example</h1>
       <Sled
-        auto={3000}
+        autoPlay={3000}
         dragDistance='50ow'
       >
         <Views height='50ow'>

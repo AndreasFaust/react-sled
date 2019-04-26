@@ -10,7 +10,7 @@ const SledSprings = ({ children }) => {
     prevIndex,
     width,
     height,
-    auto,
+    autoPlay,
     pause,
     mouseover,
     config,
@@ -52,7 +52,7 @@ const SledSprings = ({ children }) => {
 
   useInterval(() => {
     dispatch({ type: 'NEXT' })
-  }, !pause && !mouseover ? auto : null)
+  }, !pause && !mouseover ? autoPlay : null)
 
   function setX () {
     set(i => ({

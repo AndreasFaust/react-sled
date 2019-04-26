@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-const useKeys = (keys, hasFocus, dispatch) => {
+const useKeyboard = (keyboard, hasFocus, dispatch) => {
   useEffect(() => {
     function onKeyup (event) {
       if (!hasFocus) return
@@ -13,11 +13,11 @@ const useKeys = (keys, hasFocus, dispatch) => {
           break
       }
     }
-    if (keys) {
+    if (keyboard) {
       document.addEventListener('keyup', onKeyup)
       return () => document.removeEventListener('keyup', onKeyup)
     }
   }, [])
 }
 
-export default useKeys
+export default useKeyboard

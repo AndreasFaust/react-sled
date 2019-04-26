@@ -6,7 +6,7 @@ import ViewpagerSprings from './springs'
 
 import useCSSHeight from './utils/useCSSHeight'
 import useDimensions from './utils/useDimensions'
-import useKeys from './utils/useKeys'
+import useKeyboard from './utils/useKeyboard'
 import useMouse from './utils/useMouse'
 // import useFocus from './utils/useFocus'
 import { useStateContext } from './utils/state'
@@ -20,14 +20,14 @@ const StyledDiv = styled.div`
 `
 
 const SledViews = ({ width, height, children, style }) => {
-  const [{ hasFocus, keys }, dispatch] = useStateContext()
+  const [{ hasFocus, keyboard }, dispatch] = useStateContext()
 
   const viewsRef = useRef()
   const cssHeight = useCSSHeight(height)
   useDimensions(viewsRef, width, height, cssHeight)
 
   // useFocus(viewsRef)
-  useKeys(keys, hasFocus, dispatch)
+  useKeyboard(keyboard, hasFocus, dispatch)
   useMouse(viewsRef, dispatch)
 
   useEffect(() => {
