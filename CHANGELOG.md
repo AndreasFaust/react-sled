@@ -1,3 +1,13 @@
+### 0.5.0 (2019-04-26)
+
+##### New Features
+
+*  Add goto-feature. (dc930a9c)
+
+##### Refactors
+
+*  Change prop 'keys' to 'keysboard'. (d83d69bb)
+
 ### 0.4.0 (2019-04-26)
 
 ##### Refactors
