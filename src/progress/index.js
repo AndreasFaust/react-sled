@@ -6,7 +6,7 @@ import { useSpring, animated } from 'react-spring'
 import { useStateContext } from '../utils/useState'
 
 const ProgressBar = () => {
-  const [{ currentIndex, elementCount, auto, pause }] = useStateContext()
+  const [{ currentIndex, prevIndex, elementCount, auto, pause }] = useStateContext()
 
   const config = { mass: 1, tension: 210, friction: 20, clamp: true }
 
@@ -20,7 +20,8 @@ const ProgressBar = () => {
         config: auto && !pause ? { duration: auto } : config,
         from: { x: 100 },
         x: 100 - ((100 / elementCount) * (currentIndex + 1)),
-        reset: true
+        reset: true,
+        immediate: prevIndex === 1
       })
     } else {
       set({
@@ -29,7 +30,7 @@ const ProgressBar = () => {
         reset: false
       })
     }
-  }, [currentIndex, pause])
+  }, [currentIndex, prevIndex, pause])
 
   return (
     <animated.div

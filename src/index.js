@@ -9,19 +9,19 @@ const reducer = (state, action) => {
     case 'NEXT': return {
       ...state,
       currentIndex: (state.currentIndex + 1) % state.elementCount,
-      prevIndex: state.index,
+      prevIndex: state.currentIndex,
       pause: action.pause || state.pauses
     }
     case 'PREV': return {
       ...state,
       currentIndex: (state.currentIndex - 1 + state.elementCount) % state.elementCount,
-      prevIndex: state.index,
+      prevIndex: state.currentIndex,
       pause: action.pause || state.pauses
     }
     case 'GOTO': return {
       ...state,
       currentIndex: action.index,
-      prevIndex: state.index,
+      prevIndex: state.currentIndex,
       pause: action.pause || state.pauses
     }
     case 'SET_PAUSE': return {
@@ -45,7 +45,7 @@ const Viewpager = (props) => {
   return (
     <StateProvider reducer={reducer} initialState={{
       currentIndex: 0,
-      prevIndex: 0,
+      prevIndex: undefined,
       pause: false,
       elementCount: 0,
       hasFocus: true,

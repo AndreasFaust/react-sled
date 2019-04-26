@@ -3,7 +3,11 @@
 [![NPM](https://img.shields.io/npm/v/react-raster.svg)](https://www.npmjs.com/package/react-spring-slides) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 - Lightweight and performant architecture
+- Touch- and Mousedrag
+- Easy to style with thanks to **styled-components**
 - Ready for server-side-rendering
+
+🛷 [Have a look to the demo-example!](https://andreasfaust.github.io/react-spring-viewpager/)
 
 **This Project is under development!**
 
@@ -12,7 +16,7 @@
 Install all dependencies via Yarn or NPM.
 
 ```bash
-yarn add react-spring-viewpager react-spring react-with-gesture react react-dom
+yarn add react-spring-viewpager react-spring react-with-gesture styled-components react react-dom
 ```
 
 ## Usage
@@ -89,9 +93,28 @@ List of all props:
 />
 ```
 
+```jsx
+<Control
+  type
+  // Type: String.
+  // Default: 'next'
+  // Possible values: 'prev', 'next'
+
+  style
+  // Type: String.
+  // Default: `
+  //  cursor: pointer;
+  //  padding: 10px;
+  //  width: 40px;
+  //  height: 40px;
+  //`
+  // If you provide a style, the default gets deleted.
+```
+
 ## To-Do
 
-- [ ] Controls
+- [ ] Control animation on drag
+- [ ] Better accessibility
 - [ ] Infinity-Mode
 - [ ] Nice documentation with live examples (using Docz)
 - [ ] Stricter type-checking / props validation
@@ -109,4 +132,6 @@ MIT © [AndreasFaust](https://github.com/AndreasFaust)
 
 ## Thanks
 
-This Library is created using [create-react-hook](https://github.com/hermanya/create-react-hook), which is based on [create-react-library](https://github.com/transitive-bullshit/create-react-library).
+This library is an derived the great work and especially from this [code-sandbox-example](https://codesandbox.io/embed/n9vo1my91p) provided by [Paul Henschel](https://github.com/drcmda) and the react-spring-team.
+
+Thanks also to the creators of [create-react-hook](https://github.com/hermanya/create-react-hook) and [create-react-library](https://github.com/transitive-bullshit/create-react-library).

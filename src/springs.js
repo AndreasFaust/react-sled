@@ -9,7 +9,7 @@ const ViewpagerSprings = ({
   width,
   height
 }) => {
-  const [{ currentIndex, auto, pause, config, dragDistance }, dispatch] = useStateContext()
+  const [{ currentIndex, prevIndex, auto, pause, config, dragDistance }, dispatch] = useStateContext()
   const indexRef = useRef(0)
   const widthRef = useRef(width)
   const distanceRef = useRef()
@@ -28,7 +28,7 @@ const ViewpagerSprings = ({
       }
     }
     distanceRef.current = getDistanceRef(dragDistance)
-  }, [dragDistance])
+  }, [dragDistance, width])
 
   useEffect(() => {
     widthRef.current = width
@@ -46,14 +46,15 @@ const ViewpagerSprings = ({
 
   function setX () {
     set(i => ({
-      x: (i - currentIndex) * width
+      x: (i - currentIndex) * width,
+      immediate: prevIndex === undefined
     }))
   }
 
   const [props, set] = useSprings(children.length, i => ({
     x: i * width,
     sc: 1,
-    // display: 'block',
+    immediate: true,
     config
   }))
 
@@ -71,7 +72,7 @@ const ViewpagerSprings = ({
     set(i => {
       const x = (i - indexRef.current) * widthRef.current + (down ? xDelta : 0)
       // const sc = down ? 1 - distance / widthRef.current / 2 : 1
-      return { x }
+      return { x, immediate: false }
     })
     dispatch({ type: 'SET_PAUSE', pause: true })
   })
