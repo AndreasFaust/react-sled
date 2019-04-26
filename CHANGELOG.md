@@ -1,3 +1,9 @@
+### 0.4.0 (2019-04-26)
+
+##### Refactors
+
+*  Change and improve sizing. (e3086bf1)
+
 ### 0.3.0 (2019-04-26)
 
 ##### New Features
