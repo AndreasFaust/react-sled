@@ -1,3 +1,9 @@
+#### 0.2.3 (2019-04-26)
+
+##### Bug Fixes
+
+*  Fix typo in readme. (e10ae2c2)
+
 #### 0.2.2 (2019-04-26)
 
 ##### Bug Fixes
