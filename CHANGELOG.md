@@ -1,3 +1,9 @@
+#### 0.6.1 (2019-04-27)
+
+##### Documentation Changes
+
+*  Fix docs. (2801f1e4)
+
 ### 0.6.0 (2019-04-27)
 
 ##### Refactors
