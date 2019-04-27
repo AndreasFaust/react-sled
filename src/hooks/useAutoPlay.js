@@ -26,6 +26,7 @@ export default (autoPlay) => {
     const newInterval = parseInt(autoPlay, 10)
     if (!isNaN(newInterval)) {
       dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: newInterval })
+      dispatch({ type: 'SET_PAUSE', pause: false })
     } else {
       dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: undefined })
     }
