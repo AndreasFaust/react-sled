@@ -2,26 +2,26 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { useStateContext } from '../state'
-import SledProgressBar from './progressBar'
+import SledProgressSeparators from './separators'
+import SledProgressRail from './rail'
+import SledProgressTrack from './track'
+import SledProgressControls from './controls'
 
 const StyledSledProgress = styled.div`
   position: relative;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  height: 4px;
-  background: black;
-  margin: 10px 0;
+  align-items: center;
+  overflow: hidden;
+  height: 20px;
 
-  // Mimic "justify-content: space-evenly;"
-  :before,
-  :after {
-    content: '';
-    display: block;
-    height: 100%;
+  .sled-progress-rail {
+    background: black;
+    height: 4px;
   }
-  .sled-progress-bar {
+  .sled-progress-track {
     background: red;
+    height: 4px;
   }
   .sled-progress-separator {
     width: 4px;
@@ -31,26 +31,16 @@ const StyledSledProgress = styled.div`
 `
 
 const SledProgress = ({ style }) => {
-  const [{ viewCount }] = useStateContext()
-
   return (
     <StyledSledProgress
       className='sled-progress'
       styles={style}
-      role='progressbar'
+      role='progressBar'
     >
-      <SledProgressBar />
-      {[...Array(viewCount ? viewCount - 1 : 1)].map((_, index) => (
-        <div
-          key={index}
-          className='sled-progress-separator'
-          style={{
-            position: 'relative',
-            zIndex: 100,
-            height: '100%'
-          }}
-        />
-      ))}
+      <SledProgressRail />
+      <SledProgressTrack />
+      <SledProgressSeparators />
+      <SledProgressControls />
     </StyledSledProgress>
   )
 }

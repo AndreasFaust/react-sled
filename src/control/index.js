@@ -2,61 +2,55 @@ import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import DefaultArrow from './arrow'
-import useDisabled from './useDisabled'
+import useDisabled from './hooks/useDisabled'
+import usePreset from './hooks/usePreset'
+import useDefaultPreset from './hooks/useDefaultPreset'
+import useClassName from './hooks/useClassName'
+import useLabel from './hooks/useLabel'
+import useClick from './hooks/useClick'
 
-import { useStateContext } from '../state'
 import useFocus from '../hooks/useFocus'
-
-const defaultStyle = `
-  cursor: pointer;
-  padding: 10px;
-  width: 40px;
-  height: 40px;
-
-  :disabled svg {
-    opacity: 0.4;
-  }
-`
 
 const StyledButton = styled.button`
   ${props => props.disabled && 'pointer-events: none;'}
   ${props => props.styles}
 `
 
-const SledControl = ({ children, type, style }) => {
-  const [, dispatch] = useStateContext()
+const SledControl = ({ children, goto, style, preset }) => {
   const controlRef = useRef()
   useFocus(controlRef)
-
-  const disabled = useDisabled(type)
+  const presetStyles = usePreset(preset)
+  const defaultPreset = useDefaultPreset(goto)
+  const disabled = useDisabled(goto)
+  const className = useClassName(goto, disabled)
+  const label = useLabel(goto)
+  const onClick = useClick(goto)
 
   return (
     <StyledButton
-      className={`sled__control sled__control--${type} ${disabled ? 'sled__control--disabled' : ''}`}
+      className={className}
       disabled={disabled}
       ref={controlRef}
-      type={type}
-      styles={style || defaultStyle}
-      ariaLabel={`Go to ${type === 'next' ? 'next' : 'previous'} view`}
+      styles={presetStyles + style || defaultPreset}
+      ariaLabel={label}
       tabIndex={0}
-      onClick={() => {
-        dispatch({ type: type === 'next' ? 'NEXT' : 'PREV', pause: true })
-      }}
+      onClick={onClick}
     >
-      {children || <DefaultArrow type={type} />}
+      {children}
     </StyledButton>
   )
 }
 
 SledControl.propTypes = {
-  type: PropTypes.oneOf(['next', 'prev']),
-  style: PropTypes.string
+  goto: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  style: PropTypes.string,
+  preset: PropTypes.string
 }
 
 SledControl.defaultProps = {
-  type: 'next',
-  style: ''
+  goto: 'next',
+  style: '',
+  preset: ''
 }
 
 export default SledControl

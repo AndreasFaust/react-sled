@@ -9,7 +9,7 @@ function getX (viewCount, currentIndex, goPrevNext = 0) {
   return 100 - ((100 / viewCount) * (currentIndex + goPrevNext))
 }
 
-const SledProgressBar = () => {
+const SledProgressTrack = () => {
   const [{
     currentIndex,
     prevIndex,
@@ -75,17 +75,16 @@ const SledProgressBar = () => {
 
   return (
     <animated.div
-      className='sled-progress-bar'
+      className='sled-progress-track'
       style={{
         position: 'absolute',
         left: 0,
         width: '100%',
-        top: 0,
-        bottom: 0,
+        pointerEvents: 'none',
         transform: props.x.interpolate(x => `translateX(-${x}%)`)
       }}
     />
   )
 }
 
-export default SledProgressBar
+export default SledProgressTrack

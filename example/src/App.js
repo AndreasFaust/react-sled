@@ -57,7 +57,7 @@ const App = () => {
           🛷
         </span>
         {' '}
-        react-sled Example
+        react-sled
       </h1>
 
       <a href='https://github.com/AndreasFaust/react-sled' className='github'>
@@ -104,8 +104,13 @@ const App = () => {
         </Views>
         <Progress />
         <div className='controls'>
-          <Control type='prev' />
-          <Control type='next' />
+          <Control goto='prev' />
+          <Control goto='next' />
+        </div>
+        <div className='controls'>
+          {pages.map((page, index) => (
+            <Control key={page} goto={index} />
+          ))}
         </div>
       </Sled>
       <div className='props'>

@@ -32,18 +32,26 @@ yarn add react-sled react-spring react-with-gesture styled-components react reac
 import React from "react";
 import { Sled, Views, Progress, Control } from "react-sled";
 
+const images = ["my-image-1.jpg", "my-image-2.jpg"];
+
 const App = () => {
   return (
     <Sled>
       // 'ow' is percent of the sled's own width. So the ratio is 2:1.
       <Views height="50ow">
-        <img src="my-image-1.jpg" alt="My Image" />
-        <img src="my-image-2.jpg" alt="My Image" />
+        {images.map(image => (
+          <img src={image} alt="My Image" />
+        ))}
       </Views>
       <Progress />
-      <div className="controls">
-        <Control type="prev" />
-        <Control type="next" />
+      <div className="controls arrows">
+        <Control goto="prev" />
+        <Control goto="next">Go to next view!</Control>
+      </div>
+      <div className="controls dots">
+        {images.map((null, index) => (
+          <Control goto={index} />
+        ))}
       </div>
     </Sled>
   );
@@ -52,15 +60,14 @@ const App = () => {
 export default App;
 ```
 
-## Props
+## Sled
 
-List of all props:
+Sled is the wrapper-component. It does not take any props.
 
-```jsx
-<Sled
-// does not take any props
-/>
-```
+## Views
+
+Render all your views into this component.
+It takes these props:
 
 ```jsx
 <Views
@@ -90,7 +97,7 @@ List of all props:
   // Mouse- and Touch-Dragging.
   dragDistance
   // Type: Number or String. Default: 40 (px)
-  // Distance, the user has to drag the slider to trigger action.
+  // Distance the user has to drag the slider to trigger action.
   // A number is calculated in Pixel. A string has to have the custom unit 'ow' (own width of the sled).
   autoPlay
   // Type: Number. Default: undefined
@@ -108,42 +115,96 @@ List of all props:
 />
 ```
 
-```jsx
-<Progress
-  style
-  // Type: String.
-  // Default: `
-  //   height: 4px;
-  //   background: black;
-  //   margin: 10px 0;
+## Controls
 
-  //   .viewpager-progress-bar {
-  //     background: red;
-  //   }
-  //   .viewpager-progress-separator {
-  //     width: 4px;
-  //     background: white;
-  //   }
-  // `
-/>
-```
+There is only one control-component for **Arrows** and **Dots**.
+
+- It is by default an empty `button`, that has a default **styling-preset**.
+- There's the prop `goto`, that decides, which of type the buton is: A string `next` or `prev` will activate Arrow-functionality, a number Dot-functionality.
+
+- If you provide styles of your own via `style` this default-preset gets deleted.
+- You can provide a preset of your choice via `preset` and extend and overwrite it with `style`.
+
+**Available Presets:**
+
+- dot (default preset of Dot )
+- arrowLeft (default preset of Arrow-Left )
+- arrowRight (default preset of Arrow-Right )
+
+**Conrol Props Overview:**
 
 ```jsx
 <Control
-  type
-  // Type: String.
+  goto
+  // Type: String or Number.
   // Default: 'next'
-  // Possible values: 'prev', 'next'
+  // Number is index of the target-view.
+  // Possible values string: 'prev', 'next'
+
+  preset
+  // Type: String.
+  // Default: ''.
+  // If you provide a preset, the default gets deleted.
 
   style
   // Type: String.
-  // Default: `
-  //  cursor: pointer;
-  //  padding: 10px;
-  //  width: 40px;
-  //  height: 40px;
-  //`
-  // If you provide a style, the default gets deleted.
+  // Default: ''
+  // If you provide a style, the default preset gets deleted.
+```
+
+**Conrol Examples:**
+
+```jsx
+// Dot with extended default preset
+<Control
+  goto={1}
+  preset='dot'
+  style={`
+    background: red;
+  `}
+/>
+
+// Arrow with custom content
+<Control
+  goto="next"
+  style={`
+    background: red;
+  `}
+>
+  Go to next view!
+</Control>
+```
+
+## Progress
+
+react-sled has an Instagram-like progress-bar.
+You can easily style it via the `style`-prop.
+Here's the default, you can extend and overwrite:
+
+```jsx
+<Progress
+  style={`
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    height: 20px;
+
+    .sled-progress-rail {
+      background: black;
+      height: 4px;
+    }
+    .sled-progress-track {
+      background: red;
+      height: 4px;
+    }
+    .sled-progress-separator {
+      width: 4px;
+      background: white;
+    }
+  `}
+/>
 ```
 
 ## To-Do
