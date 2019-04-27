@@ -1,3 +1,9 @@
+#### 0.8.4 (2019-04-27)
+
+##### Bug Fixes
+
+*  Go back to old domain. (584761bf)
+
 #### 0.8.3 (2019-04-27)
 
 ##### Bug Fixes
