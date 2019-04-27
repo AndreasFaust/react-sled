@@ -37,6 +37,9 @@ h1 span {
   display: flex;
   justify-content: center;
 }
+.controls > button {
+  margin: 10px;
+}
 
 .goto {
   display: flex;

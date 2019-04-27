@@ -2,9 +2,11 @@ import React, { useRef } from 'react'
 import { animated } from 'react-spring'
 
 import useFocus from './hooks/useFocus'
+import { useStateContext } from './state'
 
 const SledSpring = ({ values: { x, cursor }, index, bind, children }) => {
   const springRef = useRef()
+  const [{ viewCount }] = useStateContext()
   useFocus(springRef)
 
   return (
@@ -24,7 +26,7 @@ const SledSpring = ({ values: { x, cursor }, index, bind, children }) => {
       }}
       tabIndex={index + 1}
     >
-      {children}
+      {viewCount && children}
     </animated.div>
   )
 }

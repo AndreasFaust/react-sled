@@ -9,11 +9,13 @@
 - Touch- and Mousedrag (thanks to **react-with-gesture**)
 - Easy to style (thanks to **styled-components**)
 - Ready for server-side-rendering
+- All props are dynamically changeable
 - (Should be) Compatible with older Browsers from Internet Explorer 11 (Needs testing!)
 
 🛷 [Have a look at the example!](https://andreasfaust.github.io/react-sled/)
 
 **This Project is under development. Please join and contribute!**
+
 **Beware:** Until version 1.0.0 the API can and does change (constantly). Any (breaking-)changes are expressed in minor-updates and will be noted in the docs immediatedly.
 
 ## Install
@@ -99,6 +101,9 @@ List of all props:
   pauseOnMouseOver
   // Type: Boolean. Default: true
   // autoPlay (if activated) gets paused, as long as the User hovers over the sled.
+  rewind
+  // Type: Boolean. Default: false
+  // Rewind sled, when you want to go beyond the first or last view.
 />
 ```
 

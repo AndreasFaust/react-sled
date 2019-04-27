@@ -14,6 +14,7 @@ import useFocus from './hooks/useFocus'
 import useViewCount from './hooks/useViewCount'
 import useAutoPlay from './hooks/useAutoPlay'
 import useConfig from './hooks/useConfig'
+import useRewind from './hooks/useRewind'
 
 const StyledDiv = styled.div`
   position: relative;
@@ -34,13 +35,15 @@ const SledViews = ({
   style,
   autoPlay,
   pauseOnMouseOver,
-  config
+  config,
+  rewind
 }) => {
   const viewsRef = useRef()
   const cssHeight = useCSSHeight(height)
   useDimensions(viewsRef, width, height, cssHeight)
   useFocus(viewsRef)
   useViewCount(children)
+  useRewind(rewind)
 
   useMouseOver(pauseOnMouseOver, viewsRef)
   useGoto(goto)
@@ -77,6 +80,7 @@ SledViews.propTypes = {
   dragDistance: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   autoPlay: PropTypes.number,
   pauseOnMouseOver: PropTypes.bool,
+  rewind: PropTypes.bool,
   config: PropTypes.object
 }
 
@@ -91,7 +95,8 @@ SledViews.defaultProps = {
   dragDistance: '25ow',
   autoPlay: undefined,
   config: { mass: 1, tension: 210, friction: 20, clamp: true },
-  pauseOnMouseOver: true
+  pauseOnMouseOver: true,
+  rewind: false
 }
 
 export default SledViews

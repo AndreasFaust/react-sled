@@ -39,7 +39,9 @@ const App = () => {
           height='50ow'
           goto={index}
           autoPlay={3000}
-          dragDistance='50ow'
+          dragDistance='15ow'
+          rewind
+          keyboard
         >
           {pages.map((page) => (
             <div

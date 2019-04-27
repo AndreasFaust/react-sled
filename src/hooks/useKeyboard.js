@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { useStateContext } from '../state'
 
-const useKeyboard = () => {
-  const [{ hasFocus, keyboard }, dispatch] = useStateContext()
+const useKeyboard = (keyboard) => {
+  const [{ hasFocus }, dispatch] = useStateContext()
   const hasFocusRef = useRef()
 
   useEffect(() => {
