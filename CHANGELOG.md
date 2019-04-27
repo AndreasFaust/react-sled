@@ -1,3 +1,9 @@
+#### 0.8.3 (2019-04-27)
+
+##### Bug Fixes
+
+*  Change example-domain. (056e1a16)
+
 #### 0.8.2 (2019-04-27)
 
 ##### Bug Fixes
