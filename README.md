@@ -32,9 +32,9 @@ import { Sled, Views, Progress, Control } from "react-sled";
 
 const App = () => {
   return (
-    // 'ow' is percent of the sled's own width. So the ratio is 2:1.
-    <Sled wrapperHeight="50ow">
-      <Views>
+    <Sled>
+      // 'ow' is percent of the sled's own width. So the ratio is 2:1.
+      <Views height="50ow">
         <img src="my-image-1.jpg" alt="My Image" />
         <img src="my-image-2.jpg" alt="My Image" />
       </Views>
@@ -145,8 +145,8 @@ List of all props:
 - [ ] Control animation on drag
 - [ ] Better accessibility
 - [ ] Infinity-Mode
+- [ ] Vertical-Mode
 - [ ] Nice documentation with live examples (using Docz)
-- [ ] Stricter type-checking / props validation
 - [ ] automated testing
 
 ## Contributing

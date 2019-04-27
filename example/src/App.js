@@ -34,13 +34,12 @@ const App = () => {
         <Github />
       </a>
 
-      <Sled
-        autoPlay={3000}
-        dragDistance='50ow'
-      >
+      <Sled>
         <Views
           height='50ow'
           goto={index}
+          autoPlay={3000}
+          dragDistance='50ow'
         >
           {pages.map((page) => (
             <div
