@@ -1,3 +1,9 @@
+#### 0.7.2 (2019-04-27)
+
+##### Documentation Changes
+
+*  Change logo. (05fc3609)
+
 #### 0.7.1 (2019-04-27)
 
 ##### Documentation Changes
