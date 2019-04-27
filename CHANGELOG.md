@@ -1,3 +1,9 @@
+### 0.8.0 (2019-04-27)
+
+##### New Features
+
+*  Make all props dynamic. (0801e73d)
+
 #### 0.7.2 (2019-04-27)
 
 ##### Documentation Changes
