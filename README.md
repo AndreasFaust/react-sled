@@ -56,22 +56,7 @@ List of all props:
 
 ```jsx
 <Sled
-  autoPlay
-  // Type: Number. Default: undefined
-  // Activates automatic Sliding.
-  // Time in Milliseconds
-  config
-  // Type: Object. Default: { mass: 1, tension: 210, friction: 20, clamp: true }
-  // react-spring animation-settings.
-  keyboard
-  // Type: Boolean. Default: true
-  // Keyboard controls.
-  dragDistance
-  // Type: String. Default: 25ow
-  // Distance, the user has to drag the slider to trigger action.
-  pauseOnMouseOver
-  // Type: Boolean. Default: true
-  // The autoslide (if activated) gets paused, as long as the User hovers over the sled.
+// does not take any props
 />
 ```
 
@@ -95,6 +80,25 @@ List of all props:
   style
   // Type: String. Default: ''
   // Optional. Add styles to the view-wrapper (via styled-components template-string).
+  keyboard
+  // Type: Boolean. Default: true
+  // Keyboard controls.
+  dragging
+  // Type: Boolean. Default: true
+  // Mouse- and Touch-Dragging.
+  dragDistance
+  // Type: String. Default: 25ow
+  // Distance, the user has to drag the slider to trigger action.
+  autoPlay
+  // Type: Number. Default: undefined
+  // Activates automatic Sliding.
+  // Time in Milliseconds
+  config
+  // Type: Object. Default: { mass: 1, tension: 210, friction: 20, clamp: true }
+  // react-spring animation-settings.
+  pauseOnMouseOver
+  // Type: Boolean. Default: true
+  // autoPlay (if activated) gets paused, as long as the User hovers over the sled.
 />
 ```
 

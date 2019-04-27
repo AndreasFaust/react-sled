@@ -1,16 +1,19 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import ViewpagerSprings from './springs'
 
-import useCSSHeight from './utils/useCSSHeight'
-import useDimensions from './utils/useDimensions'
-import useKeyboard from './utils/useKeyboard'
-import useMouse from './utils/useMouse'
-import useGoto from './utils/useGoto'
-// import useFocus from './utils/useFocus'
-import { useStateContext } from './utils/state'
+import useCSSHeight from './hooks/useCSSHeight'
+import useDimensions from './hooks/useDimensions'
+import useKeyboard from './hooks/useKeyboard'
+import useDragging from './hooks/useDragging'
+import useMouseOver from './hooks/useMouseOver'
+import useGoto from './hooks/useGoto'
+import useFocus from './hooks/useFocus'
+import useViewCount from './hooks/useViewCount'
+import useAutoPlay from './hooks/useAutoPlay'
+import useConfig from './hooks/useConfig'
 
 const StyledDiv = styled.div`
   position: relative;
@@ -20,21 +23,32 @@ const StyledDiv = styled.div`
   ${props => props.styles}
 `
 
-const SledViews = ({ width, height, goto, children, style }) => {
-  const [{ hasFocus, keyboard }, dispatch] = useStateContext()
-
+const SledViews = ({
+  width,
+  height,
+  dragging,
+  dragDistance,
+  keyboard,
+  goto,
+  children,
+  style,
+  autoPlay,
+  pauseOnMouseOver,
+  config
+}) => {
   const viewsRef = useRef()
   const cssHeight = useCSSHeight(height)
   useDimensions(viewsRef, width, height, cssHeight)
+  useFocus(viewsRef)
+  useViewCount(children)
 
-  // useFocus(viewsRef)
-  useKeyboard(keyboard, hasFocus, dispatch)
-  useMouse(viewsRef, dispatch)
+  useMouseOver(pauseOnMouseOver, viewsRef)
   useGoto(goto)
+  useKeyboard(keyboard)
+  useDragging(dragging, dragDistance)
+  useAutoPlay(autoPlay)
 
-  useEffect(() => {
-    dispatch({ type: 'ELEMENT_COUNT', count: React.Children.toArray(children).length })
-  }, [children.length])
+  useConfig(config)
 
   return (
     <StyledDiv
@@ -43,7 +57,7 @@ const SledViews = ({ width, height, goto, children, style }) => {
       styles={style}
       cssWidth={width}
       cssHeight={cssHeight}
-      tabIndex={-1}
+      tabIndex={0}
     >
       <ViewpagerSprings>
         {children}
@@ -57,7 +71,13 @@ SledViews.propTypes = {
   style: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,
-  goto: PropTypes.number
+  goto: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  keyboard: PropTypes.bool,
+  dragging: PropTypes.bool,
+  dragDistance: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  autoPlay: PropTypes.number,
+  pauseOnMouseOver: PropTypes.bool,
+  config: PropTypes.object
 }
 
 SledViews.defaultProps = {
@@ -65,7 +85,13 @@ SledViews.defaultProps = {
   style: '',
   width: undefined,
   height: '50ow',
-  goto: undefined
+  goto: undefined,
+  keyboard: true,
+  dragging: true,
+  dragDistance: '25ow',
+  autoPlay: undefined,
+  config: { mass: 1, tension: 210, friction: 20, clamp: true },
+  pauseOnMouseOver: true
 }
 
 export default SledViews

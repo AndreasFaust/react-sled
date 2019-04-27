@@ -1,9 +1,17 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import { useStateContext } from '../state'
 
-const useKeyboard = (keyboard, hasFocus, dispatch) => {
+const useKeyboard = () => {
+  const [{ hasFocus, keyboard }, dispatch] = useStateContext()
+  const hasFocusRef = useRef()
+
+  useEffect(() => {
+    hasFocusRef.current = hasFocus
+  }, [hasFocus])
+
   useEffect(() => {
     function onKeyup (event) {
-      if (!hasFocus) return
+      if (!hasFocusRef.current) return
       switch (event.keyCode) {
         case 37:
           dispatch({ type: 'PREV', pause: true })
@@ -17,7 +25,7 @@ const useKeyboard = (keyboard, hasFocus, dispatch) => {
       document.addEventListener('keyup', onKeyup)
       return () => document.removeEventListener('keyup', onKeyup)
     }
-  }, [])
+  }, [keyboard])
 }
 
 export default useKeyboard

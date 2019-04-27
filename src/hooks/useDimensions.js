@@ -1,7 +1,7 @@
 
 import { useEffect } from 'react'
-import debounce from './debounce'
-import { useStateContext } from './state'
+import debounce from '../utils/debounce'
+import { useStateContext } from '../state'
 
 function set (ref, dispatch) {
   const { offsetWidth, offsetHeight } = ref.current

@@ -17,10 +17,20 @@ h1 span {
   top: 0.25em;
 }
 
-img {
+.github {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 16px;
+  right: 20px;
+}
+.github svg {
   width: 100%;
-  user-select: none;
-  pointer-events: none;
+}
+
+.github:hover path,
+.github:active path {
+  fill: #cc1d1c;
 }
 
 .controls {

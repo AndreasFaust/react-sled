@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import { useStateContext } from './state'
+import { useStateContext } from '../state'
 
-const useMouse = (ref) => {
-  const [{ pauseOnMouseOver }, dispatch] = useStateContext()
+export default (pauseOnMouseOver, ref) => {
+  const [, dispatch] = useStateContext()
 
   useEffect(() => {
     function onMouseEnter () {
@@ -21,7 +21,5 @@ const useMouse = (ref) => {
         ref.current.removeEventListener('mouseout', onMouseLeave)
       }
     }
-  }, [])
+  }, [pauseOnMouseOver])
 }
-
-export default useMouse

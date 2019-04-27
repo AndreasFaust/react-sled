@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
-import { useStateContext } from '../utils/state'
 import styled from 'styled-components'
+
+import { useStateContext } from '../state'
+import useFocus from '../hooks/useFocus'
 
 const ArrowRight = () => (
   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 210 140'>
@@ -38,12 +40,17 @@ const StyledButton = styled.button`
 
 const SledControl = ({ children, type, style }) => {
   const [, dispatch] = useStateContext()
+  const controlRef = useRef()
+  useFocus(controlRef)
 
   return (
     <StyledButton
       className={`sled__control sled__control--${type}`}
+      ref={controlRef}
       type={type}
       styles={style || defaultStyle}
+      ariaLabel={`Go to ${type === 'next' ? 'next' : 'previous'} view`}
+      tabIndex={0}
       onClick={() => {
         dispatch({ type: type === 'next' ? 'NEXT' : 'PREV', pause: true })
       }}

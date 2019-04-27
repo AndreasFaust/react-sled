@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react'
-import { useSprings, animated } from 'react-spring'
-import { useGesture } from 'react-with-gesture'
-import useInterval from './utils/useInterval'
-import { useStateContext } from './utils/state'
+import { useSprings } from 'react-spring'
+
+import { useStateContext } from './state'
+import useDragGesture from './hooks/useDragGesture'
+import SledSpring from './spring'
 
 const SledSprings = ({ children }) => {
   const [{
@@ -10,54 +11,21 @@ const SledSprings = ({ children }) => {
     prevIndex,
     width,
     height,
-    autoPlay,
-    pause,
-    mouseover,
-    config,
-    dragDistance
-  }, dispatch] = useStateContext()
-
-  const indexRef = useRef(0)
-  const widthRef = useRef(width)
-  const distanceRef = useRef()
+    config
+  }] = useStateContext()
 
   useEffect(() => {
-    function getDistanceRef (distance) {
-      switch (typeof distance) {
-        case 'number': return distance
-        case 'string':
-          if (distance.indexOf('ow') >= 0) {
-            return (width / 100) * +distance.replace('ow', '')
-          }
-          return 25
-        default:
-          return 25
-      }
-    }
-    distanceRef.current = getDistanceRef(dragDistance)
-  }, [dragDistance, width])
-
-  useEffect(() => {
-    widthRef.current = width
-    set(i => ({
-      x: (i - currentIndex) * width,
-      immediate: true
-    }))
+    setX(true)
   }, [width, height])
 
   useEffect(() => {
-    setX()
-    indexRef.current = currentIndex
+    setX(prevIndex === undefined)
   }, [currentIndex])
 
-  useInterval(() => {
-    dispatch({ type: 'NEXT' })
-  }, !pause && !mouseover ? autoPlay : null)
-
-  function setX () {
+  function setX (immediate) {
     set(i => ({
       x: (i - currentIndex) * width,
-      immediate: prevIndex === undefined
+      immediate
     }))
   }
 
@@ -69,43 +37,17 @@ const SledSprings = ({ children }) => {
     cursor: 'grab'
   }))
 
-  const bind = useGesture(({
-    down,
-    delta: [xDelta],
-    direction: [xDir],
-    distance,
-    cancel
-  }) => {
-    if (down && distance > distanceRef.current) {
-      dispatch({ type: xDir > 0 ? 'PREV' : 'NEXT', pause: true })
-      cancel()
-    }
-    set(i => {
-      const x = (i - indexRef.current) * widthRef.current + (down ? xDelta : 0)
-      // const sc = down ? 1 - distance / widthRef.current / 2 : 1
-      return { x, immediate: false, cursor: down ? 'grabbing' : 'grab' }
-    })
-    dispatch({ type: 'SET_PAUSE', pause: true })
-  })
+  const bind = useDragGesture(set)
 
-  return props.map(({ x, cursor }, index) => (
-    <animated.div
-      {...bind()}
+  return props.map((prop, index) => (
+    <SledSpring
       key={index}
-      style={{
-        position: 'absolute',
-        top: 0,
-        transform: x.interpolate(x => `translate3d(${x}px,0,0)`),
-        width: '100%',
-        height: '100%',
-        willChange: 'transform',
-        overflow: 'hidden',
-        cursor
-      }}
-      tabIndex={index + 1}
+      values={prop}
+      bind={bind}
+      index={index}
     >
       {children[index]}
-    </animated.div>
+    </SledSpring>
   ))
 }
 

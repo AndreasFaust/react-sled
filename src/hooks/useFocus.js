@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useStateContext } from './state'
+import { useStateContext } from '../state'
 
 const useFocus = (ref) => {
   const [, dispatch] = useStateContext()

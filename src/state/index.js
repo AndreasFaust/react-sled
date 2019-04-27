@@ -10,3 +10,4 @@ export const StateProvider = ({ reducer, initialState, children }) => (
 )
 
 export const useStateContext = () => useContext(StateContext)
+export { default as reducer } from './reducer'

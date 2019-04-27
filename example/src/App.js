@@ -7,6 +7,7 @@ import image2 from './images/image-2.jpg'
 import image3 from './images/image-3.jpg'
 import image4 from './images/image-4.jpg'
 import image5 from './images/image-5.jpg'
+import Github from './github-logo'
 
 const pages = [
   image1,
@@ -21,7 +22,18 @@ const App = () => {
 
   return (
     <div className='content'>
-      <h1><span role='img' aria-label='sled-emoji'>🛷</span> react-sled Example</h1>
+      <h1>
+        <span role='img' aria-label='sled-emoji'>
+          🛷
+        </span>
+        {' '}
+        react-sled Example
+      </h1>
+
+      <a href='https://github.com/AndreasFaust/react-sled' className='github'>
+        <Github />
+      </a>
+
       <Sled
         autoPlay={3000}
         dragDistance='50ow'

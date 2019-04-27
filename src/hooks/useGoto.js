@@ -1,11 +1,14 @@
 import { useEffect } from 'react'
-import { useStateContext } from './state'
+import { useStateContext } from '../state'
 
 const useGoto = (goto) => {
   const [, dispatch] = useStateContext()
   useEffect(() => {
     if (!goto) return
-    dispatch({ type: 'GOTO', index: +goto, pause: true })
+    const index = parseInt(goto, 10)
+    if (!isNaN(index)) {
+      dispatch({ type: 'GOTO', index: index, pause: true })
+    }
   }, [goto])
 }
 

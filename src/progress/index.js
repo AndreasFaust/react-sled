@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { useSpring, animated } from 'react-spring'
 
-import { useStateContext } from '../utils/state'
+import { useStateContext } from '../state'
 
 const springConfig = { mass: 1, tension: 210, friction: 20, clamp: true }
 
@@ -11,7 +11,7 @@ const SledProgressBar = () => {
   const [{
     currentIndex,
     prevIndex,
-    elementCount,
+    viewCount,
     mouseover,
     autoPlay,
     pause
@@ -24,8 +24,8 @@ const SledProgressBar = () => {
   useEffect(() => {
     if (!autoPlay || pause) return
 
-    const xStart = 100 - ((100 / elementCount) * (currentIndex))
-    const xEnd = 100 - ((100 / elementCount) * (currentIndex + 1))
+    const xStart = 100 - ((100 / viewCount) * (currentIndex))
+    const xEnd = 100 - ((100 / viewCount) * (currentIndex + 1))
 
     set({
       config: mouseover ? springConfig : { duration: autoPlay },
@@ -37,7 +37,7 @@ const SledProgressBar = () => {
 
   useEffect(() => {
     const config = autoPlay && !pause && !mouseover ? { duration: autoPlay } : springConfig
-    const xCalc = 100 - ((100 / elementCount) * (currentIndex + 1))
+    const xCalc = 100 - ((100 / viewCount) * (currentIndex + 1))
 
     if (currentIndex === 0) {
       set({
@@ -53,7 +53,7 @@ const SledProgressBar = () => {
         reset: false
       })
     }
-  }, [elementCount, currentIndex, prevIndex, pause])
+  }, [viewCount, currentIndex, prevIndex, pause])
 
   return (
     <animated.div
@@ -96,16 +96,16 @@ const StyledSledProgress = styled.div`
 `
 
 const SledProgress = ({ style }) => {
-  const [{ elementCount }] = useStateContext()
+  const [{ viewCount }] = useStateContext()
 
   return (
     <StyledSledProgress
       className='sled-progress'
       styles={style}
-      tabIndex={-1}
+      role='progressbar'
     >
       <SledProgressBar />
-      {[...Array(elementCount ? elementCount - 1 : 1)].map((_, index) => (
+      {[...Array(viewCount ? viewCount - 1 : 1)].map((_, index) => (
         <div
           key={index}
           className='sled-progress-separator'
