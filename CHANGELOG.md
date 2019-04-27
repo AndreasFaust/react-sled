@@ -1,3 +1,9 @@
+#### 0.8.1 (2019-04-27)
+
+##### Bug Fixes
+
+*  Correction in example. (1452f1f6)
+
 ### 0.8.0 (2019-04-27)
 
 ##### New Features
