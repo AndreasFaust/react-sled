@@ -7,7 +7,7 @@ export default (goto) => {
     case 'string':
     default:
       return goto === 'next'
-        ? presets['arrowNext']
-        : presets['arrowPrev']
+        ? presets['arrowRight']
+        : presets['arrowLeft']
   }
 }

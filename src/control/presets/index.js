@@ -1,9 +1,9 @@
 import dot from './dot'
-import arrowNext from './arrowNext'
-import arrowPrev from './arrowPrev'
+import arrowLeft from './arrowLeft'
+import arrowRight from './arrowRight'
 
 export default {
   dot,
-  arrowNext,
-  arrowPrev
+  arrowLeft,
+  arrowRight
 }

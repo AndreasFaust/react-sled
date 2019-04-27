@@ -119,17 +119,17 @@ It takes these props:
 
 There is only one control-component for **Arrows** and **Dots**.
 
-- It is by default an empty `button`, that has a default **styling-preset**.
-- There's the prop `goto`, that decides, which of type the buton is: A string `next` or `prev` will activate Arrow-functionality, a number Dot-functionality.
-
-- If you provide styles of your own via `style` this default-preset gets deleted.
-- You can provide a preset of your choice via `preset` and extend and overwrite it with `style`.
+- It is by default an empty `button`-tag, that has a default **styling-preset**.
+- There's the prop `goto`, that decides what the Control-element is: A string called `next` or `prev` will activate Arrow-functionality, a number Dot-functionality.
 
 **Available Presets:**
 
-- dot (default preset of Dot )
-- arrowLeft (default preset of Arrow-Left )
-- arrowRight (default preset of Arrow-Right )
+- [dot](https://github.com/AndreasFaust/react-sled/blob/master/src/control/presets/dot.js) (default preset of Dot )
+- [arrowLeft](https://github.com/AndreasFaust/react-sled/blob/master/src/control/presets/arrowLeft.js) (default preset of Arrow-Left )
+- [arrowRight](https://github.com/AndreasFaust/react-sled/blob/master/src/control/presets/arrowRight.js) (default preset of Arrow-Right )
+
+If you provide your own styles via `style`, the default-preset gets deleted.
+You can provide a preset of your choice via `preset` and extend and overwrite it with `style`.
 
 **Conrol Props Overview:**
 
@@ -144,12 +144,12 @@ There is only one control-component for **Arrows** and **Dots**.
   preset
   // Type: String.
   // Default: ''.
-  // If you provide a preset, the default gets deleted.
+  // If you provide a preset, the default gets replaced.
 
   style
   // Type: String.
   // Default: ''
-  // If you provide a style, the default preset gets deleted.
+  // If you provide a style, the default preset gets replaced.
 ```
 
 **Conrol Examples:**
