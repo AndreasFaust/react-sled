@@ -19,14 +19,19 @@ const useInterval = (callback, delay) => {
   }, [delay])
 }
 
-export default (autoPlay) => {
-  const [{ mouseover, pause }, dispatch] = useStateContext()
+export default (autoPlay) => {
+  const [{ mouseover, pause, autoPlayInterval }, dispatch] = useStateContext()
 
   useEffect(() => {
-    dispatch({ type: 'SET_AUTOPLAY', autoPlay })
-  }, autoPlay)
+    const newInterval = parseInt(autoPlay, 10)
+    if (!isNaN(newInterval)) {
+      dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: newInterval })
+    } else {
+      dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: undefined })
+    }
+  }, [autoPlay])
 
   useInterval(() => {
     dispatch({ type: 'NEXT' })
-  }, !pause && !mouseover ? autoPlay : null)
+  }, !pause && !mouseover ? autoPlayInterval : null)
 }

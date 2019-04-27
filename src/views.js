@@ -78,7 +78,7 @@ SledViews.propTypes = {
   keyboard: PropTypes.bool,
   dragging: PropTypes.bool,
   dragDistance: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  autoPlay: PropTypes.number,
+  autoPlay: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   pauseOnMouseOver: PropTypes.bool,
   rewind: PropTypes.bool,
   config: PropTypes.object

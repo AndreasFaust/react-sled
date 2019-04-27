@@ -22,6 +22,10 @@ const SledSprings = ({ children }) => {
     setX(prevIndex === undefined)
   }, [currentIndex])
 
+  useEffect(() => {
+    set(i => ({ config }))
+  }, [config])
+
   function setX (immediate) {
     set(i => ({
       x: (i - currentIndex) * width,

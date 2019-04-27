@@ -16,6 +16,7 @@ export default (pauseOnMouseOver, ref) => {
       ref.current.addEventListener('mouseover', onMouseEnter)
       ref.current.addEventListener('mouseout', onMouseLeave)
       return () => {
+        dispatch({ type: 'SET_MOUSEOVER', mouseover: false })
         ref.current.removeEventListener('mouseenter', onMouseEnter)
         ref.current.removeEventListener('mouseover', onMouseEnter)
         ref.current.removeEventListener('mouseout', onMouseLeave)

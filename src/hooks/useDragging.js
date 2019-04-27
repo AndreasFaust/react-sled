@@ -8,9 +8,9 @@ function getDistanceRef (distance, width) {
       if (distance.indexOf('ow') >= 0) {
         return (width / 100) * +distance.replace('ow', '')
       }
-      return 25
+      return 40
     default:
-      return 25
+      return 40
   }
 }
 
@@ -23,8 +23,6 @@ export default (dragging, dragDistance) => {
   }, [dragDistance, width])
 
   useEffect(() => {
-    if (dragging) {
-      dispatch({ type: 'SET_DRAGGING', dragging })
-    }
+    dispatch({ type: 'SET_DRAGGING', dragging })
   }, [dragging])
 }

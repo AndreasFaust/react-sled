@@ -62,6 +62,10 @@ export default (state, action) => {
       ...state,
       dragDistance: action.dragDistance
     }
+    case 'SET_AUTOPLAY': return {
+      ...state,
+      autoPlayInterval: action.autoPlayInterval
+    }
     case 'SET_CONFIG': return {
       ...state,
       config: action.config

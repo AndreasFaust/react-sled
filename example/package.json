@@ -5,14 +5,17 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
+    "rc-slider": "^8.6.9",
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
-    "react-spring": "link:../node_modules/react-spring",
-    "react-with-gesture": "link:../node_modules/react-with-gesture",
-    "styled-components": "link:../node_modules/styled-components",
     "react-scripts": "^2.1.3",
-    "react-sled": "link:.."
+    "react-sled": "link:..",
+    "react-spring": "link:../node_modules/react-spring",
+    "react-toggle": "^4.0.2",
+    "react-with-gesture": "link:../node_modules/react-with-gesture",
+    "styled-components": "link:../node_modules/styled-components"
   },
   "scripts": {
     "start": "react-scripts start",

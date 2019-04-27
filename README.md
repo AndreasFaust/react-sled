@@ -89,8 +89,9 @@ List of all props:
   // Type: Boolean. Default: true
   // Mouse- and Touch-Dragging.
   dragDistance
-  // Type: String. Default: 25ow
+  // Type: Number or String. Default: 40 (px)
   // Distance, the user has to drag the slider to trigger action.
+  // A number is calculated in Pixel. A string has to have the custom unit 'ow' (own width of the sled).
   autoPlay
   // Type: Number. Default: undefined
   // Activates automatic Sliding.

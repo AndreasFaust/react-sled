@@ -17,6 +17,10 @@ h1 span {
   top: 0.25em;
 }
 
+h2 {
+  font-size: 20px;
+}
+
 .github {
   position: absolute;
   width: 50px;
@@ -36,27 +40,75 @@ h1 span {
 .controls {
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 .controls > button {
   margin: 10px;
 }
 
-.goto {
+.props {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 25px;
+  width: 100%;
+
+  box-sizing: border-box;
+}
+
+.column {
+  padding: 20px;
+  flex-grow: 1;
+}
+.column--2 {
+  background: #efefef;
+  flex-grow: 5;
+}
+
+.props__h2 {
+  margin: 0 10px 0 0;
+}
+/* .column--2 .props__label:first-child {
+  margin-bottom: 0px;
+} */
+
+.props__h3 {
+  font-family: monospace;
+  font-weight: normal;
+  font-size: 16px;
+  margin: 0 10px 0 0;
+  min-width: 150px;
+}
+
+.props__label {
+  display: flex;
   align-items: center;
-  margin: 20px;
+  padding: 10px;
+  height: 25px;
 }
 
-h2 {
-  font-size: 20px;
-  margin: 0 1em 0 0;
+.props__label--config {
 }
 
-.goto__input {
+.react-toggle {
+  margin-right: 15px;
+}
+
+.props__input {
   font-size: 20px;
   font-family: serif;
   text-align: center;
   padding: 5px;
+  height: 25px;
+  margin-right: 15px;
   font-weight: bold;
+}
+
+.rc-slider-handle {
+  border-color: red !important;
+}
+.rc-slider-rail {
+  background-color: #fff !important;
+}
+.rc-slider-track {
+  background-color: red !important;
 }
