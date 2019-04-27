@@ -1,3 +1,9 @@
+#### 0.8.2 (2019-04-27)
+
+##### Bug Fixes
+
+*  Make autoplay restartable. (488bc048)
+
 #### 0.8.1 (2019-04-27)
 
 ##### Bug Fixes
