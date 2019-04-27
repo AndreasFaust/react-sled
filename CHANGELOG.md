@@ -1,3 +1,9 @@
+#### 0.7.1 (2019-04-27)
+
+##### Documentation Changes
+
+*  Change logo. (7e6321b3)
+
 ### 0.7.0 (2019-04-27)
 
 ##### New Features
