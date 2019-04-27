@@ -1,4 +1,4 @@
-![react-sled Logo](https://raw.github.com/andreasfaust/react-sled/master/react-sled-logo.png)
+![react-sled Logo](https://raw.github.com/andreasfaust/react-sled/master/react-sled-logo.jpg){:width="100%"}
 
 **react-sled** is a carousel made with **react-spring**.
 
