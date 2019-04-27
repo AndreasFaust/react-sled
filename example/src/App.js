@@ -48,6 +48,7 @@ const App = () => {
               key={page}
               style={{
                 position: 'absolute',
+                background: '#fff',
                 top: 0,
                 bottom: 0,
                 left: 0,

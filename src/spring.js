@@ -2,12 +2,13 @@ import React, { useRef } from 'react'
 import { animated } from 'react-spring'
 
 import useFocus from './hooks/useFocus'
-import { useStateContext } from './state'
+import useZIndex from './hooks/useZIndex'
 
 const SledSpring = ({ values: { x, cursor }, index, bind, children }) => {
   const springRef = useRef()
-  const [{ viewCount }] = useStateContext()
+
   useFocus(springRef)
+  const zIndex = useZIndex(index)
 
   return (
     <animated.div
@@ -15,6 +16,7 @@ const SledSpring = ({ values: { x, cursor }, index, bind, children }) => {
       ref={springRef}
       style={{
         position: 'absolute',
+        zIndex,
         top: 0,
         // transform: interpolate([x, sc], (x, sc) => `translate3d(${x}px,0,0) scale3d(${sc}, ${sc}, 1)`),
         transform: x.interpolate((x) => `translate3d(${x}px,0,0)`),
@@ -26,7 +28,7 @@ const SledSpring = ({ values: { x, cursor }, index, bind, children }) => {
       }}
       tabIndex={index + 1}
     >
-      {viewCount && children}
+      {children}
     </animated.div>
   )
 }

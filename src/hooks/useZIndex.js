@@ -6,8 +6,8 @@ const useZIndex = (index) => {
   const [zIndex, setZIndex] = useState()
 
   useEffect(() => {
-    console.log((viewCount - index) * 100)
-    setZIndex((viewCount - index) * 100)
+    const z = 1000 - index
+    setZIndex(z)
   }, [viewCount])
 
   return zIndex
