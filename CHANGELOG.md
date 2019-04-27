@@ -1,3 +1,9 @@
+### 0.6.0 (2019-04-27)
+
+##### Refactors
+
+*  Clean up codebase. (21e59655)
+
 ### 0.5.0 (2019-04-26)
 
 ##### New Features
