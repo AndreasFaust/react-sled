@@ -1,3 +1,13 @@
+### 0.7.0 (2019-04-27)
+
+##### New Features
+
+*  Add rewind-prop. (0a2208f7)
+
+##### Bug Fixes
+
+*  Reverse z-indices. (2e90dd31)
+
 #### 0.6.1 (2019-04-27)
 
 ##### Documentation Changes
