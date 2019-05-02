@@ -11,12 +11,17 @@ const SledSprings = ({ children }) => {
     prevIndex,
     width,
     height,
+    dragging,
     config
   }] = useStateContext()
 
   useEffect(() => {
     setX(true)
   }, [width, height])
+
+  useEffect(() => {
+    set(() => ({ cursor: dragging ? 'grab' : 'auto' }))
+  }, [dragging])
 
   useEffect(() => {
     setX(prevIndex === undefined)
@@ -38,7 +43,7 @@ const SledSprings = ({ children }) => {
     sc: 1,
     immediate: true,
     config,
-    cursor: 'grab'
+    cursor: 'auto'
   }))
 
   const bind = useDragGesture(set)

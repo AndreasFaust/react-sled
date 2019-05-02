@@ -67,53 +67,20 @@ Sled is the wrapper-component. It does not take any props.
 ## Views
 
 Render all your views into this component.
-It takes these props:
+It takes these optional props:
 
-```jsx
-<Views
-  width
-  // Type: String. Default: '100%'
-  // Optional. Sets the viewpager’s width.
-  // Allowed units:
-  // – all CSS-units
-  // – 'ow' ("own width": percent of viewpager’s width)
-  height
-  // Type: String. Default: "50vh"
-  // Set the viewpager’s height.
-  // Allowed units:
-  // – all CSS-units
-  // – 'ow' ("own width": percent of viewpager’s width)
-  goto
-  // Type: Number. Default: undefined
-  // Got to view.
-  style
-  // Type: String. Default: ''
-  // Optional. Add styles to the view-wrapper (via styled-components template-string).
-  keyboard
-  // Type: Boolean. Default: true
-  // Keyboard controls.
-  dragging
-  // Type: Boolean. Default: true
-  // Mouse- and Touch-Dragging.
-  dragDistance
-  // Type: Number or String. Default: 40 (px)
-  // Distance the user has to drag the slider to trigger action.
-  // A number is calculated in Pixel. A string has to have the custom unit 'ow' (own width of the sled).
-  autoPlay
-  // Type: Number. Default: undefined
-  // Activates automatic Sliding.
-  // Time in Milliseconds
-  config
-  // Type: Object. Default: { mass: 1, tension: 210, friction: 20, clamp: true }
-  // react-spring animation-settings.
-  pauseOnMouseOver
-  // Type: Boolean. Default: true
-  // autoPlay (if activated) gets paused, as long as the User hovers over the sled.
-  rewind
-  // Type: Boolean. Default: false
-  // Rewind sled, when you want to go beyond the first or last view.
-/>
-```
+| :-------- | :--------------- | :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **width** | String | `'100%'` | Sets the viewpager’s width. Allowed units: all CSS-units and the custom `ow` ("own width": percent of viewpager’s width)|
+| **height** | String | `50ow` | Sets the viewpager’s height. Allowed units: all CSS-units and the custom `ow` ("own width": percent of viewpager’s width) |
+| **goto** | Number | `undefined` | Got to view. |
+| **style** | String | `''` | Add styles to the view-wrapper (via styled-components template-string). |
+| **keyboard** | Boolean | `true` | Set Keyboard controls. |
+| **dragging** | Boolean | `true` | Set Mouse- and Touch-Dragging. |
+| **dragDistance** | Number or String | `'25ow'` | Distance the user has to drag the slider to trigger action. A number is calculated in Pixel. A string has to have the custom unit `ow` (own width of the sled). |
+| **autoPlay** | Number | `undefined` | Activates automatic Sliding-Interval in Milliseconds. |
+| **config** | Number | `{ mass: 1, tension: 210, friction: 20, clamp: true }` | react-spring animation-settings. |
+| **pauseOnMouseOver** | Boolean | `true` | `autoPlay` (if activated) gets paused, as long as the user hovers over the sled. |
+| **rewind** | Boolean | `false` | Rewind sled, when you want to go beyond the first or last view. |
 
 ## Controls
 
@@ -133,38 +100,16 @@ You can provide a preset of your choice via `preset` and extend and overwrite it
 
 **Conrol Props Overview:**
 
-```jsx
-<Control
-  goto
-  // Type: String or Number.
-  // Default: 'next'
-  // Number is index of the target-view.
-  // Possible values string: 'prev', 'next'
-
-  preset
-  // Type: String.
-  // Default: ''.
-  // If you provide a preset, the default gets replaced.
-
-  style
-  // Type: String.
-  // Default: ''
-  // If you provide a style, the default preset gets replaced.
-```
+| :-------- | :--------------- | :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **goto** | String or Number | `'next'` | Defines, if the `Control` has arrow- or dot-functionality. A number is the index of the target-view. A string can be `'prev'` or `'next'` |
+| **preset** | String | Default depends on `goto` | If you provide a preset, the default preset gets replaced. |
+| **style** | String | `''` | If you provide a `style` and no `preset`, the default `preset` gets completely replaced. If you provide a `style` and a `preset`, the `preset` gets extended. |
 
 **Conrol Examples:**
 
 ```jsx
-// Dot with extended default preset
-<Control
-  goto={1}
-  preset='dot'
-  style={`
-    background: red;
-  `}
-/>
-
-// Arrow with custom content
+// Case 1: You want to style your arrow from scratch.
+//  – A style-prop overwrites the default preset.
 <Control
   goto="next"
   style={`
@@ -173,6 +118,19 @@ You can provide a preset of your choice via `preset` and extend and overwrite it
 >
   Go to next view!
 </Control>
+
+// Case 2: You want to extend the default preset.
+//  – Because of goto={1} the Control has dot-functionality.
+//  – The default preset 'dot' is explicitly called and extended with addidional style.
+<Control
+  goto={1}
+  preset='dot'
+  style={`
+    background: red;
+  `}
+/>
+
+
 ```
 
 ## Progress

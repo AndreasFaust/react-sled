@@ -26,7 +26,7 @@ const SledSpring = ({ values: { x, cursor }, index, bind, children }) => {
         overflow: 'hidden',
         cursor
       }}
-      tabIndex={index + 1}
+      // tabIndex={index + 1}
     >
       {children}
     </animated.div>

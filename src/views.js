@@ -87,7 +87,7 @@ SledViews.propTypes = {
 SledViews.defaultProps = {
   children: null,
   style: '',
-  width: undefined,
+  width: '100%',
   height: '50ow',
   goto: undefined,
   keyboard: true,
