@@ -27,6 +27,12 @@ const StyledSledProgress = styled.div`
     width: 4px;
     background: white;
   }
+  .sled-control {
+    :focus {
+      background: hsla(0, 0%, 100%, 0.5)
+    }
+  }
+}
   ${props => props.styles}
 `
 

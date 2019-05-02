@@ -4,8 +4,14 @@ body {
   overflow-x: hidden;
 }
 
-.content {
+.wrapper {
   margin-bottom: 50vh;
+}
+
+@media (min-width: 1025px) {
+  .content {
+    display: flex;
+  }
 }
 
 h1 {
@@ -47,13 +53,26 @@ h2 {
   margin: 10px;
 }
 
+.sled-wrapper {
+  flex-grow: 1;
+}
+@media (min-width: 1025px) {
+  .sled-wrapper {
+    padding-left: 25px;
+  }
+}
+
 .props {
   display: flex;
   flex-wrap: wrap;
   padding: 0 25px;
   width: 100%;
-
   box-sizing: border-box;
+}
+@media (min-width: 1025px) {
+  .props {
+    max-width: 400px;
+  }
 }
 
 .column {

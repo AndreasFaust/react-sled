@@ -161,6 +161,11 @@ Here's the default, you can extend and overwrite:
       width: 4px;
       background: white;
     }
+    .sled-control {
+      :focus {
+        background: hsla(0, 0%, 100%, 0.5)
+      }
+    }
   `}
 />
 ```
