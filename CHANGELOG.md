@@ -1,3 +1,13 @@
+### 0.10.0 (2019-05-02)
+
+##### Documentation Changes
+
+*  improve docs and example. (da6cfdb3)
+
+##### Bug Fixes
+
+*  change cursor if dragging is deactivated. (4188989e)
+
 #### 0.9.1 (2019-04-27)
 
 ##### Bug Fixes
