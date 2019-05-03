@@ -13,6 +13,7 @@ const SledSpring = ({ values: { x, cursor }, index, bind, children }) => {
   return (
     <animated.div
       {...bind()}
+      className='sled-view'
       ref={springRef}
       style={{
         position: 'absolute',
@@ -26,7 +27,6 @@ const SledSpring = ({ values: { x, cursor }, index, bind, children }) => {
         overflow: 'hidden',
         cursor
       }}
-      // tabIndex={index + 1}
     >
       {children}
     </animated.div>
