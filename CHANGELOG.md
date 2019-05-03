@@ -1,3 +1,9 @@
+### 0.11.0 (2019-05-03)
+
+##### New Features
+
+*  Add classname ot view. (0ff5d0bf)
+
 #### 0.10.1 (2019-05-03)
 
 ##### Documentation Changes
