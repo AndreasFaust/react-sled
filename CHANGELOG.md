@@ -1,3 +1,9 @@
+#### 0.10.1 (2019-05-03)
+
+##### Documentation Changes
+
+*  fix docs. (74d0f7d8)
+
 ### 0.10.0 (2019-05-02)
 
 ##### Documentation Changes
