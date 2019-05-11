@@ -54,7 +54,9 @@ const SledProgressTrack = () => {
   }, [mouseover])
 
   useEffect(() => {
-    const config = autoPlayInterval && !pause && !mouseover ? { duration: autoPlayInterval } : springConfig
+    const config = autoPlayInterval && !pause && !mouseover
+      ? { duration: autoPlayInterval }
+      : springConfig
     const xCalc = getX(viewCount, currentIndex, 1)
 
     if (currentIndex === 0) {
@@ -62,7 +64,9 @@ const SledProgressTrack = () => {
         config,
         from: { x: 100 },
         x: xCalc,
-        reset: prevIndex !== 1
+        reset: viewCount > 2
+          ? prevIndex !== 1
+          : true
       })
     } else {
       set({

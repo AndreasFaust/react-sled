@@ -15,7 +15,7 @@ const App = () => {
   const [pauseOnMouseOver, setPauseOnMouseOver] = useState(true)
   const [keyboard, setKeyboard] = useState(true)
   const [dragging, setDragging] = useState(true)
-  const [autoPlay, setAutoPlay] = useState(3000)
+  const [autoPlay, setAutoPlay] = useState(2000)
   const [dragDistance, setDragDistance] = useState('25ow')
   const dSetAutoPlay = useRef((event) => {
     event.persist()
