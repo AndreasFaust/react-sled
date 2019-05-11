@@ -1,3 +1,9 @@
+#### 0.11.1 (2019-05-11)
+
+##### Bug Fixes
+
+*  Progress: Fix bug, when there are only 2 views. (15d8537b)
+
 ### 0.11.0 (2019-05-03)
 
 ##### New Features
