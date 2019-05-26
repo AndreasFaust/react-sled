@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Plugin Transitions`,
-    siteUrl: `https://andreasfaust.github.io/gatsby-plugin-transitions/`,
-    description: `gatsby-plugin-transitions enables smooth page-transitions.`
+    title: `React Sled`,
+    siteUrl: `https://andreasfaust.github.io/react-sled/`,
+    description: `react-sled is a carousel made with react-spring.`
   },
   pathPrefix: `/gatsby-plugin-transitions`,
   plugins: [

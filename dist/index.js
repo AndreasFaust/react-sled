@@ -1976,7 +1976,7 @@ var useRewind = (function (rewind) {
 });
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  position: relative;\n  overflow: hidden;\n  width: ", ";\n  ", "\n  ", "\n"]);
+  var data = _taggedTemplateLiteral(["\n  position: relative;\n  overflow: hidden;\n  width: ", ";\n  ", "\n  ", "\n  \n  :focus,\n  .sled-view:focus {\n    outline: none;\n  }\n"]);
 
   _templateObject = function _templateObject() {
     return data;

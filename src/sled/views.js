@@ -22,6 +22,11 @@ const StyledDiv = styled.div`
   width: ${props => props.cssWidth || '100%'};
   ${props => props.cssHeight}
   ${props => props.styles}
+  
+  :focus,
+  .sled-view:focus {
+    outline: none;
+  }
 `
 
 const SledViews = ({
