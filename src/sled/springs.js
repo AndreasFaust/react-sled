@@ -12,8 +12,11 @@ const SledSprings = ({ children }) => {
     width,
     height,
     dragging,
-    config
-  }] = useStateContext()
+    config,
+    stopOnInteraction,
+    onSledEnd,
+    viewCount
+  }, dispatch] = useStateContext()
 
   useEffect(() => {
     setX(true)
@@ -34,8 +37,16 @@ const SledSprings = ({ children }) => {
   function setX (immediate) {
     set(i => ({
       x: (i - currentIndex) * width,
-      immediate
+      immediate,
+      onRest: () => onRest(i)
     }))
+  }
+
+  function onRest (i) {
+    if (i === 0) {
+      dispatch({ type: 'SET_PAUSE', pause: !!stopOnInteraction })
+      if (currentIndex === viewCount - 1 && typeof onSledEnd === 'function') onSledEnd()
+    }
   }
 
   const [props, set] = useSprings(children.length, i => ({

@@ -22,11 +22,13 @@ const Sled = (props) => {
 }
 
 Sled.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  onSledEnd: PropTypes.func
 }
 
 Sled.defaultProps = {
-  children: null
+  children: null,
+  onSledEnd: null
 }
 
 export { Sled }

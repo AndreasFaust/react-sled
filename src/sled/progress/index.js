@@ -32,7 +32,6 @@ const StyledSledProgress = styled.div`
       background: hsla(0, 0%, 100%, 0.5)
     }
   }
-}
   ${props => props.styles}
 `
 

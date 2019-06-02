@@ -1441,6 +1441,11 @@ var reducer = (function (state, action) {
         rewind: action.rewind
       });
 
+    case 'SET_STOPONINTERACTION':
+      return _objectSpread({}, state, {
+        stopOnInteraction: action.stopOnInteraction
+      });
+
     default:
       return state;
   }
@@ -1467,6 +1472,7 @@ var useDragGesture = (function (set) {
       dragging = _useStateContext2$.dragging,
       dragDistance = _useStateContext2$.dragDistance,
       width = _useStateContext2$.width,
+      pauseOnInteraction = _useStateContext2$.pauseOnInteraction,
       currentIndex = _useStateContext2$.currentIndex,
       dispatch = _useStateContext2[1];
 
@@ -1596,14 +1602,18 @@ var SledSprings = function SledSprings(_ref) {
   var children = _ref.children;
 
   var _useStateContext = useStateContext(),
-      _useStateContext2 = _slicedToArray(_useStateContext, 1),
+      _useStateContext2 = _slicedToArray(_useStateContext, 2),
       _useStateContext2$ = _useStateContext2[0],
       currentIndex = _useStateContext2$.currentIndex,
       prevIndex = _useStateContext2$.prevIndex,
       width = _useStateContext2$.width,
       height = _useStateContext2$.height,
       dragging = _useStateContext2$.dragging,
-      config = _useStateContext2$.config;
+      config = _useStateContext2$.config,
+      stopOnInteraction = _useStateContext2$.stopOnInteraction,
+      onSledEnd = _useStateContext2$.onSledEnd,
+      viewCount = _useStateContext2$.viewCount,
+      dispatch = _useStateContext2[1];
 
   React.useEffect(function () {
     setX(true);
@@ -1630,9 +1640,22 @@ var SledSprings = function SledSprings(_ref) {
     set(function (i) {
       return {
         x: (i - currentIndex) * width,
-        immediate: immediate
+        immediate: immediate,
+        onRest: function onRest() {
+          return _onRest(i);
+        }
       };
     });
+  }
+
+  function _onRest(i) {
+    if (i === 0) {
+      dispatch({
+        type: 'SET_PAUSE',
+        pause: !!stopOnInteraction
+      });
+      if (currentIndex === viewCount - 1 && typeof onSledEnd === 'function') onSledEnd();
+    }
   }
 
   var _useSprings = reactSpring.useSprings(children.length, function (i) {
@@ -1975,8 +1998,21 @@ var useRewind = (function (rewind) {
   }, [rewind]);
 });
 
+var useStopOnInteraction = function useStopOnInteraction(stopOnInteraction) {
+  var _useStateContext = useStateContext(),
+      _useStateContext2 = _slicedToArray(_useStateContext, 2),
+      dispatch = _useStateContext2[1];
+
+  React.useEffect(function () {
+    dispatch({
+      type: 'SET_STOPONINTERACTION',
+      stopOnInteraction: stopOnInteraction
+    });
+  }, [stopOnInteraction]);
+};
+
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  position: relative;\n  overflow: hidden;\n  width: ", ";\n  ", "\n  ", "\n  \n  :focus,\n  .sled-view:focus {\n    outline: none;\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  position: relative;\n  overflow: hidden;\n  width: ", ";\n  ", "\n  ", "\n  user-select: none;\n\n  :focus,\n  .sled-view:focus {\n    outline: none;\n  }\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -2003,6 +2039,7 @@ var SledViews = function SledViews(_ref) {
       style = _ref.style,
       autoPlay = _ref.autoPlay,
       pauseOnMouseOver = _ref.pauseOnMouseOver,
+      stopOnInteraction = _ref.stopOnInteraction,
       config = _ref.config,
       rewind = _ref.rewind;
   var viewsRef = React.useRef();
@@ -2011,6 +2048,7 @@ var SledViews = function SledViews(_ref) {
   useFocus(viewsRef);
   useViewCount(children);
   useRewind(rewind);
+  useStopOnInteraction(stopOnInteraction);
   useMouseOver(pauseOnMouseOver, viewsRef);
   useGoto(_goto);
   useKeyboard(keyboard);
@@ -2039,7 +2077,8 @@ SledViews.propTypes = {
   autoPlay: propTypes.oneOfType([propTypes.number, propTypes.string]),
   pauseOnMouseOver: propTypes.bool,
   rewind: propTypes.bool,
-  config: propTypes.object
+  config: propTypes.object,
+  stopOnInteraction: propTypes.bool
 };
 SledViews.defaultProps = {
   children: null,
@@ -2058,6 +2097,7 @@ SledViews.defaultProps = {
     clamp: true
   },
   pauseOnMouseOver: true,
+  stopOnInteraction: false,
   rewind: false
 };
 
@@ -2453,7 +2493,7 @@ var SledProgressControls = function SledProgressControls(_ref) {
 };
 
 function _templateObject$5() {
-  var data = _taggedTemplateLiteral(["\n  position: relative;\n  width: 100%;\n  display: flex;\n  align-items: center;\n  overflow: hidden;\n  height: 20px;\n\n  .sled-progress-rail {\n    background: black;\n    height: 4px;\n  }\n  .sled-progress-track {\n    background: red;\n    height: 4px;\n  }\n  .sled-progress-separator {\n    width: 4px;\n    background: white;\n  }\n  .sled-control {\n    :focus {\n      background: hsla(0, 0%, 100%, 0.5)\n    }\n  }\n}\n  ", "\n"]);
+  var data = _taggedTemplateLiteral(["\n  position: relative;\n  width: 100%;\n  display: flex;\n  align-items: center;\n  overflow: hidden;\n  height: 20px;\n\n  .sled-progress-rail {\n    background: black;\n    height: 4px;\n  }\n  .sled-progress-track {\n    background: red;\n    height: 4px;\n  }\n  .sled-progress-separator {\n    width: 4px;\n    background: white;\n  }\n  .sled-control {\n    :focus {\n      background: hsla(0, 0%, 100%, 0.5)\n    }\n  }\n  ", "\n"]);
 
   _templateObject$5 = function _templateObject() {
     return data;
@@ -2501,10 +2541,12 @@ var Sled = function Sled(props) {
 };
 
 Sled.propTypes = {
-  children: propTypes.node
+  children: propTypes.node,
+  onSledEnd: propTypes.func
 };
 Sled.defaultProps = {
-  children: null
+  children: null,
+  onSledEnd: null
 };
 
 exports.Control = SledControl;

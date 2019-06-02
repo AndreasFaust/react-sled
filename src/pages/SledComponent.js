@@ -31,7 +31,11 @@ const SledComponent = ({
   clamp
 }) => (
   <div className='sled-wrapper'>
-    <Sled>
+    <Sled
+      onSledEnd={() => {
+        console.log('THIS IS THE END')
+      }}
+    >
       <Views
         width={width}
         height={height}

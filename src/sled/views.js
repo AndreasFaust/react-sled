@@ -15,6 +15,7 @@ import useViewCount from './hooks/useViewCount'
 import useAutoPlay from './hooks/useAutoPlay'
 import useConfig from './hooks/useConfig'
 import useRewind from './hooks/useRewind'
+import useStopOnInteraction from './hooks/useStopOnInteraction'
 
 const StyledDiv = styled.div`
   position: relative;
@@ -22,7 +23,8 @@ const StyledDiv = styled.div`
   width: ${props => props.cssWidth || '100%'};
   ${props => props.cssHeight}
   ${props => props.styles}
-  
+  user-select: none;
+
   :focus,
   .sled-view:focus {
     outline: none;
@@ -40,6 +42,7 @@ const SledViews = ({
   style,
   autoPlay,
   pauseOnMouseOver,
+  stopOnInteraction,
   config,
   rewind
 }) => {
@@ -50,6 +53,7 @@ const SledViews = ({
   useViewCount(children)
   useRewind(rewind)
 
+  useStopOnInteraction(stopOnInteraction)
   useMouseOver(pauseOnMouseOver, viewsRef)
   useGoto(goto)
   useKeyboard(keyboard)
@@ -86,7 +90,8 @@ SledViews.propTypes = {
   autoPlay: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   pauseOnMouseOver: PropTypes.bool,
   rewind: PropTypes.bool,
-  config: PropTypes.object
+  config: PropTypes.object,
+  stopOnInteraction: PropTypes.bool
 }
 
 SledViews.defaultProps = {
@@ -101,6 +106,7 @@ SledViews.defaultProps = {
   autoPlay: undefined,
   config: { mass: 1, tension: 210, friction: 20, clamp: true },
   pauseOnMouseOver: true,
+  stopOnInteraction: false,
   rewind: false
 }
 

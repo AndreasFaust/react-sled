@@ -74,6 +74,10 @@ export default (state, action) => {
       ...state,
       rewind: action.rewind
     }
+    case 'SET_STOPONINTERACTION': return {
+      ...state,
+      stopOnInteraction: action.stopOnInteraction
+    }
     default: return state
   }
 }

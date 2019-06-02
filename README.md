@@ -62,7 +62,12 @@ export default App;
 
 ## Sled
 
-Sled is the wrapper-component. It does not take any props.
+Sled is the wrapper-component. 
+
+| **Name**             | **Type**         | **Default**                                            | **Description**                                                                                                                                                  |
+| :------------------- | :--------------- | :----------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **onSledEnd**            | function           | `null`                                               | Callback, that gets triggered after last view.                 |
+
 
 ## Views
 
@@ -81,6 +86,7 @@ It takes these optional props:
 | **autoPlay**         | Number           | `undefined`                                            | Activates automatic Sliding-Interval in Milliseconds.                                                                                                            |
 | **config**           | Number           | `{ mass: 1, tension: 210, friction: 20, clamp: true }` | react-spring animation-settings.                                                                                                                                 |
 | **pauseOnMouseOver** | Boolean          | `true`                                                 | `autoPlay` (if activated) gets paused, as long as the user hovers over the sled.                                                                                 |
+| **stopOnInteraction** | Boolean          | `false`                                                 | `autoPlay` (if activated) gets stopped, after the user interacted with the sled.                                                                                 |
 | **rewind**           | Boolean          | `false`                                                | Rewind sled, when you want to go beyond the first or last view.                                                                                                  |
 
 ## Controls

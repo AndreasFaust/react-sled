@@ -3,7 +3,7 @@ import { useGesture } from 'react-with-gesture'
 import { useStateContext } from '../state'
 
 export default (set) => {
-  const [{ dragging, dragDistance, width, currentIndex }, dispatch] = useStateContext()
+  const [{ dragging, dragDistance, width, pauseOnInteraction, currentIndex }, dispatch] = useStateContext()
 
   const indexRef = useRef()
   const draggingRef = useRef()
