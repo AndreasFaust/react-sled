@@ -1606,6 +1606,7 @@ var SledSprings = function SledSprings(_ref) {
       stopOnInteraction = _useStateContext2$.stopOnInteraction,
       onSledEnd = _useStateContext2$.onSledEnd,
       viewCount = _useStateContext2$.viewCount,
+      autoPlayInterval = _useStateContext2$.autoPlayInterval,
       dispatch = _useStateContext2[1];
 
   useEffect(function () {
@@ -1629,26 +1630,29 @@ var SledSprings = function SledSprings(_ref) {
     });
   }, [config]);
 
+  function onRest(i) {
+    dispatch({
+      type: 'SET_PAUSE',
+      pause: !!stopOnInteraction
+    });
+
+    if (viewCount && currentIndex + 1 === viewCount && typeof onSledEnd === 'function') {
+      if (autoPlayInterval) {
+        window.setTimeout(onSledEnd, autoPlayInterval);
+      } else {
+        onSledEnd();
+      }
+    }
+  }
+
   function setX(immediate) {
     set(function (i) {
       return {
         x: (i - currentIndex) * width,
         immediate: immediate,
-        onRest: function onRest() {
-          return _onRest(i);
-        }
+        onRest: i === viewCount - 1 && onRest(i)
       };
     });
-  }
-
-  function _onRest(i) {
-    if (i === 0) {
-      dispatch({
-        type: 'SET_PAUSE',
-        pause: !!stopOnInteraction
-      });
-      if (currentIndex === viewCount - 1 && typeof onSledEnd === 'function') onSledEnd();
-    }
   }
 
   var _useSprings = useSprings(children.length, function (i) {
