@@ -1,3 +1,13 @@
+### 0.12.0 (2019-06-02)
+
+##### New Features
+
+*  Add props onSledEnd and stopOnInteraction. (97d50729)
+
+##### Bug Fixes
+
+*  Disable focus-outline. (7cb5bd06)
+
 #### 0.11.1 (2019-05-11)
 
 ##### Bug Fixes
