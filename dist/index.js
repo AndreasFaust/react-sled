@@ -2002,6 +2002,19 @@ var useRewind = (function (rewind) {
   }, [rewind]);
 });
 
+var usePause = (function (pause) {
+  var _useStateContext = useStateContext(),
+      _useStateContext2 = _slicedToArray(_useStateContext, 2),
+      dispatch = _useStateContext2[1];
+
+  React.useEffect(function () {
+    dispatch({
+      type: 'SET_PAUSE',
+      pause: pause
+    });
+  }, [pause]);
+});
+
 var useStopOnInteraction = function useStopOnInteraction(stopOnInteraction) {
   var _useStateContext = useStateContext(),
       _useStateContext2 = _slicedToArray(_useStateContext, 2),
@@ -2042,6 +2055,7 @@ var SledViews = function SledViews(_ref) {
       children = _ref.children,
       style = _ref.style,
       autoPlay = _ref.autoPlay,
+      pause = _ref.pause,
       pauseOnMouseOver = _ref.pauseOnMouseOver,
       stopOnInteraction = _ref.stopOnInteraction,
       config = _ref.config,
@@ -2052,6 +2066,7 @@ var SledViews = function SledViews(_ref) {
   useFocus(viewsRef);
   useViewCount(children);
   useRewind(rewind);
+  usePause(pause);
   useStopOnInteraction(stopOnInteraction);
   useMouseOver(pauseOnMouseOver, viewsRef);
   useGoto(_goto);
@@ -2082,7 +2097,8 @@ SledViews.propTypes = {
   pauseOnMouseOver: propTypes.bool,
   rewind: propTypes.bool,
   config: propTypes.object,
-  stopOnInteraction: propTypes.bool
+  stopOnInteraction: propTypes.bool,
+  pause: propTypes.bool
 };
 SledViews.defaultProps = {
   children: null,
@@ -2102,7 +2118,8 @@ SledViews.defaultProps = {
   },
   pauseOnMouseOver: true,
   stopOnInteraction: false,
-  rewind: false
+  rewind: false,
+  pause: false
 };
 
 var useArrow = function useArrow(_goto) {
@@ -2557,4 +2574,5 @@ exports.Control = SledControl;
 exports.Progress = SledProgress;
 exports.Sled = Sled;
 exports.Views = SledViews;
+exports.useSledStore = useStateContext;
 //# sourceMappingURL=index.js.map

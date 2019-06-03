@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StateProvider, reducer } from './state'
+import { StateProvider, useStateContext, reducer } from './state'
 
 const Sled = (props) => {
   const { children, ...rest } = props
@@ -35,3 +35,4 @@ export { Sled }
 export { default as Views } from './views'
 export { default as Control } from './control'
 export { default as Progress } from './progress'
+export { useStateContext as useSledStore }

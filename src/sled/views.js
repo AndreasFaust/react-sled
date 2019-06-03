@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import ViewpagerSprings from './springs'
+import Springs from './springs'
 
 import useCSSHeight from './hooks/useCSSHeight'
 import useDimensions from './hooks/useDimensions'
@@ -15,6 +15,7 @@ import useViewCount from './hooks/useViewCount'
 import useAutoPlay from './hooks/useAutoPlay'
 import useConfig from './hooks/useConfig'
 import useRewind from './hooks/useRewind'
+import usePause from './hooks/usePause'
 import useStopOnInteraction from './hooks/useStopOnInteraction'
 
 const StyledDiv = styled.div`
@@ -41,6 +42,7 @@ const SledViews = ({
   children,
   style,
   autoPlay,
+  pause,
   pauseOnMouseOver,
   stopOnInteraction,
   config,
@@ -52,6 +54,7 @@ const SledViews = ({
   useFocus(viewsRef)
   useViewCount(children)
   useRewind(rewind)
+  usePause(pause)
 
   useStopOnInteraction(stopOnInteraction)
   useMouseOver(pauseOnMouseOver, viewsRef)
@@ -71,9 +74,9 @@ const SledViews = ({
       cssHeight={cssHeight}
       tabIndex={0}
     >
-      <ViewpagerSprings>
+      <Springs>
         {children}
-      </ViewpagerSprings>
+      </Springs>
     </StyledDiv>
   )
 }
@@ -91,7 +94,8 @@ SledViews.propTypes = {
   pauseOnMouseOver: PropTypes.bool,
   rewind: PropTypes.bool,
   config: PropTypes.object,
-  stopOnInteraction: PropTypes.bool
+  stopOnInteraction: PropTypes.bool,
+  pause: PropTypes.bool
 }
 
 SledViews.defaultProps = {
@@ -107,7 +111,8 @@ SledViews.defaultProps = {
   config: { mass: 1, tension: 210, friction: 20, clamp: true },
   pauseOnMouseOver: true,
   stopOnInteraction: false,
-  rewind: false
+  rewind: false,
+  pause: false
 }
 
 export default SledViews

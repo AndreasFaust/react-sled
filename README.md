@@ -85,6 +85,8 @@ It takes these optional props:
 | **dragDistance**     | Number or String | `'25ow'`                                               | Distance the user has to drag the slider to trigger action. A number is calculated in Pixel. A string has to have the custom unit `ow` (own width of the sled).  |
 | **autoPlay**         | Number           | `undefined`                                            | Activates automatic Sliding-Interval in Milliseconds.                                                                                                            |
 | **config**           | Number           | `{ mass: 1, tension: 210, friction: 20, clamp: true }` | react-spring animation-settings.                                                                                                                                 |
+
+| **pause** | Boolean          | `false`                                                 | `autoPlay` (if activated) gets paused.                                                                                 |
 | **pauseOnMouseOver** | Boolean          | `true`                                                 | `autoPlay` (if activated) gets paused, as long as the user hovers over the sled.                                                                                 |
 | **stopOnInteraction** | Boolean          | `false`                                                 | `autoPlay` (if activated) gets stopped, after the user interacted with the sled.                                                                                 |
 | **rewind**           | Boolean          | `false`                                                | Rewind sled, when you want to go beyond the first or last view.                                                                                                  |
@@ -177,6 +179,17 @@ Here's the default, you can extend and overwrite:
   `}
 />
 ```
+
+## useSledStore
+
+A hook, that exposes the plugin’s state-management.
+Unfortunately it is currently not possible to use `useSledStore` outside of `SledProvider`.
+It returns an `Array` with 2 elements:
+
+1.  **state** of type `object`
+2.  **dispatch** of type `function`
+
+
 
 ## To-Do
 
