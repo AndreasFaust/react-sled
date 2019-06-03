@@ -1,3 +1,9 @@
+### 0.15.0 (2019-06-03)
+
+##### New Features
+
+*  Add pause-prop. Expose state-management. (40371acc)
+
 #### 0.14.1 (2019-06-02)
 
 ### 0.14.0 (2019-06-02)
