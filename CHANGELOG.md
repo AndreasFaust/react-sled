@@ -1,3 +1,9 @@
+#### 1.0.2 (2019-06-05)
+
+##### Bug Fixes
+
+*  Small change. (60ce31b2)
+
 #### 1.0.1 (2019-06-05)
 
 ##### Documentation Changes
