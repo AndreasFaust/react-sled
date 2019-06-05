@@ -1,5 +1,7 @@
 ## 1.0.0 (2019-06-05)
 
+## 1.0.0 (2019-06-05)
+
 ##### New Features
 
 *  First major release. (03fd1bb8)
