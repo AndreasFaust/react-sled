@@ -190,7 +190,6 @@ It returns an `Array` with 2 elements:
 ## To-Do
 
 - [ ] Control animation by frame on drag
-- [ ] Better accessibility
 - [ ] Infinity-Mode
 - [ ] Vertical-Mode
 - [ ] Nice documentation with live examples (using Docz)
