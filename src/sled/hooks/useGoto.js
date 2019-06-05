@@ -7,7 +7,7 @@ const useGoto = (goto) => {
     if (!goto) return
     const index = parseInt(goto, 10)
     if (!isNaN(index)) {
-      dispatch({ type: 'GOTO', index: index, pause: true })
+      dispatch({ type: 'GOTO', index: index })
     }
   }, [goto])
 }

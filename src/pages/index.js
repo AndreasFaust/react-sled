@@ -13,6 +13,7 @@ const App = () => {
   const [goto, setGoto] = useState(0)
   const [rewind, setRewind] = useState(true)
   const [pauseOnMouseOver, setPauseOnMouseOver] = useState(true)
+  const [stopOnInteraction, setStopOnInteraction] = useState(true)
   const [keyboard, setKeyboard] = useState(true)
   const [dragging, setDragging] = useState(true)
   const [autoPlay, setAutoPlay] = useState(2000)
@@ -60,6 +61,7 @@ const App = () => {
           goto={goto}
           rewind={rewind}
           pauseOnMouseOver={pauseOnMouseOver}
+          stopOnInteraction={stopOnInteraction}
           keyboard={keyboard}
           dragging={dragging}
           autoPlay={autoPlay}
@@ -142,6 +144,14 @@ const App = () => {
                 onChange={() => setPauseOnMouseOver(prev => !prev)}
               />
               <h2 className='props__h2'>pauseOnMouseOver</h2>
+            </label>
+            <label className='props__label'>
+              <Toggle
+                defaultChecked={stopOnInteraction}
+                icons={false}
+                onChange={() => setStopOnInteraction(prev => !prev)}
+              />
+              <h2 className='props__h2'>stopOnInteraction</h2>
             </label>
 
             <label className='props__label'>

@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react'
 import { useStateContext } from '../state'
 
-const useInterval = (callback, delay) => {
+const useInterval = (callback, interval) => {
   const savedCallback = useRef()
 
   useEffect(() => {
@@ -12,21 +12,20 @@ const useInterval = (callback, delay) => {
     function tick () {
       savedCallback.current()
     }
-    if (typeof delay === 'number') {
-      let id = setInterval(tick, delay)
+    if (typeof interval === 'number') {
+      let id = setInterval(tick, interval)
       return () => clearInterval(id)
     }
-  }, [delay])
+  }, [interval])
 }
 
 export default (autoPlay) => {
-  const [{ mouseover, pause, autoPlayInterval }, dispatch] = useStateContext()
+  const [{ pause, autoPlayInterval }, dispatch] = useStateContext()
 
   useEffect(() => {
     const newInterval = parseInt(autoPlay, 10)
     if (!isNaN(newInterval)) {
       dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: newInterval })
-      dispatch({ type: 'SET_PAUSE', pause: false })
     } else {
       dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: undefined })
     }
@@ -34,5 +33,5 @@ export default (autoPlay) => {
 
   useInterval(() => {
     dispatch({ type: 'NEXT' })
-  }, !pause && !mouseover ? autoPlayInterval : null)
+  }, !pause && autoPlayInterval)
 }

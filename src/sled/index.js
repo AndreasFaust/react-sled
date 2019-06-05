@@ -11,7 +11,6 @@ const Sled = (props) => {
       pause: false,
       viewCount: 0,
       hasFocus: false,
-      mouseover: false,
       width: 0,
       height: 0,
       ...rest
@@ -22,13 +21,11 @@ const Sled = (props) => {
 }
 
 Sled.propTypes = {
-  children: PropTypes.node,
-  onSledEnd: PropTypes.func
+  children: PropTypes.node
 }
 
 Sled.defaultProps = {
-  children: null,
-  onSledEnd: null
+  children: null
 }
 
 export { Sled }

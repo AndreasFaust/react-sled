@@ -3,7 +3,7 @@ import { useSpring, animated } from 'react-spring'
 
 import { useStateContext } from '../state'
 
-const springConfig = { mass: 1, tension: 210, friction: 20, clamp: true }
+// const springConfig = { mass: 1, tension: 210, friction: 20, clamp: true }
 
 function getX (viewCount, currentIndex, goPrevNext = 0) {
   return 100 - ((100 / viewCount) * (currentIndex + goPrevNext))
@@ -14,9 +14,10 @@ const SledProgressTrack = () => {
     currentIndex,
     prevIndex,
     viewCount,
-    mouseover,
     autoPlayInterval,
-    pause
+    pause,
+    mouseOver,
+    config
   }] = useStateContext()
 
   const [props, set] = useSpring(() => ({
@@ -24,41 +25,18 @@ const SledProgressTrack = () => {
   }))
 
   useEffect(() => {
-    if (!autoPlayInterval || pause) return
-    set({
-      config: { duration: autoPlayInterval },
-      from: getX(viewCount, currentIndex),
-      x: getX(viewCount, currentIndex, 1),
-      reset: false
-    })
-  }, [autoPlayInterval])
-
-  useEffect(() => {
-    if (!autoPlayInterval || pause) return
-
-    if (mouseover) {
+    if (mouseOver) {
       set({
-        config: springConfig,
-        from: {},
+        config,
         x: getX(viewCount, currentIndex),
         reset: false
       })
-    } else {
-      set({
-        config: { duration: autoPlayInterval },
-        from: getX(viewCount, currentIndex),
-        x: getX(viewCount, currentIndex, 1),
-        reset: false
-      })
     }
-  }, [mouseover])
+  }, [mouseOver])
 
   useEffect(() => {
-    const config = autoPlayInterval && !pause && !mouseover
-      ? { duration: autoPlayInterval }
-      : springConfig
-    const xCalc = getX(viewCount, currentIndex, 1)
-
+    if (!viewCount) return
+    const xCalc = getX(viewCount, currentIndex, !autoPlayInterval && 1)
     if (currentIndex === 0) {
       set({
         config,
@@ -75,7 +53,19 @@ const SledProgressTrack = () => {
         reset: false
       })
     }
-  }, [viewCount, currentIndex, prevIndex, pause])
+  }, [viewCount, currentIndex, autoPlayInterval])
+
+  useEffect(() => {
+    if (!autoPlayInterval) return
+
+    set({
+      config: autoPlayInterval && !pause
+        ? { duration: autoPlayInterval }
+        : config,
+      x: getX(viewCount, currentIndex, !pause && 1),
+      reset: false
+    })
+  }, [pause])
 
   return (
     <animated.div

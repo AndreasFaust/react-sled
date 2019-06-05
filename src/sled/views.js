@@ -17,6 +17,7 @@ import useConfig from './hooks/useConfig'
 import useRewind from './hooks/useRewind'
 import usePause from './hooks/usePause'
 import useStopOnInteraction from './hooks/useStopOnInteraction'
+import useSledEnd from './hooks/useSledEnd'
 
 const StyledDiv = styled.div`
   position: relative;
@@ -46,7 +47,8 @@ const SledViews = ({
   pauseOnMouseOver,
   stopOnInteraction,
   config,
-  rewind
+  rewind,
+  onSledEnd
 }) => {
   const viewsRef = useRef()
   const cssHeight = useCSSHeight(height)
@@ -55,6 +57,7 @@ const SledViews = ({
   useViewCount(children)
   useRewind(rewind)
   usePause(pause)
+  useSledEnd(onSledEnd)
 
   useStopOnInteraction(stopOnInteraction)
   useMouseOver(pauseOnMouseOver, viewsRef)
@@ -95,7 +98,8 @@ SledViews.propTypes = {
   rewind: PropTypes.bool,
   config: PropTypes.object,
   stopOnInteraction: PropTypes.bool,
-  pause: PropTypes.bool
+  pause: PropTypes.bool,
+  onSledEnd: PropTypes.func
 }
 
 SledViews.defaultProps = {
@@ -112,7 +116,8 @@ SledViews.defaultProps = {
   pauseOnMouseOver: true,
   stopOnInteraction: false,
   rewind: false,
-  pause: false
+  pause: false,
+  onSledEnd: null
 }
 
 export default SledViews

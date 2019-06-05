@@ -2,16 +2,19 @@ import { useEffect } from 'react'
 import { useStateContext } from '../state'
 
 export default (pauseOnMouseOver, ref) => {
-  const [, dispatch] = useStateContext()
-
+  const [{ autoPlayInterval }, dispatch] = useStateContext()
   useEffect(() => {
+    dispatch({ type: 'SET_PAUSE', pause: false })
+
     function onMouseEnter () {
-      dispatch({ type: 'SET_MOUSEOVER', mouseover: true })
+      dispatch({ type: 'SET_MOUSEOVER', mouseOver: true })
+      dispatch({ type: 'SET_PAUSE', pause: true })
     }
     function onMouseLeave () {
-      dispatch({ type: 'SET_MOUSEOVER', mouseover: false })
+      dispatch({ type: 'SET_MOUSEOVER', mouseOver: false })
+      dispatch({ type: 'SET_PAUSE', pause: false })
     }
-    if (pauseOnMouseOver) {
+    if (pauseOnMouseOver && autoPlayInterval) {
       ref.current.addEventListener('mouseenter', onMouseEnter)
       ref.current.addEventListener('mouseover', onMouseEnter)
       ref.current.addEventListener('mouseout', onMouseLeave)
@@ -22,5 +25,5 @@ export default (pauseOnMouseOver, ref) => {
         ref.current.removeEventListener('mouseout', onMouseLeave)
       }
     }
-  }, [pauseOnMouseOver])
+  }, [pauseOnMouseOver, autoPlayInterval])
 }

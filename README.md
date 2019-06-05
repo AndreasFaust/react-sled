@@ -14,9 +14,7 @@
 
 🛷 [Have a look at the example!](https://andreasfaust.github.io/react-sled/)
 
-**This Project is under development. Please join and contribute!**
-
-**Beware:** Until version 1.0.0 the API can and does change (constantly). Any (breaking-)changes are expressed in minor-updates and will be noted in the docs immediatedly.
+**This Project is still under development. Please join and contribute!**
 
 ## Install
 
@@ -62,11 +60,7 @@ export default App;
 
 ## Sled
 
-Sled is the wrapper-component. 
-
-| **Name**             | **Type**         | **Default**                                            | **Description**                                                                                                                                                  |
-| :------------------- | :--------------- | :----------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **onSledEnd**            | function           | `null`                                               | Callback, that gets triggered after last view.                 |
+Sled is the wrapper-component. It takes no props.
 
 
 ## Views
@@ -90,6 +84,8 @@ It takes these optional props:
 | **pauseOnMouseOver** | Boolean          | `true`                                                 | `autoPlay` (if activated) gets paused, as long as the user hovers over the sled.                                                                                 |
 | **stopOnInteraction** | Boolean          | `false`                                                 | `autoPlay` (if activated) gets stopped, after the user interacted with the sled.                                                                                 |
 | **rewind**           | Boolean          | `false`                                                | Rewind sled, when you want to go beyond the first or last view.                                                                                                  |
+| **onSledEnd**            | function           | `null`                                               | Callback, that gets triggered after last view.                 |
+
 
 ## Controls
 
@@ -193,7 +189,7 @@ It returns an `Array` with 2 elements:
 
 ## To-Do
 
-- [ ] Control animation on drag
+- [ ] Control animation by frame on drag
 - [ ] Better accessibility
 - [ ] Infinity-Mode
 - [ ] Vertical-Mode

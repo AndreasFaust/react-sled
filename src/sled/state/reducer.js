@@ -18,24 +18,32 @@ export default (state, action) => {
     case 'NEXT': return {
       ...state,
       currentIndex: getNext(state.currentIndex, state.viewCount, state.rewind),
-      prevIndex: state.currentIndex,
-      pause: action.pause || state.pause
+      prevIndex: state.currentIndex
+      // pause: action.pause || state.pause
     }
     case 'PREV': return {
       ...state,
       currentIndex: getPrev(state.currentIndex, state.viewCount, state.rewind),
-      prevIndex: state.currentIndex,
-      pause: action.pause || state.pause
+      prevIndex: state.currentIndex
+      // pause: action.pause || state.pause
     }
     case 'GOTO': return {
       ...state,
       currentIndex: clamp(action.index, 0, state.viewCount - 1),
-      prevIndex: state.currentIndex,
-      pause: action.pause || state.pause
+      prevIndex: state.currentIndex
+      // pause: action.pause || state.pause
     }
     case 'SET_PAUSE': return {
       ...state,
       pause: action.pause
+    }
+    case 'SET_RESTED_INDEX': return {
+      ...state,
+      restedIndex: state.currentIndex
+    }
+    case 'SET_MOUSEOVER': return {
+      ...state,
+      mouseOver: action.mouseOver
     }
     case 'SET_VIEWCOUNT': return {
       ...state,
@@ -44,10 +52,6 @@ export default (state, action) => {
     case 'SET_FOCUS': return {
       ...state,
       hasFocus: action.focus
-    }
-    case 'SET_MOUSEOVER': return {
-      ...state,
-      mouseover: action.mouseover
     }
     case 'SET_DIMENSIONS': return {
       ...state,

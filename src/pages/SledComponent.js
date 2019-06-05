@@ -22,6 +22,7 @@ const SledComponent = ({
   autoPlay,
   rewind,
   pauseOnMouseOver,
+  stopOnInteraction,
   keyboard,
   dragging,
   dragDistance,
@@ -32,17 +33,18 @@ const SledComponent = ({
 }) => (
   <div className='sled-wrapper'>
     <Sled
-      onSledEnd={() => {
-        console.log('THIS IS THE END')
-      }}
     >
       <Views
+        onSledEnd={() => {
+          console.log('THIS IS THE END')
+        }}
         width={width}
         height={height}
         goto={goto}
         autoPlay={autoPlay}
         rewind={rewind}
         pauseOnMouseOver={pauseOnMouseOver}
+        stopOnInteraction={stopOnInteraction}
         keyboard={keyboard}
         dragging={dragging}
         dragDistance={dragDistance}

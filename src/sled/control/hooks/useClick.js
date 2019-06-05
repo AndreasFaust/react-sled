@@ -1,13 +1,17 @@
 import { useStateContext } from '../../state'
 
 export default (goto) => {
-  const [, dispatch] = useStateContext()
+  const [{ stopOnInteraction }, dispatch] = useStateContext()
 
-  switch (typeof goto) {
-    case 'number':
-      return () => dispatch({ type: 'GOTO', index: goto, pause: true })
-    case 'string':
-    default:
-      return () => dispatch({ type: goto === 'next' ? 'NEXT' : 'PREV', pause: true })
+  function onClick () {
+    if (stopOnInteraction) {
+      dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: undefined })
+    }
+    if (typeof goto === 'number') {
+      dispatch({ type: 'GOTO', index: goto })
+    } else {
+      dispatch({ type: goto === 'next' ? 'NEXT' : 'PREV' })
+    }
   }
+  return onClick
 }

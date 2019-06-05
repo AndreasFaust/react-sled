@@ -12,11 +12,7 @@ const SledSprings = ({ children }) => {
     width,
     height,
     dragging,
-    config,
-    stopOnInteraction,
-    onSledEnd,
-    viewCount,
-    autoPlayInterval
+    config
   }, dispatch] = useStateContext()
 
   useEffect(() => {
@@ -35,22 +31,10 @@ const SledSprings = ({ children }) => {
     set(i => ({ config }))
   }, [config])
 
-  function onRest (i) {
-    dispatch({ type: 'SET_PAUSE', pause: !!stopOnInteraction })
-    if (viewCount && currentIndex + 1 === viewCount && typeof onSledEnd === 'function') {
-      if (autoPlayInterval) {
-        window.setTimeout(onSledEnd, autoPlayInterval)
-      } else {
-        onSledEnd()
-      }
-    }
-  }
-
   function setX (immediate) {
     set(i => ({
       x: (i - currentIndex) * width,
-      immediate,
-      onRest: i === viewCount - 1 && onRest(i)
+      immediate
     }))
   }
 
@@ -59,7 +43,18 @@ const SledSprings = ({ children }) => {
     sc: 1,
     immediate: true,
     config,
-    cursor: 'auto'
+    cursor: 'auto',
+    onStart: (a1, a2, a3) => {
+      if (i === children.length - 1) {
+        dispatch({ type: 'SET_PAUSE', pause: true })
+      }
+    },
+    onRest: (a1, a2, a3) => {
+      if (i === children.length - 1) {
+        dispatch({ type: 'SET_PAUSE', pause: false })
+        dispatch({ type: 'SET_RESTED_INDEX' })
+      }
+    }
   }))
 
   const bind = useDragGesture(set)
