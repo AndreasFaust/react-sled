@@ -1,3 +1,9 @@
+#### 1.0.1 (2019-06-05)
+
+##### Documentation Changes
+
+*  Small change. (336465d8)
+
 ## 1.0.0 (2019-06-05)
 
 ##### New Features
