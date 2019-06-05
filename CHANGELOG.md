@@ -1,3 +1,9 @@
+#### 1.0.4 (2019-06-05)
+
+##### Other Changes
+
+*  fix first animation. (49ea3a1d)
+
 #### 1.0.3 (2019-06-05)
 
 ##### Bug Fixes
