@@ -19,19 +19,16 @@ export default (state, action) => {
       ...state,
       currentIndex: getNext(state.currentIndex, state.viewCount, state.rewind),
       prevIndex: state.currentIndex
-      // pause: action.pause || state.pause
     }
     case 'PREV': return {
       ...state,
       currentIndex: getPrev(state.currentIndex, state.viewCount, state.rewind),
       prevIndex: state.currentIndex
-      // pause: action.pause || state.pause
     }
     case 'GOTO': return {
       ...state,
       currentIndex: clamp(action.index, 0, state.viewCount - 1),
       prevIndex: state.currentIndex
-      // pause: action.pause || state.pause
     }
     case 'SET_PAUSE': return {
       ...state,
