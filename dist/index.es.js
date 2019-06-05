@@ -1365,27 +1365,37 @@ var reducer = (function (state, action) {
     case 'NEXT':
       return _objectSpread({}, state, {
         currentIndex: getNext(state.currentIndex, state.viewCount, state.rewind),
-        prevIndex: state.currentIndex,
-        pause: action.pause || state.pause
+        prevIndex: state.currentIndex // pause: action.pause || state.pause
+
       });
 
     case 'PREV':
       return _objectSpread({}, state, {
         currentIndex: getPrev(state.currentIndex, state.viewCount, state.rewind),
-        prevIndex: state.currentIndex,
-        pause: action.pause || state.pause
+        prevIndex: state.currentIndex // pause: action.pause || state.pause
+
       });
 
     case 'GOTO':
       return _objectSpread({}, state, {
         currentIndex: clamp(action.index, 0, state.viewCount - 1),
-        prevIndex: state.currentIndex,
-        pause: action.pause || state.pause
+        prevIndex: state.currentIndex // pause: action.pause || state.pause
+
       });
 
     case 'SET_PAUSE':
       return _objectSpread({}, state, {
         pause: action.pause
+      });
+
+    case 'SET_RESTED_INDEX':
+      return _objectSpread({}, state, {
+        restedIndex: state.currentIndex
+      });
+
+    case 'SET_MOUSEOVER':
+      return _objectSpread({}, state, {
+        mouseOver: action.mouseOver
       });
 
     case 'SET_VIEWCOUNT':
@@ -1396,11 +1406,6 @@ var reducer = (function (state, action) {
     case 'SET_FOCUS':
       return _objectSpread({}, state, {
         hasFocus: action.focus
-      });
-
-    case 'SET_MOUSEOVER':
-      return _objectSpread({}, state, {
-        mouseover: action.mouseover
       });
 
     case 'SET_DIMENSIONS':
@@ -1603,10 +1608,6 @@ var SledSprings = function SledSprings(_ref) {
       height = _useStateContext2$.height,
       dragging = _useStateContext2$.dragging,
       config = _useStateContext2$.config,
-      stopOnInteraction = _useStateContext2$.stopOnInteraction,
-      onSledEnd = _useStateContext2$.onSledEnd,
-      viewCount = _useStateContext2$.viewCount,
-      autoPlayInterval = _useStateContext2$.autoPlayInterval,
       dispatch = _useStateContext2[1];
 
   useEffect(function () {
@@ -1630,27 +1631,11 @@ var SledSprings = function SledSprings(_ref) {
     });
   }, [config]);
 
-  function onRest(i) {
-    dispatch({
-      type: 'SET_PAUSE',
-      pause: !!stopOnInteraction
-    });
-
-    if (viewCount && currentIndex + 1 === viewCount && typeof onSledEnd === 'function') {
-      if (autoPlayInterval) {
-        window.setTimeout(onSledEnd, autoPlayInterval);
-      } else {
-        onSledEnd();
-      }
-    }
-  }
-
   function setX(immediate) {
     set(function (i) {
       return {
         x: (i - currentIndex) * width,
-        immediate: immediate,
-        onRest: i === viewCount - 1 && onRest(i)
+        immediate: immediate
       };
     });
   }
@@ -1661,7 +1646,26 @@ var SledSprings = function SledSprings(_ref) {
       sc: 1,
       immediate: true,
       config: config,
-      cursor: 'auto'
+      cursor: 'auto',
+      onStart: function onStart(a1, a2, a3) {
+        if (i === children.length - 1) {
+          dispatch({
+            type: 'SET_PAUSE',
+            pause: true
+          });
+        }
+      },
+      onRest: function onRest(a1, a2, a3) {
+        if (i === children.length - 1) {
+          dispatch({
+            type: 'SET_PAUSE',
+            pause: false
+          });
+          dispatch({
+            type: 'SET_RESTED_INDEX'
+          });
+        }
+      }
     };
   }),
       _useSprings2 = _slicedToArray(_useSprings, 2),
@@ -1849,24 +1853,38 @@ var useDragging = (function (dragging, dragDistance) {
 var useMouseOver = (function (pauseOnMouseOver, ref) {
   var _useStateContext = useStateContext(),
       _useStateContext2 = _slicedToArray(_useStateContext, 2),
+      autoPlayInterval = _useStateContext2[0].autoPlayInterval,
       dispatch = _useStateContext2[1];
 
   useEffect(function () {
+    dispatch({
+      type: 'SET_PAUSE',
+      pause: false
+    });
+
     function onMouseEnter() {
       dispatch({
         type: 'SET_MOUSEOVER',
-        mouseover: true
+        mouseOver: true
+      });
+      dispatch({
+        type: 'SET_PAUSE',
+        pause: true
       });
     }
 
     function onMouseLeave() {
       dispatch({
         type: 'SET_MOUSEOVER',
-        mouseover: false
+        mouseOver: false
+      });
+      dispatch({
+        type: 'SET_PAUSE',
+        pause: false
       });
     }
 
-    if (pauseOnMouseOver) {
+    if (pauseOnMouseOver && autoPlayInterval) {
       ref.current.addEventListener('mouseenter', onMouseEnter);
       ref.current.addEventListener('mouseover', onMouseEnter);
       ref.current.addEventListener('mouseout', onMouseLeave);
@@ -1880,7 +1898,7 @@ var useMouseOver = (function (pauseOnMouseOver, ref) {
         ref.current.removeEventListener('mouseout', onMouseLeave);
       };
     }
-  }, [pauseOnMouseOver]);
+  }, [pauseOnMouseOver, autoPlayInterval]);
 });
 
 var useGoto = function useGoto(_goto) {
@@ -1895,8 +1913,7 @@ var useGoto = function useGoto(_goto) {
     if (!isNaN(index)) {
       dispatch({
         type: 'GOTO',
-        index: index,
-        pause: true
+        index: index
       });
     }
   }, [_goto]);
@@ -1915,7 +1932,7 @@ function useViewCount (children) {
   }, [children.length]);
 }
 
-var useInterval = function useInterval(callback, delay) {
+var useInterval = function useInterval(callback, interval) {
   var savedCallback = useRef();
   useEffect(function () {
     savedCallback.current = callback;
@@ -1925,20 +1942,19 @@ var useInterval = function useInterval(callback, delay) {
       savedCallback.current();
     }
 
-    if (typeof delay === 'number') {
-      var id = setInterval(tick, delay);
+    if (typeof interval === 'number') {
+      var id = setInterval(tick, interval);
       return function () {
         return clearInterval(id);
       };
     }
-  }, [delay]);
+  }, [interval]);
 };
 
 var useAutoPlay = (function (autoPlay) {
   var _useStateContext = useStateContext(),
       _useStateContext2 = _slicedToArray(_useStateContext, 2),
       _useStateContext2$ = _useStateContext2[0],
-      mouseover = _useStateContext2$.mouseover,
       pause = _useStateContext2$.pause,
       autoPlayInterval = _useStateContext2$.autoPlayInterval,
       dispatch = _useStateContext2[1];
@@ -1951,10 +1967,6 @@ var useAutoPlay = (function (autoPlay) {
         type: 'SET_AUTOPLAY',
         autoPlayInterval: newInterval
       });
-      dispatch({
-        type: 'SET_PAUSE',
-        pause: false
-      });
     } else {
       dispatch({
         type: 'SET_AUTOPLAY',
@@ -1966,7 +1978,7 @@ var useAutoPlay = (function (autoPlay) {
     dispatch({
       type: 'NEXT'
     });
-  }, !pause && !mouseover ? autoPlayInterval : null);
+  }, !pause && autoPlayInterval);
 });
 
 var useConfig = (function (config) {
@@ -2021,6 +2033,44 @@ var useStopOnInteraction = function useStopOnInteraction(stopOnInteraction) {
   }, [stopOnInteraction]);
 };
 
+var useSledEnd = (function (onSledEnd) {
+  var _useStateContext = useStateContext(),
+      _useStateContext2 = _slicedToArray(_useStateContext, 1),
+      _useStateContext2$ = _useStateContext2[0],
+      viewCount = _useStateContext2$.viewCount,
+      restedIndex = _useStateContext2$.restedIndex,
+      currentIndex = _useStateContext2$.currentIndex,
+      autoPlayInterval = _useStateContext2$.autoPlayInterval;
+
+  useEffect(function () {
+    if (typeof onSledEnd !== 'function') return;
+    var timeoutId;
+
+    if (viewCount && restedIndex + 1 === viewCount) {
+      if (autoPlayInterval) {
+        timeoutId = window.setTimeout(function () {
+          onSledEnd(); // clear timeoutId, that timeout does not get called a second time on cleanup
+
+          timeoutId = undefined;
+        }, autoPlayInterval);
+      } else {
+        onSledEnd();
+      }
+    }
+
+    return function () {
+      if (timeoutId) {
+        // if timeout is running, but sled is moved to next!
+        clearTimeout(timeoutId);
+
+        if (currentIndex === 0) {
+          onSledEnd();
+        }
+      }
+    };
+  }, [restedIndex, currentIndex]);
+});
+
 function _templateObject() {
   var data = _taggedTemplateLiteral(["\n  position: relative;\n  overflow: hidden;\n  width: ", ";\n  ", "\n  ", "\n  user-select: none;\n\n  :focus,\n  .sled-view:focus {\n    outline: none;\n  }\n"]);
 
@@ -2052,7 +2102,8 @@ var SledViews = function SledViews(_ref) {
       pauseOnMouseOver = _ref.pauseOnMouseOver,
       stopOnInteraction = _ref.stopOnInteraction,
       config = _ref.config,
-      rewind = _ref.rewind;
+      rewind = _ref.rewind,
+      onSledEnd = _ref.onSledEnd;
   var viewsRef = useRef();
   var cssHeight = useCSSHeight(height);
   useDimensions(viewsRef, width, height, cssHeight);
@@ -2060,6 +2111,7 @@ var SledViews = function SledViews(_ref) {
   useViewCount(children);
   useRewind(rewind);
   usePause(pause);
+  useSledEnd(onSledEnd);
   useStopOnInteraction(stopOnInteraction);
   useMouseOver(pauseOnMouseOver, viewsRef);
   useGoto(_goto);
@@ -2091,7 +2143,8 @@ SledViews.propTypes = {
   rewind: propTypes.bool,
   config: propTypes.object,
   stopOnInteraction: propTypes.bool,
-  pause: propTypes.bool
+  pause: propTypes.bool,
+  onSledEnd: propTypes.func
 };
 SledViews.defaultProps = {
   children: null,
@@ -2112,7 +2165,8 @@ SledViews.defaultProps = {
   pauseOnMouseOver: true,
   stopOnInteraction: false,
   rewind: false,
-  pause: false
+  pause: false,
+  onSledEnd: null
 };
 
 var useArrow = function useArrow(_goto) {
@@ -2247,27 +2301,30 @@ var useLabel = (function (_goto) {
 var useClick = (function (_goto) {
   var _useStateContext = useStateContext(),
       _useStateContext2 = _slicedToArray(_useStateContext, 2),
+      stopOnInteraction = _useStateContext2[0].stopOnInteraction,
       dispatch = _useStateContext2[1];
 
-  switch (_typeof(_goto)) {
-    case 'number':
-      return function () {
-        return dispatch({
-          type: 'GOTO',
-          index: _goto,
-          pause: true
-        });
-      };
+  function onClick() {
+    if (stopOnInteraction) {
+      dispatch({
+        type: 'SET_AUTOPLAY',
+        autoPlayInterval: undefined
+      });
+    }
 
-    case 'string':
-    default:
-      return function () {
-        return dispatch({
-          type: _goto === 'next' ? 'NEXT' : 'PREV',
-          pause: true
-        });
-      };
+    if (typeof _goto === 'number') {
+      dispatch({
+        type: 'GOTO',
+        index: _goto
+      });
+    } else {
+      dispatch({
+        type: _goto === 'next' ? 'NEXT' : 'PREV'
+      });
+    }
   }
+
+  return onClick;
 });
 
 function _templateObject$1() {
@@ -2372,13 +2429,6 @@ var SledProgressRail = function SledProgressRail(_ref) {
   });
 };
 
-var springConfig = {
-  mass: 1,
-  tension: 210,
-  friction: 20,
-  clamp: true
-};
-
 function getX(viewCount, currentIndex) {
   var goPrevNext = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
   return 100 - 100 / viewCount * (currentIndex + goPrevNext);
@@ -2391,9 +2441,10 @@ var SledProgressTrack = function SledProgressTrack() {
       currentIndex = _useStateContext2$.currentIndex,
       prevIndex = _useStateContext2$.prevIndex,
       viewCount = _useStateContext2$.viewCount,
-      mouseover = _useStateContext2$.mouseover,
       autoPlayInterval = _useStateContext2$.autoPlayInterval,
-      pause = _useStateContext2$.pause;
+      pause = _useStateContext2$.pause,
+      mouseOver = _useStateContext2$.mouseOver,
+      config = _useStateContext2$.config;
 
   var _useSpring = useSpring(function () {
     return {
@@ -2407,42 +2458,17 @@ var SledProgressTrack = function SledProgressTrack() {
       set = _useSpring2[1];
 
   useEffect(function () {
-    if (!autoPlayInterval || pause) return;
-    set({
-      config: {
-        duration: autoPlayInterval
-      },
-      from: getX(viewCount, currentIndex),
-      x: getX(viewCount, currentIndex, 1),
-      reset: false
-    });
-  }, [autoPlayInterval]);
-  useEffect(function () {
-    if (!autoPlayInterval || pause) return;
-
-    if (mouseover) {
+    if (mouseOver) {
       set({
-        config: springConfig,
-        from: {},
+        config: config,
         x: getX(viewCount, currentIndex),
         reset: false
       });
-    } else {
-      set({
-        config: {
-          duration: autoPlayInterval
-        },
-        from: getX(viewCount, currentIndex),
-        x: getX(viewCount, currentIndex, 1),
-        reset: false
-      });
     }
-  }, [mouseover]);
+  }, [mouseOver]);
   useEffect(function () {
-    var config = autoPlayInterval && !pause && !mouseover ? {
-      duration: autoPlayInterval
-    } : springConfig;
-    var xCalc = getX(viewCount, currentIndex, 1);
+    if (!viewCount) return;
+    var xCalc = getX(viewCount, currentIndex, !autoPlayInterval && 1);
 
     if (currentIndex === 0) {
       set({
@@ -2460,7 +2486,17 @@ var SledProgressTrack = function SledProgressTrack() {
         reset: false
       });
     }
-  }, [viewCount, currentIndex, prevIndex, pause]);
+  }, [viewCount, currentIndex, autoPlayInterval]);
+  useEffect(function () {
+    if (!autoPlayInterval) return;
+    set({
+      config: autoPlayInterval && !pause ? {
+        duration: autoPlayInterval
+      } : config,
+      x: getX(viewCount, currentIndex, !pause && 1),
+      reset: false
+    });
+  }, [pause]);
   return React.createElement(animated.div, {
     className: "sled-progress-track",
     style: {
@@ -2547,7 +2583,6 @@ var Sled = function Sled(props) {
       pause: false,
       viewCount: 0,
       hasFocus: false,
-      mouseover: false,
       width: 0,
       height: 0
     }, rest)
@@ -2555,12 +2590,10 @@ var Sled = function Sled(props) {
 };
 
 Sled.propTypes = {
-  children: propTypes.node,
-  onSledEnd: propTypes.func
+  children: propTypes.node
 };
 Sled.defaultProps = {
-  children: null,
-  onSledEnd: null
+  children: null
 };
 
 export { SledControl as Control, SledProgress as Progress, Sled, SledViews as Views, useStateContext as useSledStore };
