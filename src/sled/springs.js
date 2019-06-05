@@ -44,12 +44,12 @@ const SledSprings = ({ children }) => {
     immediate: true,
     config,
     cursor: 'auto',
-    onStart: (a1, a2, a3) => {
+    onStart: () => {
       if (i === children.length - 1) {
         dispatch({ type: 'SET_PAUSE', pause: true })
       }
     },
-    onRest: (a1, a2, a3) => {
+    onRest: () => {
       if (i === children.length - 1) {
         dispatch({ type: 'SET_PAUSE', pause: false })
         dispatch({ type: 'SET_RESTED_INDEX' })
