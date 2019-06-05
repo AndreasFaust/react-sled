@@ -57,7 +57,6 @@ const SledProgressTrack = () => {
 
   useEffect(() => {
     if (!autoPlayInterval) return
-
     set({
       config: autoPlayInterval && !pause
         ? { duration: autoPlayInterval }
@@ -65,7 +64,7 @@ const SledProgressTrack = () => {
       x: getX(viewCount, currentIndex, !pause && 1),
       reset: false
     })
-  }, [pause])
+  }, [pause, autoPlayInterval])
 
   return (
     <animated.div
