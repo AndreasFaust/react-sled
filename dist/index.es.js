@@ -1365,22 +1365,19 @@ var reducer = (function (state, action) {
     case 'NEXT':
       return _objectSpread({}, state, {
         currentIndex: getNext(state.currentIndex, state.viewCount, state.rewind),
-        prevIndex: state.currentIndex // pause: action.pause || state.pause
-
+        prevIndex: state.currentIndex
       });
 
     case 'PREV':
       return _objectSpread({}, state, {
         currentIndex: getPrev(state.currentIndex, state.viewCount, state.rewind),
-        prevIndex: state.currentIndex // pause: action.pause || state.pause
-
+        prevIndex: state.currentIndex
       });
 
     case 'GOTO':
       return _objectSpread({}, state, {
         currentIndex: clamp(action.index, 0, state.viewCount - 1),
-        prevIndex: state.currentIndex // pause: action.pause || state.pause
-
+        prevIndex: state.currentIndex
       });
 
     case 'SET_PAUSE':
@@ -1647,7 +1644,7 @@ var SledSprings = function SledSprings(_ref) {
       immediate: true,
       config: config,
       cursor: 'auto',
-      onStart: function onStart(a1, a2, a3) {
+      onStart: function onStart() {
         if (i === children.length - 1) {
           dispatch({
             type: 'SET_PAUSE',
@@ -1655,7 +1652,7 @@ var SledSprings = function SledSprings(_ref) {
           });
         }
       },
-      onRest: function onRest(a1, a2, a3) {
+      onRest: function onRest() {
         if (i === children.length - 1) {
           dispatch({
             type: 'SET_PAUSE',
@@ -2496,7 +2493,7 @@ var SledProgressTrack = function SledProgressTrack() {
       x: getX(viewCount, currentIndex, !pause && 1),
       reset: false
     });
-  }, [pause]);
+  }, [pause, autoPlayInterval]);
   return React.createElement(animated.div, {
     className: "sled-progress-track",
     style: {
