@@ -1,3 +1,9 @@
+#### 1.0.7 (2019-06-06)
+
+##### Bug Fixes
+
+*  Fix gatsby-config. (ef75f8f9)
+
 #### 1.0.6 (2019-06-06)
 
 ##### Documentation Changes
