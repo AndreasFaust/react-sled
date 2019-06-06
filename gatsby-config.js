@@ -4,7 +4,7 @@ module.exports = {
     siteUrl: `https://andreasfaust.github.io/react-sled/`,
     description: `react-sled is a carousel made with react-spring.`
   },
-  pathPrefix: `/gatsby-plugin-transitions`,
+  pathPrefix: `/react-sled`,
   plugins: [
     'gatsby-plugin-layout',
     {
