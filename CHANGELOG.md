@@ -1,3 +1,9 @@
+#### 1.0.8 (2019-09-07)
+
+##### Bug Fixes
+
+*  update dependecies and fix typo in readme (639efd77)
+
 #### 1.0.7 (2019-06-06)
 
 ##### Bug Fixes
