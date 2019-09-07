@@ -126,7 +126,7 @@ You can provide a preset of your choice via `preset` and extend and overwrite it
 
 // Case 2: You want to extend the default preset.
 //  – Because of goto={1} the Control has dot-functionality.
-//  – The default preset 'dot' is explicitly called and extended with addidional style.
+//  – The default preset 'dot' is explicitly called and extended with additional style.
 <Control
   goto={1}
   preset='dot'
