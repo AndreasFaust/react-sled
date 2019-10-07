@@ -1,0 +1,48 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  margin-bottom: 50vh;
+}
+
+@media (min-width: 1025px) {
+  .content {
+    display: flex;
+  }
+}
+
+
+.github {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 16px;
+  right: 20px;
+}
+.github svg {
+  width: 100%;
+}
+
+.github:hover path,
+.github:active path {
+  fill: #cc1d1c;
+}
+
+
+.props {
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 25px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  max-width: 400px;
+  z-index: 100;
+  background: #fff;
+}
+
