@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react'
 import Toggle from 'react-toggle'
 import debounce from 'lodash/debounce'
-import './toggle.css'
-import './index.css'
+import './css/toggle.css'
+import './css/reset.css'
+import './css/index.css'
+import './css/settings.css'
 import SledComponent from './SledComponent'
 import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
@@ -43,10 +45,10 @@ const App = () => {
       <header className='header'>
         <h1>
           <span role='img' aria-label='sled-emoji'>
-          🛷
+            🛷
           </span>
           {' '}
-        react-sled
+          react-sled
         </h1>
 
         <a href='https://github.com/AndreasFaust/react-sled' className='github'>
@@ -71,133 +73,133 @@ const App = () => {
           tension={tension}
           friction={friction}
         />
+      </div>
 
-        <div className='props'>
-          <div className='column'>
-            <label className='props__label'>
-              <input
-                type='text'
-                size={7}
-                className='props__input'
-                defaultValue={width}
-                onChange={(event) => dSetWidth.current(event)}
-              />
-              <h2 className='props__h2'>width</h2>
-            </label>
-            <label className='props__label'>
-              <input
-                type='text'
-                size={7}
-                className='props__input'
-                defaultValue={height}
-                onChange={(event) => dSetHeight.current(event)}
-              />
-              <h2 className='props__h2'>height</h2>
-            </label>
+      <div className='settings'>
+        <div className='column'>
+          <label className='settings__label'>
+            <input
+              type='text'
+              size={7}
+              className='settings__input'
+              defaultValue={width}
+              onChange={(event) => dSetWidth.current(event)}
+            />
+            <h2 className='settings__h2'>width</h2>
+          </label>
+          <label className='settings__label'>
+            <input
+              type='text'
+              size={7}
+              className='settings__input'
+              defaultValue={height}
+              onChange={(event) => dSetHeight.current(event)}
+            />
+            <h2 className='settings__h2'>height</h2>
+          </label>
 
-            <label className='props__label'>
-              <input
-                type='text'
-                size={7}
-                className='props__input'
-                value={goto}
-                onChange={(event) => setGoto(event.target.value)}
-              />
-              <h2 className='props__h2'>goto</h2>
-            </label>
-            <label className='props__label'>
-              <input
-                type='text'
-                size={7}
-                className='props__input'
-                defaultValue={autoPlay}
-                onChange={(event) => dSetAutoPlay.current(event)}
-              />
-              <h2 className='props__h2'>autoPlay</h2>
-            </label>
-            <label className='props__label'>
-              <input
-                type='text'
-                size={7}
-                className='props__input'
-                defaultValue={dragDistance}
-                onChange={(event) => setDragDistance(event.target.value)}
-              />
-              <h2 className='props__h2'>dragDistance</h2>
-            </label>
-          </div>
+          <label className='settings__label'>
+            <input
+              type='text'
+              size={7}
+              className='settings__input'
+              value={goto}
+              onChange={(event) => setGoto(event.target.value)}
+            />
+            <h2 className='settings__h2'>goto</h2>
+          </label>
+          <label className='settings__label'>
+            <input
+              type='text'
+              size={7}
+              className='settings__input'
+              defaultValue={autoPlay}
+              onChange={(event) => dSetAutoPlay.current(event)}
+            />
+            <h2 className='settings__h2'>autoPlay</h2>
+          </label>
+          <label className='settings__label'>
+            <input
+              type='text'
+              size={7}
+              className='settings__input'
+              defaultValue={dragDistance}
+              onChange={(event) => setDragDistance(event.target.value)}
+            />
+            <h2 className='settings__h2'>dragDistance</h2>
+          </label>
+        </div>
 
-          <div className='column'>
-            <label className='props__label'>
-              <Toggle
-                defaultChecked={rewind}
-                icons={false}
-                onChange={() => setRewind(prev => !prev)}
-              />
-              <h2 className='props__h2'>rewind</h2>
-            </label>
+        <div className='column'>
+          <label className='settings__label'>
+            <Toggle
+              defaultChecked={rewind}
+              icons={false}
+              onChange={() => setRewind(prev => !prev)}
+            />
+            <h2 className='settings__h2'>rewind</h2>
+          </label>
 
-            <label className='props__label'>
-              <Toggle
-                defaultChecked={pauseOnMouseOver}
-                icons={false}
-                onChange={() => setPauseOnMouseOver(prev => !prev)}
-              />
-              <h2 className='props__h2'>pauseOnMouseOver</h2>
-            </label>
-            <label className='props__label'>
-              <Toggle
-                defaultChecked={stopOnInteraction}
-                icons={false}
-                onChange={() => setStopOnInteraction(prev => !prev)}
-              />
-              <h2 className='props__h2'>stopOnInteraction</h2>
-            </label>
+          <label className='settings__label'>
+            <Toggle
+              defaultChecked={pauseOnMouseOver}
+              icons={false}
+              onChange={() => setPauseOnMouseOver(prev => !prev)}
+            />
+            <h2 className='settings__h2'>pauseOnMouseOver</h2>
+          </label>
+          <label className='settings__label'>
+            <Toggle
+              defaultChecked={stopOnInteraction}
+              icons={false}
+              onChange={() => setStopOnInteraction(prev => !prev)}
+            />
+            <h2 className='settings__h2'>stopOnInteraction</h2>
+          </label>
 
-            <label className='props__label'>
-              <Toggle
-                defaultChecked={keyboard}
-                icons={false}
-                onChange={() => setKeyboard(prev => !prev)}
-              />
-              <h2 className='props__h2'>keyboard</h2>
-            </label>
-            <label className='props__label'>
-              <Toggle
-                defaultChecked={dragging}
-                icons={false}
-                onChange={() => setDragging(prev => !prev)}
-              />
-              <h2 className='props__h2'>dragging</h2>
-            </label>
+          <label className='settings__label'>
+            <Toggle
+              defaultChecked={keyboard}
+              icons={false}
+              onChange={() => setKeyboard(prev => !prev)}
+            />
+            <h2 className='settings__h2'>keyboard</h2>
+          </label>
+          <label className='settings__label'>
+            <Toggle
+              defaultChecked={dragging}
+              icons={false}
+              onChange={() => setDragging(prev => !prev)}
+            />
+            <h2 className='settings__h2'>dragging</h2>
+          </label>
 
-          </div>
+        </div>
 
-          <div className='column column--2'>
-            <label className='props__label'>
-              <h2 className='props__h2'>config</h2>
-            </label>
-            <label className='props__label props__label--config'>
-              <h3 className='props__h3'>mass: {mass}</h3>
-              <Slider min={1} max={500} defaultValue={1} onChange={(value) => setMass(value)} />
-            </label>
-            <label className='props__label props__label--config'>
-              <h3 className='props__h3'>tension: {tension}</h3>
-              <Slider min={1} max={500} defaultValue={210} onChange={(value) => setTension(value)} />
-            </label>
-            <label className='props__label props__label--config'>
-              <h3 className='props__h3'>friction: {friction}</h3>
-              <Slider min={1} max={500} defaultValue={20} onChange={(value) => setFriction(value)} />
-            </label>
-            <label className='props__label props__label--config'>
-              <h3 className='props__h3'>clamp</h3>
-              <Toggle
-                defaultChecked={clamp}
-                icons={false}
-                onChange={() => setClamp(prev => !prev)}
-              />
-            </label>
-          </div>
+        <div className='column column--2'>
+          <label className='settings__label'>
+            <h2 className='settings__h2'>config</h2>
+          </label>
+          <label className='settings__label settings__label--config'>
+            <h3 className='settings__h3'>mass: {mass}</h3>
+            <Slider min={1} max={500} defaultValue={1} onChange={(value) => setMass(value)} />
+          </label>
+          <label className='settings__label settings__label--config'>
+            <h3 className='settings__h3'>tension: {tension}</h3>
+            <Slider min={1} max={500} defaultValue={210} onChange={(value) => setTension(value)} />
+          </label>
+          <label className='settings__label settings__label--config'>
+            <h3 className='settings__h3'>friction: {friction}</h3>
+            <Slider min={1} max={500} defaultValue={20} onChange={(value) => setFriction(value)} />
+          </label>
+          <label className='settings__label settings__label--config'>
+            <h3 className='settings__h3'>clamp</h3>
+            <Toggle
+              defaultChecked={clamp}
+              icons={false}
+              onChange={() => setClamp(prev => !prev)}
+            />
+          </label>
         </div>
       </div>
     </div>
