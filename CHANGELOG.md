@@ -1,3 +1,13 @@
+### 1.1.0 (2019-10-08)
+
+##### Bug Fixes
+
+*  fix content-z-index in example. (96193878)
+
+##### Other Changes
+
+*  fix callback bug (3b909b98)
+
 #### 1.0.8 (2019-09-07)
 
 ##### Bug Fixes
