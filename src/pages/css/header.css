@@ -1,0 +1,64 @@
+.header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  display: flex;
+  height: 4rem;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  box-shadow: 0 0 1rem hsla(0, 0%, 0%, 0.1);
+}
+
+h1 {
+  /* font-family: plex-serif; */
+  font-size: 1.25rem;
+  letter-spacing: -0.01rem;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  /* text-align: center; */
+}
+
+h1 span {
+  font-size: 2em;
+  margin: 0 0.5rem 0 0;
+}
+
+.github {
+  position: absolute;
+  display: block;
+  width: 2.25rem;
+  height: 2.25rem;
+  right: 0.5rem;
+}
+
+.github svg {
+  width: 100%;
+}
+
+.github:hover path,
+.github:active path {
+  fill: #cc1d1c;
+}
+
+
+@media (min-width: 1025px) {
+  h1 {
+    font-size: 2rem;
+  }
+  h1 span {
+    margin: 0 1rem 0 0;
+  }  
+  .github {
+    position: absolute;
+    display: block;
+    width: 2.75rem;
+    height: 2.75rem;
+    right: 0.5rem;
+  }  
+}

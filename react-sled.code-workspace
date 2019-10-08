@@ -3,5 +3,8 @@
     {
       "path": "."
     }
-  ]
+  ],
+  "settings": {
+    "javascript.autoClosingTags": false
+  }
 }

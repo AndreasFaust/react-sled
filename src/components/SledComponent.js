@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Sled, Views, Progress, Control } from '../sled'
+import { useStateValue } from './state';
 
 import image1 from '../images/image-1.jpg'
 import image2 from '../images/image-2.jpg'
@@ -15,53 +16,47 @@ const pages = [
   image5
 ]
 
-const SledComponent = ({
-  width,
-  height,
-  goto,
-  autoPlay,
-  rewind,
-  pauseOnMouseOver,
-  stopOnInteraction,
-  keyboard,
-  dragging,
-  dragDistance,
-  mass,
-  tension,
-  friction,
-  clamp
-}) => {
+const SledComponent = () => {
   const [show, setShow] = useState(false)
+  const [state] = useStateValue()
+
+  console.log(state)
+
   useEffect(() => {
     setTimeout(() => setShow(true), 3000)
   }, [])
   return show && (
     <div className='sled-wrapper'>
-
       <Sled>
         <Views
           onSledEnd={() => {
             console.log('THIS IS THE END')
           }}
-          width={width}
-          height={height}
-          goto={goto}
-          autoPlay={autoPlay}
-          rewind={rewind}
-          pauseOnMouseOver={pauseOnMouseOver}
-          stopOnInteraction={stopOnInteraction}
-          keyboard={keyboard}
-          dragging={dragging}
-          dragDistance={dragDistance}
+          width={state.width}
+          height={state.height}
+          goto={state.goto}
+          autoPlay={state.autoPlay}
+          rewind={state.rewind}
+          pauseOnMouseOver={state.pauseOnMouseOver}
+          stopOnInteraction={state.stopOnInteraction}
+          keyboard={state.keyboard}
+          dragging={state.dragging}
+          dragDistance={state.dragDistance}
           config={{
-            mass,
-            tension,
-            friction,
-            clamp
+            mass: state.mass,
+            tension: state.tension,
+            friction: state.friction,
+            clamp: state.clamp
+          }}
+          onAnimationStart={() => {
+            console.log('START Animation!')
+          }}
+          onAnimationEnd={() => {
+            console.log('END Animation!')
           }}
           style={`
-    // transition: all 1s;
-  `}
+            // transition: all 1s;
+          `}
         >
           {pages.map((page) => (
             <div

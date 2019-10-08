@@ -1,48 +1,60 @@
+@font-face {
+  font-family: 'ia';
+  src: url('../../fonts/plex-mono.woff') format('woff');
+}
+@font-face {
+  font-family: 'ia-bold';
+  src: url('../../fonts/plex-mono-bold.woff') format('woff');
+}
+
+.bold {
+  font-family: 'ia-bold';
+}
+
 body {
+  font-family: 'ia';
   margin: 0;
   padding: 0;
   overflow-x: hidden;
 }
 
 .wrapper {
-  margin-bottom: 50vh;
 }
 
+.content {
+  position: relative;
+  z-index: -1;
+  margin-top: 8rem;
+  width: 100%;
+}
 @media (min-width: 1025px) {
   .content {
-    display: flex;
+    width: calc(100% - 300px);
+    margin-left: 300px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;  
+    z-index: 10000;
+  }  
+}
+
+.sled-wrapper {
+  flex-grow: 1;
+  padding: 0 1rem;
+}
+@media (min-width: 1025px) {
+  .sled-wrapper {
+    padding: 0 2rem;
   }
 }
 
-
-.github {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  top: 16px;
-  right: 20px;
-}
-.github svg {
+.controls {
+  display: flex;
+  justify-content: center;
   width: 100%;
 }
-
-.github:hover path,
-.github:active path {
-  fill: #cc1d1c;
-}
-
-
-.props {
-  height: 100vh;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 25px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  max-width: 400px;
-  z-index: 100;
-  background: #fff;
+.controls > button {
+  margin: 10px;
 }
 

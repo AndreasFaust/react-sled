@@ -5,7 +5,11 @@ import { useStateContext } from './state'
 import useDragGesture from './hooks/useDragGesture'
 import SledSpring from './spring'
 
-const SledSprings = ({ children }) => {
+const SledSprings = ({
+  onAnimationStart,
+  onAnimationEnd,
+  children
+}) => {
   const [{
     currentIndex,
     prevIndex,
@@ -31,10 +35,20 @@ const SledSprings = ({ children }) => {
     set(i => ({ config }))
   }, [config])
 
-  function setX (immediate) {
+  function setX(immediate) {
     set(i => ({
       x: (i - currentIndex) * width,
-      immediate
+      immediate,
+      onStart: () => {
+        if (!immediate && i === children.length - 1) {
+          if (typeof onAnimationStart === 'function') onAnimationStart()
+        }
+      },
+      onRest: () => {
+        if (!immediate && i === children.length - 1) {
+          if (typeof onAnimationEnd === 'function') onAnimationEnd()
+        }
+      }
     }))
   }
 

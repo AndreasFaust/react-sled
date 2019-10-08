@@ -48,7 +48,9 @@ const SledViews = ({
   stopOnInteraction,
   config,
   rewind,
-  onSledEnd
+  onSledEnd,
+  onAnimationStart,
+  onAnimationEnd,
 }) => {
   const viewsRef = useRef()
   const cssHeight = useCSSHeight(height)
@@ -77,7 +79,10 @@ const SledViews = ({
       cssHeight={cssHeight}
       tabIndex={0}
     >
-      <Springs>
+      <Springs
+        onAnimationStart={onAnimationStart}
+        onAnimationEnd={onAnimationEnd}
+      >
         {children}
       </Springs>
     </StyledDiv>
@@ -99,7 +104,9 @@ SledViews.propTypes = {
   config: PropTypes.object,
   stopOnInteraction: PropTypes.bool,
   pause: PropTypes.bool,
-  onSledEnd: PropTypes.func
+  onSledEnd: PropTypes.func,
+  onAnimationStart: PropTypes.func,
+  onAnimationEnd: PropTypes.func
 }
 
 SledViews.defaultProps = {
@@ -117,7 +124,9 @@ SledViews.defaultProps = {
   stopOnInteraction: false,
   rewind: false,
   pause: false,
-  onSledEnd: null
+  onSledEnd: null,
+  onAnimationStart: null,
+  onAnimationEnd: null
 }
 
 export default SledViews

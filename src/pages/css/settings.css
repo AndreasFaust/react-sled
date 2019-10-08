@@ -1,75 +1,86 @@
-.column {
-  padding: 20px;
-  flex-grow: 1;
-}
-.column--2 {
-  background: #efefef;
-  flex-grow: 5;
-}
-
-h1 {
-  text-align: center;
-}
-
-h1 span {
-  font-size: 2em;
+.settings {
   position: relative;
-  top: 0.25em;
+  width: 300px;
+  z-index: 100;
+  background: #fff;
+  box-shadow: 0 0 1rem hsla(0, 0%, 0%, 0.1);
+  top: 0;
 }
 
-h2 {
-  font-size: 20px;
-}
-.controls {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-.controls > button {
-  margin: 10px;
-}
-
-.sled-wrapper {
-  flex-grow: 1;
-}
 @media (min-width: 1025px) {
-  .sled-wrapper {
-    padding-left: 25px;
+  .settings {
+    top: 4rem;
   }
 }
 
+.bm-item-list {
+  overflow-y: scroll;
+  padding: 1rem 0 8rem 0;
+}
+
+.settings__column--3 {
+  margin-top: 1rem;
+}
+.background {
+}
+
+
+h2 {
+  
+}
+
 .settings__h2 {
-  margin: 0 10px 0 0;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  height: 3.5rem;
+  user-select: none;
+  display: flex;
+  align-items: center;
+}
+.settings__h2:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .settings__h3 {
-  font-family: monospace;
   font-weight: normal;
-  font-size: 16px;
+  font-size: 0.9rem;
   margin: 0 10px 0 0;
   min-width: 150px;
+  flex-grow: 1;
 }
 
 .settings__label {
   display: flex;
   align-items: center;
-  padding: 10px;
-  height: 25px;
-}
-
-.settings__label--config {
+  padding: 0.5rem 1rem 0.5rem 0;
+  margin-left: 2rem;
+  height: 2.5rem;
+  border-top: 1px solid #ebebeb;
 }
 
 .react-toggle {
-  margin-right: 15px;
+  margin-left: 1rem;
 }
 
 .settings__input {
-  font-size: 20px;
-  font-family: serif;
+  font-family: 'ia';
+  font-size: 0.9rem;
   text-align: center;
-  padding: 5px;
-  height: 25px;
-  margin-right: 15px;
-  font-weight: bold;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  background: #efefef;
+  box-shadow: none;
+}
+
+.rc-slider-handle {
+  border-color: red !important;
+}
+.rc-slider-rail {
+  background-color: #ccc !important;
+}
+.rc-slider-track {
+  background-color: red !important;
 }

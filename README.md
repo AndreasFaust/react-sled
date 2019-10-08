@@ -84,6 +84,8 @@ It takes these optional props:
 | **stopOnInteraction** | Boolean          | `false`                                                 | `autoPlay` (if activated) gets stopped, after the user interacted with the sled.                                                                                 |
 | **rewind**           | Boolean          | `false`                                                | Rewind sled, when you want to go beyond the first or last view.                                                                                                  |
 | **onSledEnd**            | function           | `null`                                               | Callback, that gets triggered after last view.                 |
+| **onAnimationStart**            | function           | `null`                                               | Callback, that gets triggered when a sliding-animation starts.                 |
+| **onAnimationEnd**            | function           | `null`                                               | Callback, that gets triggered when a sliding-animation ends.                 |
 
 
 ## Controls
