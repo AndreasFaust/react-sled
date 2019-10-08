@@ -2,6 +2,7 @@ import React, { createContext, useContext, useReducer, useRef, useEffect, useSta
 import styled from 'styled-components';
 import { animated, useSprings, useSpring } from 'react-spring';
 import { useGesture } from 'react-with-gesture';
+import 'util';
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -1618,7 +1619,9 @@ var SledSpring = function SledSpring(_ref) {
 };
 
 var SledSprings = function SledSprings(_ref) {
-  var children = _ref.children;
+  var onAnimationStart = _ref.onAnimationStart,
+      onAnimationEnd = _ref.onAnimationEnd,
+      children = _ref.children;
 
   var _useStateContext = useStateContext(),
       _useStateContext2 = _slicedToArray(_useStateContext, 2),
@@ -1652,11 +1655,38 @@ var SledSprings = function SledSprings(_ref) {
     });
   }, [config]);
 
+  function callback(immediate, animationCallback) {
+    if (!immediate && typeof animationCallback === 'function') {
+      animationCallback();
+    }
+  }
+
   function setX(immediate) {
     set(function (i) {
       return {
         x: (i - currentIndex) * width,
-        immediate: immediate
+        immediate: immediate,
+        onStart: function onStart() {
+          if (i === children.length - 1) {
+            dispatch({
+              type: 'SET_PAUSE',
+              pause: true
+            });
+            callback(immediate, onAnimationStart);
+          }
+        },
+        onRest: function onRest() {
+          if (i === children.length - 1) {
+            dispatch({
+              type: 'SET_PAUSE',
+              pause: false
+            });
+            dispatch({
+              type: 'SET_RESTED_INDEX'
+            });
+            callback(immediate, onAnimationEnd);
+          }
+        }
       };
     });
   }
@@ -2124,7 +2154,9 @@ var SledViews = function SledViews(_ref) {
       stopOnInteraction = _ref.stopOnInteraction,
       config = _ref.config,
       rewind = _ref.rewind,
-      onSledEnd = _ref.onSledEnd;
+      onSledEnd = _ref.onSledEnd,
+      onAnimationStart = _ref.onAnimationStart,
+      onAnimationEnd = _ref.onAnimationEnd;
   var viewsRef = useRef();
   var cssHeight = useCSSHeight(height);
   useDimensions(viewsRef, width, height, cssHeight);
@@ -2147,7 +2179,10 @@ var SledViews = function SledViews(_ref) {
     cssWidth: width,
     cssHeight: cssHeight,
     tabIndex: 0
-  }, React.createElement(SledSprings, null, children));
+  }, React.createElement(SledSprings, {
+    onAnimationStart: onAnimationStart,
+    onAnimationEnd: onAnimationEnd
+  }, children));
 };
 
 SledViews.propTypes = {
@@ -2165,7 +2200,9 @@ SledViews.propTypes = {
   config: propTypes.object,
   stopOnInteraction: propTypes.bool,
   pause: propTypes.bool,
-  onSledEnd: propTypes.func
+  onSledEnd: propTypes.func,
+  onAnimationStart: propTypes.func,
+  onAnimationEnd: propTypes.func
 };
 SledViews.defaultProps = {
   children: null,
@@ -2187,7 +2224,9 @@ SledViews.defaultProps = {
   stopOnInteraction: false,
   rewind: false,
   pause: false,
-  onSledEnd: null
+  onSledEnd: null,
+  onAnimationStart: null,
+  onAnimationEnd: null
 };
 
 var useArrow = function useArrow(_goto) {
