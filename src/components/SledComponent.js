@@ -20,8 +20,6 @@ const SledComponent = () => {
   const [show, setShow] = useState(false)
   const [state] = useStateValue()
 
-  console.log(state)
-
   useEffect(() => {
     setTimeout(() => setShow(true), 3000)
   }, [])

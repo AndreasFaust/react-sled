@@ -5,7 +5,7 @@ import { useStateContext } from '../state'
 
 // const springConfig = { mass: 1, tension: 210, friction: 20, clamp: true }
 
-function getX (viewCount, currentIndex, goPrevNext = 0) {
+function getX(viewCount, currentIndex, goPrevNext = 0) {
   return 100 - ((100 / viewCount) * (currentIndex + goPrevNext))
 }
 

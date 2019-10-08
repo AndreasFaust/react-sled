@@ -4,6 +4,7 @@ import { useSprings } from 'react-spring'
 import { useStateContext } from './state'
 import useDragGesture from './hooks/useDragGesture'
 import SledSpring from './spring'
+import { callbackify } from 'util'
 
 const SledSprings = ({
   onAnimationStart,
@@ -35,18 +36,27 @@ const SledSprings = ({
     set(i => ({ config }))
   }, [config])
 
+  function callback(immediate, animationCallback) {
+    if (!immediate && typeof animationCallback === 'function') {
+      animationCallback()
+    }
+  }
+
   function setX(immediate) {
     set(i => ({
       x: (i - currentIndex) * width,
       immediate,
       onStart: () => {
-        if (!immediate && i === children.length - 1) {
-          if (typeof onAnimationStart === 'function') onAnimationStart()
+        if (i === children.length - 1) {
+          dispatch({ type: 'SET_PAUSE', pause: true })
+          callback(immediate, onAnimationStart)
         }
       },
       onRest: () => {
-        if (!immediate && i === children.length - 1) {
-          if (typeof onAnimationEnd === 'function') onAnimationEnd()
+        if (i === children.length - 1) {
+          dispatch({ type: 'SET_PAUSE', pause: false })
+          dispatch({ type: 'SET_RESTED_INDEX' })
+          callback(immediate, onAnimationEnd)
         }
       }
     }))
