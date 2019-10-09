@@ -2,7 +2,7 @@
 
 **react-sled** is a carousel made with **react-spring**.
 
-[![NPM](https://img.shields.io/npm/v/react-sled.svg)](https://www.npmjs.com/package/react-sled) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-sled.svg)](https://www.npmjs.com/package/react-sled) 
 
 - Super-smooth spring animations (thanks to **react-spring**)
 - Lightweight and performant architecture
