@@ -70,10 +70,10 @@
   "scripts": {
     "dev": "gatsby develop",
     "start": "yarn dev",
-    "build": "rollup -c && gatsby build --prefix-paths",
+    "build": "rollup -c",
     "release:major": "yarn build && changelog -M && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version major && git push origin && git push origin --tags && yarn publish",
     "release:minor": "yarn build && changelog -m && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version minor && git push origin && git push origin --tags && yarn publish",
     "release:patch": "yarn build && changelog -p && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm version patch && git push origin && git push origin --tags && yarn publish",
-    "deploy": "gh-pages -d public"
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
   }
 }

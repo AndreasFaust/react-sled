@@ -1,23 +1,19 @@
 import { useEffect, useState } from 'react'
 
-export default function useWindowSize () {
-  const isClient = typeof window === 'object'
-
-  function getSize () {
+export default function useWindowSize() {
+  function getSize() {
     return {
-      width: isClient ? window.innerWidth : undefined,
-      height: isClient ? window.innerHeight : undefined
+      width: window.innerWidth,
+      height: window.innerHeight
     }
   }
 
-  const [windowSize, setWindowSize] = useState(getSize)
+  const [windowSize, setWindowSize] = useState({ width: undefined, height: undefined })
 
   useEffect(() => {
-    if (!isClient) {
-      return false
-    }
+    setWindowSize(getSize())
 
-    function handleResize () {
+    function handleResize() {
       setWindowSize(getSize())
     }
 
