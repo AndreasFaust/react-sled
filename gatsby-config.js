@@ -1,10 +1,10 @@
 module.exports = {
   siteMetadata: {
-    title: `React Sled`,
-    siteUrl: `https://andreasfaust.github.io/react-sled/`,
-    description: `react-sled is a carousel made with react-spring.`
+    title: 'React Sled',
+    siteUrl: 'https://andreasfaust.github.io/react-sled/',
+    description: 'react-sled is a carousel made with react-spring.'
   },
-  pathPrefix: `/react-sled`,
+  pathPrefix: '/react-sled',
   plugins: [
     'gatsby-plugin-layout',
     {

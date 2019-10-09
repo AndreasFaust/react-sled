@@ -5,16 +5,18 @@ import { StateProvider, useStateContext, reducer } from './state'
 const Sled = (props) => {
   const { children, ...rest } = props
   return (
-    <StateProvider reducer={reducer} initialState={{
-      currentIndex: 0,
-      prevIndex: undefined,
-      pause: false,
-      viewCount: 0,
-      hasFocus: false,
-      width: 0,
-      height: 0,
-      ...rest
-    }}>
+    <StateProvider
+      reducer={reducer}
+      initialState={{
+        currentIndex: 0,
+        prevIndex: undefined,
+        pause: false,
+        viewCount: 0,
+        hasFocus: false,
+        width: 0,
+        height: 0,
+        ...rest
+      }}>
       {children}
     </StateProvider>
   )
