@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Sled, Views, Progress, Control } from '../sled'
-import { useStateValue } from './state';
+import { useStateValue } from './state'
+import SledImage from './SledImage'
 
 import image1 from '../images/image-1.jpg'
 import image2 from '../images/image-2.jpg'
@@ -8,7 +9,7 @@ import image3 from '../images/image-3.jpg'
 import image4 from '../images/image-4.jpg'
 import image5 from '../images/image-5.jpg'
 
-const pages = [
+const images = [
   image1,
   image2,
   image3,
@@ -17,13 +18,9 @@ const pages = [
 ]
 
 const SledComponent = () => {
-  const [show, setShow] = useState(false)
   const [state] = useStateValue()
 
-  useEffect(() => {
-    setTimeout(() => setShow(true), 3000)
-  }, [])
-  return show && (
+  return (
     <div className='sled-wrapper'>
       <Sled>
         <Views
@@ -56,21 +53,8 @@ const SledComponent = () => {
             // transition: all 1s;
           `}
         >
-          {pages.map((page) => (
-            <div
-              key={page}
-              style={{
-                position: 'absolute',
-                background: '#fff',
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                backgroundImage: `url(${page})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}
-            />
+          {images.map((image, index) => (
+            <SledImage image={image} index={index} />
           ))}
         </Views>
         <Progress />
@@ -79,8 +63,8 @@ const SledComponent = () => {
           <Control goto='next' />
         </div>
         <div className='controls'>
-          {pages.map((page, index) => (
-            <Control key={page} goto={index} />
+          {images.map((image, index) => (
+            <Control key={image} goto={index} />
           ))}
         </div>
       </Sled>
