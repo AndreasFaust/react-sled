@@ -1,3 +1,17 @@
+### 1.2.0 (2019-10-10)
+
+##### New Features
+
+*  replace react-with-gesture with react-use-gesture. improve performance. (5a0dd72d)
+*  add lazy-loading to example (4740b3d3)
+
+##### Bug Fixes
+
+*  Fix onSledEnd to be called just once. (cfa9de6b)
+*  example - minor style fixes (88912fd6)
+*  update readme (e1212f05)
+*  change linter from standard to eslint (c4284ead)
+
 #### 1.1.2 (2019-10-09)
 
 ##### Bug Fixes
