@@ -1,4 +1,5 @@
 deploy.sh
+__local-assets/
 
 # Logs
 logs
