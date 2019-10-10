@@ -3651,7 +3651,7 @@ var useConfig = (function (config) {
       type: 'SET_CONFIG',
       config: config
     });
-  }, [config]);
+  }, [config, dispatch]);
 });
 
 var useRewind = (function (rewind) {

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react'
+import React, { useEffect } from 'react'
 import { useSprings } from 'react-spring'
 
 import { useStateContext } from './state'
