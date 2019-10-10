@@ -21,7 +21,7 @@
 Install all dependencies via Yarn or NPM.
 
 ```bash
-yarn add react-sled react-spring react-with-gesture styled-components react react-dom
+yarn add react-sled react-spring react-use-gesture styled-components react react-dom
 ```
 
 ## Usage
