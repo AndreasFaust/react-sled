@@ -22,7 +22,6 @@ const SledImage = ({ image, index }) => {
 
   return (
     <img
-      key={image}
       alt={"This is an interesting thing."}
       src={src}
       onLoad={onLoad}
@@ -36,7 +35,8 @@ const SledImage = ({ image, index }) => {
         objectFit: 'cover',
         objectPosition: 'center',
         transition: 'opacity 1s',
-        opacity: hasLoaded ? 1 : 0
+        opacity: hasLoaded ? 1 : 0,
+        pointerEvents: 'none'
       }}
     />
   )

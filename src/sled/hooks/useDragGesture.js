@@ -1,39 +1,35 @@
 import { useEffect, useRef } from 'react'
-import { useGesture } from 'react-with-gesture'
+import { useDrag } from 'react-use-gesture'
 import { useStateContext } from '../state'
 
 export default (set) => {
-  const [{ dragging, dragDistance, width, pauseOnInteraction, currentIndex }, dispatch] = useStateContext()
+  const [{ dragDistance, width, pause, currentIndex }, dispatch] = useStateContext()
 
-  const indexRef = useRef()
-  const draggingRef = useRef()
-  const widthRef = useRef()
-  const distanceRef = useRef()
-
-  useEffect(() => {
-    indexRef.current = currentIndex
-    draggingRef.current = dragging
-    widthRef.current = width
-    distanceRef.current = dragDistance
-  }, [currentIndex, dragging, dragDistance, width])
-
-  const bind = useGesture(({
+  const bind = useDrag(({
     down,
-    delta: [xDelta],
+    movement: [xDelta],
     direction: [xDir],
     distance,
-    cancel
+    cancel,
+    canceled
   }) => {
-    if (!draggingRef.current) return
-
-    if (down && distance > distanceRef.current) {
+    if (canceled) return
+    if (down && distance > dragDistance) {
       dispatch({ type: xDir > 0 ? 'PREV' : 'NEXT', pause: true })
       cancel()
     }
     set(i => {
-      const x = (i - indexRef.current) * widthRef.current + (down ? xDelta : 0)
-      // const sc = down ? 1 - distance / widthRef.current / 2 : 1
-      return { x, immediate: false, cursor: down ? 'grabbing' : 'grab' }
+      if (i < currentIndex - 1 || i > currentIndex + 1) return { display: 'none' }
+      // const sc = down ? 1 - distance / window.innerWidth / 2 : 1
+      const x = (i - currentIndex) * width + (down ? xDelta : 0)
+      return {
+        x,
+        immediate: false,
+        display: 'block',
+        cursor: down ? 'grabbing' : 'grab',
+        onStart: undefined,
+        onRest: undefined
+      }
     })
     dispatch({ type: 'SET_PAUSE', pause: true })
   })

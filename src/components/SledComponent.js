@@ -30,7 +30,8 @@ const SledComponent = () => {
           width={state.width}
           height={state.height}
           goto={state.goto}
-          autoPlay={state.autoPlay}
+          autoPlay={undefined}
+          // autoPlay={state.autoPlay}
           rewind={state.rewind}
           pauseOnMouseOver={state.pauseOnMouseOver}
           stopOnInteraction={state.stopOnInteraction}
@@ -54,7 +55,11 @@ const SledComponent = () => {
           `}
         >
           {images.map((image, index) => (
-            <SledImage image={image} index={index} />
+            <SledImage
+              key={image}
+              image={image}
+              index={index}
+            />
           ))}
         </Views>
         <Progress />
