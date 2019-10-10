@@ -8,8 +8,6 @@ var React = require('react');
 var React__default = _interopDefault(React);
 var styled = _interopDefault(require('styled-components'));
 var reactSpring = require('react-spring');
-var reactWithGesture = require('react-with-gesture');
-require('util');
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -1492,39 +1490,1650 @@ var useStateContext = function useStateContext() {
   return React.useContext(StateContext);
 };
 
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _extends$1() {
+  _extends$1 = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends$1.apply(this, arguments);
+}
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+function _objectWithoutPropertiesLoose$1(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+var GestureFlag;
+
+(function (GestureFlag) {
+  GestureFlag["OnStart"] = "start";
+  GestureFlag["OnChange"] = "change";
+  GestureFlag["OnEnd"] = "end";
+})(GestureFlag || (GestureFlag = {}));
+
+// blank function
+var noop = function noop() {}; // returns a function that chains all functions given as parameters
+
+var chainFns = function chainFns() {
+  for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) {
+    fns[_key] = arguments[_key];
+  }
+
+  return function () {
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return fns.forEach(function (fn) {
+      return fn.apply(void 0, args);
+    });
+  };
+}; // vector add
+
+var addV = function addV(v1, v2) {
+  return v1.map(function (v, i) {
+    return v + v2[i];
+  });
+}; // vector substract
+
+var subV = function subV(v1, v2) {
+  return v1.map(function (v, i) {
+    return v - v2[i];
+  });
+};
+
+var setListeners = function setListeners(add) {
+  return function (el, listeners, options) {
+    var action = add ? 'addEventListener' : 'removeEventListener';
+    listeners.forEach(function (_ref) {
+      var type = _ref[0],
+          fn = _ref[1];
+      return el[action](type, fn, options);
+    });
+  };
+};
+
+var addListeners =
+/*#__PURE__*/
+setListeners(true);
+var removeListeners =
+/*#__PURE__*/
+setListeners(false);
+/**
+ * Gets modifier keys from event
+ * @param event
+ * @returns modifier keys
+ */
+
+function getModifierKeys(event) {
+  var shiftKey = event.shiftKey,
+      altKey = event.altKey,
+      metaKey = event.metaKey,
+      ctrlKey = event.ctrlKey;
+  return {
+    shiftKey: shiftKey,
+    altKey: altKey,
+    metaKey: metaKey,
+    ctrlKey: ctrlKey
+  };
+}
+/**
+ * Gets scroll event data
+ * @param event
+ * @returns scroll event data
+ */
+
+function getScrollEventData(event) {
+  // If the currentTarget is the window then we return the scrollX/Y position.
+  // If not (ie the currentTarget is a DOM element), then we return scrollLeft/Top
+  var _event$currentTarget = event.currentTarget,
+      scrollX = _event$currentTarget.scrollX,
+      scrollY = _event$currentTarget.scrollY,
+      scrollLeft = _event$currentTarget.scrollLeft,
+      scrollTop = _event$currentTarget.scrollTop;
+  return _extends$1({
+    xy: [scrollX || scrollLeft || 0, scrollY || scrollTop || 0]
+  }, getModifierKeys(event));
+}
+/**
+ * Gets wheel event data
+ * @param event
+ * @returns wheel event data
+ */
+
+function getWheelEventData(event) {
+  var deltaX = event.deltaX,
+      deltaY = event.deltaY; //TODO implement polyfill ?
+  // https://developer.mozilla.org/en-US/docs/Web/Events/wheel#Polyfill
+
+  return _extends$1({
+    xy: [deltaX, deltaY]
+  }, getModifierKeys(event));
+}
+/**
+ * Gets pointer event data
+ * @param event
+ * @returns pointer event data
+ */
+
+function getPointerEventData(event) {
+  var touches = event.touches,
+      buttons = event.buttons,
+      changedTouches = event.changedTouches;
+  var touchEvents = touches && touches.length > 0 ? touches : changedTouches && changedTouches.length > 0 ? changedTouches : null;
+
+  var _ref2 = touchEvents ? touchEvents[0] : event,
+      clientX = _ref2.clientX,
+      clientY = _ref2.clientY;
+
+  var down = touchEvents && touchEvents.length > 0 || buttons > 0;
+  return _extends$1({
+    xy: [clientX, clientY],
+    touches: touchEvents && touchEvents.length || 0,
+    down: down,
+    buttons: buttons
+  }, getModifierKeys(event));
+}
+/**
+ * Gets two touches event data
+ * @param event
+ * @returns two touches event data
+ */
+
+function getTwoTouchesEventData(event) {
+  var touches = event.touches;
+  var dx = touches[1].clientX - touches[0].clientX;
+  var dy = touches[1].clientY - touches[0].clientY;
+  var da = [Math.hypot(dx, dy), -(Math.atan2(dx, dy) * 180) / Math.PI];
+  var origin = [(touches[1].clientX + touches[0].clientX) / 2, (touches[1].clientY + touches[0].clientY) / 2];
+  return _extends$1({
+    da: da,
+    origin: origin,
+    touches: 2,
+    down: touches.length > 0
+  }, getModifierKeys(event));
+}
+/**
+ * Calculates velocity
+ * @param delta the difference between current and previous vectors
+ * @param delta_t the time offset
+ * @param len the length of the delta vector
+ * @returns velocity
+ */
+
+function calculateVelocity(delta, delta_t, len) {
+  len = len || Math.hypot.apply(Math, delta);
+  return delta_t ? len / delta_t : 0;
+}
+/**
+ * Calculates velocities vector
+ * @template T the expected vector type
+ * @param delta the difference between current and previous vectors
+ * @param delta_t the time offset
+ * @returns velocities vector
+ */
+
+function calculateVelocities(delta, delta_t) {
+  return delta_t ? delta.map(function (v) {
+    return v / delta_t;
+  }) : Array(delta.length).fill(0);
+}
+/**
+ * Calculates distance
+ * @param movement the difference between current and initial vectors
+ * @returns distance
+ */
+
+function calculateDistance(movement) {
+  return Math.hypot.apply(Math, movement);
+}
+/**
+ * Calculates direction
+ * @template T the expected vector type
+ * @param delta
+ * @param len
+ * @returns direction
+ */
+
+function calculateDirection(delta, len) {
+  len = len || Math.hypot.apply(Math, delta) || 1;
+  return delta.map(function (v) {
+    return v / len;
+  });
+}
+/**
+ * Calculates all kinematics
+ * @template T the expected vector type
+ * @param movement the difference between current and initial vectors
+ * @param delta the difference between current and previous vectors
+ * @param delta_t the time difference between current and previous timestamps
+ * @returns all kinematics
+ */
+
+function calculateAllKinematics(movement, delta, delta_t) {
+  var len = Math.hypot.apply(Math, delta);
+  return {
+    velocities: calculateVelocities(delta, delta_t),
+    velocity: calculateVelocity(delta, delta_t, len),
+    distance: calculateDistance(movement),
+    direction: calculateDirection(delta, len)
+  };
+}
+/**
+ * Whether the browser supports GestureEvent (ie Safari)
+ * @returns true if the browser supports gesture event
+ */
+
+function gestureEventSupported() {
+  try {
+    // TODO [TS] possibly find GestureEvent definitions?
+    // @ts-ignore: Unreachable code error
+    return 'constructor' in GestureEvent;
+  } catch (e) {
+    return false;
+  }
+}
+
+/**
+ * Some gestures might use the state key from another gesture (i.e. hover)
+ * so mappedKeys is a commodity object to get the state key and handler key
+ * for every gesture
+ */
+
+var mappedKeys = {
+  drag: {
+    stateKey: 'drag',
+    handlerKey: 'onDrag'
+  },
+  pinch: {
+    stateKey: 'pinch',
+    handlerKey: 'onPinch'
+  },
+  move: {
+    stateKey: 'move',
+    handlerKey: 'onMove'
+  },
+  scroll: {
+    stateKey: 'scroll',
+    handlerKey: 'onScroll'
+  },
+  wheel: {
+    stateKey: 'wheel',
+    handlerKey: 'onWheel'
+  },
+  hover: {
+    stateKey: 'move',
+    handlerKey: 'onHover'
+  }
+}; // default config (will extend user config)
+
+var defaultConfig = {
+  domTarget: undefined,
+  event: {
+    passive: true,
+    capture: false
+  },
+  window: typeof window !== 'undefined' ? window : undefined,
+  dragDelay: false,
+  passiveEvents: true,
+  pointerEvents: false,
+  enabled: true,
+  drag: true,
+  pinch: true,
+  scroll: true,
+  wheel: true,
+  hover: true,
+  move: true
+}; // common initial state for all gestures
+
+var initialCommon = {
+  event: undefined,
+  currentTarget: undefined,
+  pointerId: undefined,
+  delta: [0, 0],
+  movement: [0, 0],
+  offset: [0, 0],
+  direction: [0, 0],
+  initial: [0, 0],
+  previous: [0, 0],
+  first: false,
+  last: false,
+  active: false,
+  time: undefined,
+  cancel: noop,
+  canceled: false,
+  memo: undefined,
+  args: undefined
+}; // initial state for coordinates-based gestures
+
+var initialCoordinates = {
+  xy: [0, 0],
+  vxvy: [0, 0],
+  velocity: 0,
+  distance: 0
+}; // xy coordinates
+// initial state for distance and angle-based gestures (pinch)
+
+var initialDistanceAngle = {
+  da: [0, 0],
+  vdva: [0, 0],
+  origin: undefined,
+  turns: 0
+}; // distance and angle
+// initial state object (used by the gesture controller)
+
+var initialState = {
+  shared: {
+    hovering: false,
+    scrolling: false,
+    wheeling: false,
+    dragging: false,
+    moving: false,
+    pinching: false,
+    touches: 0,
+    buttons: 0,
+    down: false,
+    shiftKey: false,
+    altKey: false,
+    metaKey: false,
+    ctrlKey: false
+  },
+  move:
+  /*#__PURE__*/
+  _extends$1({}, initialCommon, {}, initialCoordinates),
+  drag:
+  /*#__PURE__*/
+  _extends$1({}, initialCommon, {}, initialCoordinates),
+  scroll:
+  /*#__PURE__*/
+  _extends$1({}, initialCommon, {}, initialCoordinates),
+  wheel:
+  /*#__PURE__*/
+  _extends$1({}, initialCommon, {}, initialCoordinates),
+  pinch:
+  /*#__PURE__*/
+  _extends$1({}, initialCommon, {}, initialDistanceAngle)
+}; // generic end state for all gestures
+
+var genericEndState = {
+  first: false,
+  last: true,
+  active: false
+};
+
+/**
+ * Recognizer abstract class
+ * @template GestureType whether the Recognizer should deal with coordinates or distance / angle
+ */
+
+var Recognizer =
+/*#__PURE__*/
+function () {
+  /**
+   * Creates an instance of a gesture recognizer.
+   * @param gestureKey drag, move, hover, pinch, etc.
+   * @param controller the controller attached to the gesture
+   * @param [args] the args that should be passed to the gesture handler
+   */
+  function Recognizer(gestureKey, controller, args) {
+    var _this = this;
+
+    if (args === void 0) {
+      args = [];
+    }
+
+    this.gestureKey = gestureKey;
+    this.controller = controller;
+    this.args = args; // convenience method to set a timeout for a given gesture
+
+    this.setTimeout = function (callback, ms) {
+      var _window;
+
+      if (ms === void 0) {
+        ms = 140;
+      }
+
+      for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        args[_key - 2] = arguments[_key];
+      }
+
+      _this.controller.timeouts[_this.stateKey] = (_window = window).setTimeout.apply(_window, [callback, ms].concat(args));
+    }; // convenience method to clear a timeout for a given gesture
+
+
+    this.clearTimeout = function () {
+      clearTimeout(_this.controller.timeouts[_this.stateKey]);
+    }; // convenience method to add window listeners for a given gesture
+
+
+    this.addWindowListeners = function (listeners) {
+      _this.controller.addWindowListeners(_this.stateKey, listeners);
+    }; // convenience method to remove window listeners for a given gesture
+
+
+    this.removeWindowListeners = function () {
+      _this.controller.removeWindowListeners(_this.stateKey);
+    };
+    /**
+     * convenience method to update the controller state for a given gesture
+     * @param sharedState shared partial state object
+     * @param gestureState partial state object for the gesture handled by the recognizer
+     * @param [gestureFlag] if set, will also fire the gesture handler set by the user
+     */
+
+
+    this.updateState = function (sharedState, gestureState) {
+      _this.controller.updateState(sharedState, gestureState, _this.stateKey);
+    };
+
+    this.fireGestureHandler = function (gestureFlag) {
+      _this.controller.fireGestureHandler(_this.gestureKey, gestureFlag);
+    }; // generic onStart function
+
+
+    this.onStart = function (event, payload) {
+      var _this$getPayloadFromE = _this.getPayloadFromEvent(event),
+          values = _this$getPayloadFromE.values,
+          gesturePayload = _this$getPayloadFromE.gesturePayload,
+          sharedPayload = _this$getPayloadFromE.sharedPayload;
+
+      var startState = _this.getStartState(values, event);
+
+      _this.updateState(_extends$1({}, _this.sharedStartState, {}, sharedPayload), _extends$1({}, startState, {}, gesturePayload, {}, payload));
+
+      _this.fireGestureHandler(GestureFlag.OnStart);
+    }; // generic onChange function
+
+
+    this.onChange = function (event, payload) {
+      var _this$getPayloadFromE2 = _this.getPayloadFromEvent(event),
+          values = _this$getPayloadFromE2.values,
+          gesturePayload = _this$getPayloadFromE2.gesturePayload,
+          sharedPayload = _this$getPayloadFromE2.sharedPayload;
+
+      var kinematics = _this.getKinematics(values, event);
+
+      _this.updateState(_extends$1({}, sharedPayload), _extends$1({
+        first: false
+      }, kinematics, {}, gesturePayload, {}, payload));
+
+      _this.fireGestureHandler(GestureFlag.OnChange);
+    }; // generic onEnd function
+
+
+    this.onEnd = function (event, payload) {
+      if (!_this.state.active) return;
+
+      _this.removeWindowListeners();
+
+      _this.updateState(_this.sharedEndState, _extends$1({
+        event: event
+      }, genericEndState, {}, payload));
+
+      _this.fireGestureHandler(GestureFlag.OnEnd);
+    }; // generic cancel function
+
+
+    this.onCancel = function (event) {
+      _this.updateState(null, {
+        canceled: true,
+        cancel: noop
+      });
+
+      requestAnimationFrame(function () {
+        return _this.onEnd(event);
+      });
+    }; // generic gesture handler for timeout-based gestures
+
+
+    this.timeoutHandler = function (event) {
+      if (!_this.enabled) return;
+
+      _this.clearTimeout();
+
+      _this.setTimeout(_this.onEnd);
+
+      if (!_this.state.active) _this.onStart(event);else _this.onChange(event);
+    }; // mapping this.stateKey to the state key the gesture handles
+    // (ie hover actually deals with the move gesture state)
+
+
+    this.stateKey = mappedKeys[gestureKey].stateKey;
+  } // is the gesture enabled
+
+
+  _createClass(Recognizer, [{
+    key: "enabled",
+    get: function get() {
+      return this.controller.config.enabled && this.controller.config[this.gestureKey];
+    } // get the controller state for a given gesture
+
+  }, {
+    key: "state",
+    get: function get() {
+      return this.controller.state[this.stateKey];
+    }
+  }]);
+
+  return Recognizer;
+}();
+
+/**
+ * Abstract class for coordinates-based gesture recongizers
+ */
+
+var CoordinatesRecognizer =
+/*#__PURE__*/
+function (_Recognizer) {
+  _inheritsLoose(CoordinatesRecognizer, _Recognizer);
+
+  function CoordinatesRecognizer() {
+    return _Recognizer.apply(this, arguments) || this;
+  }
+
+  var _proto = CoordinatesRecognizer.prototype;
+
+  _proto.getKinematics = function getKinematics(values, event) {
+    // we get the gesture specific state
+    var _this$state = this.state,
+        xy = _this$state.xy,
+        initial = _this$state.initial,
+        offset = _this$state.offset,
+        _this$state$time = _this$state.time,
+        time = _this$state$time === void 0 ? 0 : _this$state$time; // offset is the difference between the current and initial value vectors
+
+    var movement = subV(values, initial); // delta is the difference between the current and previous value vectors
+
+    var delta = subV(values, xy);
+    var delta_t = event.timeStamp - time;
+
+    var _calculateAllKinemati = calculateAllKinematics(movement, delta, delta_t),
+        velocity = _calculateAllKinemati.velocity,
+        velocities = _calculateAllKinemati.velocities,
+        distance = _calculateAllKinemati.distance,
+        direction = _calculateAllKinemati.direction;
+
+    return {
+      event: event,
+      xy: values,
+      movement: movement,
+      offset: addV(offset, delta),
+      delta: delta,
+      velocity: velocity,
+      vxvy: velocities,
+      distance: distance,
+      direction: direction,
+      previous: xy,
+      time: event.timeStamp
+    };
+  };
+
+  _proto.getStartState = function getStartState(xy, event) {
+    var initial = initialState[this.stateKey];
+    return _extends$1({}, initial, {
+      event: event,
+      xy: xy,
+      initial: xy,
+      previous: xy,
+      offset: this.state.offset,
+      first: true,
+      active: true,
+      time: event.timeStamp,
+      args: this.args
+    });
+  };
+
+  return CoordinatesRecognizer;
+}(Recognizer);
+
+var DEFAULT_DRAG_DELAY = 180;
+
+var DragRecognizer =
+/*#__PURE__*/
+function (_CoordinatesRecognize) {
+  _inheritsLoose(DragRecognizer, _CoordinatesRecognize);
+
+  function DragRecognizer(controller, args) {
+    var _this;
+
+    _this = _CoordinatesRecognize.call(this, 'drag', controller, args) || this;
+    _this.sharedStartState = {
+      dragging: true,
+      down: true
+    };
+    _this.sharedEndState = {
+      dragging: false,
+      down: false,
+      buttons: 0,
+      touches: 0
+    };
+    _this.delayedEvent = false;
+
+    _this.onDragStart = function (event) {
+      if (!_this.enabled) return; // making sure we're not dragging the element when more than one finger press the screen
+
+      var _getPointerEventData = getPointerEventData(event),
+          touches = _getPointerEventData.touches;
+
+      if (touches > 1) return;
+      var currentTarget = event.currentTarget,
+          pointerId = event.pointerId;
+
+      if (_this.controller.config.pointerEvents) {
+        // if pointers events
+        currentTarget && currentTarget.setPointerCapture(pointerId);
+      } else {
+        _this.removeWindowListeners();
+
+        var dragListeners = [['mousemove', _this.onDragChange], ['touchmove', _this.onDragChange], ['mouseup', _this.onDragEnd], ['touchend', _this.onDragEnd], ['touchcancel', _this.onDragEnd]];
+
+        _this.addWindowListeners(dragListeners);
+      }
+
+      if (_this.controller.config.dragDelay) {
+        var dragDelay = typeof _this.controller.config.dragDelay === 'number' ? _this.controller.config.dragDelay : DEFAULT_DRAG_DELAY;
+        if (typeof event.persist === 'function') event.persist();
+        _this.delayedEvent = true;
+
+        _this.setTimeout(function () {
+          return _this.startDrag(event);
+        }, dragDelay);
+      } else {
+        _this.startDrag(event);
+      }
+    };
+
+    _this.startDrag = function (event) {
+      var currentTarget = event.currentTarget,
+          pointerId = event.pointerId;
+
+      _this.onStart(event, {
+        currentTarget: currentTarget,
+        pointerId: pointerId,
+        cancel: function cancel() {
+          return _this.onCancel(event);
+        }
+      });
+
+      _this.delayedEvent = false;
+    };
+
+    _this.onDragChange = function (event) {
+      var _this$state = _this.state,
+          canceled = _this$state.canceled,
+          active = _this$state.active;
+      if (canceled) return;
+
+      if (!active) {
+        if (_this.delayedEvent) {
+          _this.clearTimeout();
+
+          _this.startDrag(event);
+        }
+
+        return;
+      }
+
+      var _getPointerEventData2 = getPointerEventData(event),
+          buttons = _getPointerEventData2.buttons,
+          touches = _getPointerEventData2.touches;
+
+      if (buttons === 0 && touches === 0) {
+        _this.onEnd(event);
+
+        return;
+      }
+
+      _this.onChange(event, {
+        cancel: function cancel() {
+          return _this.onCancel(event);
+        }
+      });
+    };
+
+    _this.onDragEnd = function (event) {
+      _this.clearTimeout();
+
+      _this.delayedEvent = false;
+      if (!_this.state.active) return;
+      var _this$state2 = _this.state,
+          currentTarget = _this$state2.currentTarget,
+          pointerId = _this$state2.pointerId;
+      if (currentTarget && _this.controller.config.pointerEvents) currentTarget.releasePointerCapture(pointerId);
+
+      _this.onEnd(event);
+    };
+
+    return _this;
+  }
+
+  var _proto = DragRecognizer.prototype;
+
+  _proto.getPayloadFromEvent = function getPayloadFromEvent(event) {
+    var _getPointerEventData3 = getPointerEventData(event),
+        xy = _getPointerEventData3.xy,
+        sharedPayload = _objectWithoutPropertiesLoose$1(_getPointerEventData3, ["xy"]);
+
+    return {
+      values: xy,
+      sharedPayload: sharedPayload
+    };
+  };
+
+  _proto.getEventBindings = function getEventBindings() {
+    if (this.controller.config.pointerEvents) {
+      return [['onPointerDown', this.onDragStart], ['onPointerMove', this.onDragChange], [['onPointerUp'], this.onDragEnd]];
+    }
+
+    return [[['onMouseDown', 'onTouchStart'], this.onDragStart]];
+  };
+
+  return DragRecognizer;
+}(CoordinatesRecognizer);
+
+var ScrollRecognizer =
+/*#__PURE__*/
+function (_CoordinatesRecognize) {
+  _inheritsLoose(ScrollRecognizer, _CoordinatesRecognize);
+
+  function ScrollRecognizer(controller, args) {
+    var _this;
+
+    _this = _CoordinatesRecognize.call(this, 'scroll', controller, args) || this;
+    _this.sharedStartState = {
+      scrolling: true
+    };
+    _this.sharedEndState = {
+      scrolling: false,
+      velocity: 0,
+      vxvy: [0, 0]
+    };
+    return _this;
+  }
+
+  var _proto = ScrollRecognizer.prototype;
+
+  _proto.getPayloadFromEvent = function getPayloadFromEvent(event) {
+    var _getScrollEventData = getScrollEventData(event),
+        xy = _getScrollEventData.xy,
+        sharedPayload = _objectWithoutPropertiesLoose$1(_getScrollEventData, ["xy"]);
+
+    return {
+      values: xy,
+      sharedPayload: sharedPayload
+    };
+  };
+
+  _proto.getEventBindings = function getEventBindings() {
+    return [['onScroll', this.timeoutHandler]];
+  };
+
+  return ScrollRecognizer;
+}(CoordinatesRecognizer);
+
+var WheelRecognizer =
+/*#__PURE__*/
+function (_CoordinatesRecognize) {
+  _inheritsLoose(WheelRecognizer, _CoordinatesRecognize);
+
+  function WheelRecognizer(controller, args) {
+    var _this;
+
+    _this = _CoordinatesRecognize.call(this, 'wheel', controller, args) || this;
+    _this.sharedStartState = {
+      wheeling: true
+    };
+    _this.sharedEndState = {
+      wheeling: false,
+      velocity: 0,
+      vxvy: [0, 0]
+    };
+
+    _this.onWheel = function (event) {
+      if (event.ctrlKey && _this.controller.actions.has('onPinch')) return;
+
+      _this.timeoutHandler(event);
+    };
+
+    return _this;
+  }
+
+  var _proto = WheelRecognizer.prototype;
+
+  _proto.getPayloadFromEvent = function getPayloadFromEvent(event) {
+    var prevXY = this.state.xy;
+
+    var _getWheelEventData = getWheelEventData(event),
+        xy = _getWheelEventData.xy,
+        sharedPayload = _objectWithoutPropertiesLoose$1(_getWheelEventData, ["xy"]);
+
+    var values = addV(xy, prevXY);
+    return {
+      values: values,
+      sharedPayload: sharedPayload
+    };
+  };
+
+  _proto.getEventBindings = function getEventBindings() {
+    return [['onWheel', this.onWheel]];
+  };
+
+  return WheelRecognizer;
+}(CoordinatesRecognizer);
+
+var MoveRecognizer =
+/*#__PURE__*/
+function (_CoordinatesRecognize) {
+  _inheritsLoose(MoveRecognizer, _CoordinatesRecognize);
+
+  function MoveRecognizer(controller, args) {
+    var _this;
+
+    _this = _CoordinatesRecognize.call(this, 'move', controller, args) || this;
+    _this.sharedStartState = {
+      moving: true
+    };
+    _this.sharedEndState = {
+      moving: false,
+      velocity: 0,
+      vxvy: [0, 0]
+    };
+    return _this;
+  }
+
+  var _proto = MoveRecognizer.prototype;
+
+  _proto.getPayloadFromEvent = function getPayloadFromEvent(event) {
+    var _getPointerEventData = getPointerEventData(event),
+        xy = _getPointerEventData.xy,
+        sharedPayload = _objectWithoutPropertiesLoose$1(_getPointerEventData, ["xy"]);
+
+    return {
+      values: xy,
+      sharedPayload: sharedPayload
+    };
+  };
+
+  _proto.getEventBindings = function getEventBindings() {
+    if (this.controller.config.pointerEvents) {
+      return [['onPointerMove', this.timeoutHandler]];
+    }
+
+    return [['onMouseMove', this.timeoutHandler]];
+  };
+
+  return MoveRecognizer;
+}(CoordinatesRecognizer);
+
+var HoverRecognizer =
+/*#__PURE__*/
+function (_CoordinatesRecognize) {
+  _inheritsLoose(HoverRecognizer, _CoordinatesRecognize);
+
+  function HoverRecognizer(controller, args) {
+    var _this;
+
+    _this = _CoordinatesRecognize.call(this, 'hover', controller, args) || this;
+
+    _this.onPointerEnter = function (event) {
+      if (!_this.enabled) return;
+
+      var _this$getPayloadFromE = _this.getPayloadFromEvent(event),
+          values = _this$getPayloadFromE.values,
+          sharedPayload = _this$getPayloadFromE.sharedPayload;
+
+      _this.updateState(_extends$1({
+        hovering: true
+      }, sharedPayload), {
+        xy: values,
+        event: event,
+        args: _this.args
+      });
+
+      _this.fireGestureHandler(GestureFlag.OnChange);
+    };
+
+    _this.onPointerLeave = function (event) {
+      if (!_this.enabled) return;
+
+      var _this$getPayloadFromE2 = _this.getPayloadFromEvent(event),
+          values = _this$getPayloadFromE2.values,
+          sharedPayload = _this$getPayloadFromE2.sharedPayload;
+
+      var kinematics = _this.getKinematics(values, event);
+
+      _this.updateState(_extends$1({
+        hovering: false,
+        moving: false
+      }, sharedPayload), _extends$1({}, kinematics, {}, genericEndState, {
+        velocity: 0,
+        vxvy: [0, 0]
+      })); // when the mouse leaves the element, we also fire the move handler
+      // without waiting for move to end with debounce
+
+
+      _this.controller.fireGestureHandler('move', GestureFlag.OnEnd);
+
+      _this.controller.fireGestureHandler('hover', GestureFlag.OnChange);
+    };
+
+    return _this;
+  }
+
+  var _proto = HoverRecognizer.prototype;
+
+  _proto.getPayloadFromEvent = function getPayloadFromEvent(event) {
+    var _getPointerEventData = getPointerEventData(event),
+        xy = _getPointerEventData.xy,
+        sharedPayload = _objectWithoutPropertiesLoose$1(_getPointerEventData, ["xy"]);
+
+    return {
+      values: xy,
+      sharedPayload: sharedPayload
+    };
+  };
+
+  _proto.getEventBindings = function getEventBindings() {
+    if (this.controller.config.pointerEvents) {
+      return [['onPointerEnter', this.onPointerEnter], ['onPointerLeave', this.onEnd]];
+    }
+
+    return [['onMouseEnter', this.onPointerEnter], ['onMouseLeave', this.onPointerLeave]];
+  };
+
+  return HoverRecognizer;
+}(CoordinatesRecognizer);
+
+/**
+ * Abstract class for distance/angle-based gesture recongizers
+ */
+
+var DistanceAngleRecognizer =
+/*#__PURE__*/
+function (_Recognizer) {
+  _inheritsLoose(DistanceAngleRecognizer, _Recognizer);
+
+  function DistanceAngleRecognizer(gestureKey, controller, args) {
+    var _this;
+
+    if (args === void 0) {
+      args = [];
+    }
+
+    _this = _Recognizer.call(this, gestureKey, controller, args) || this;
+    _this.getKinematics = _this.getKinematics.bind(_assertThisInitialized(_this));
+    _this.getStartState = _this.getStartState.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  var _proto = DistanceAngleRecognizer.prototype;
+
+  _proto.getKinematics = function getKinematics(_ref, event) {
+    var d = _ref[0],
+        a = _ref[1];
+    var _this$state = this.state,
+        da = _this$state.da,
+        turns = _this$state.turns,
+        initial = _this$state.initial,
+        offset = _this$state.offset,
+        _this$state$time = _this$state.time,
+        time = _this$state$time === void 0 ? 0 : _this$state$time; // angle might not be defined when ctrl wheel is used for zoom only
+    // in that case we set it to the previous angle value
+
+    a = a !== void 0 ? a : da[1];
+    var delta_d = d - da[0];
+    var delta_a = a - da[1];
+    /**
+     * The angle value might jump from 179deg to -179deg when we actually want to
+     * read 181deg to ensure continuity. To make that happen, we detect when the jump
+     * is supsiciously high (ie > 270deg) and increase the `turns` value
+     */
+
+    var newTurns = Math.abs(delta_a) > 270 ? turns + Math.sign(delta_a) : turns; // we update the angle difference to its corrected value
+
+    delta_a -= 360 * (newTurns - turns);
+    var delta = [delta_d, delta_a];
+    var movement_d = d - initial[0];
+    var movement_a = a - 360 * newTurns - initial[1];
+    var movement = [movement_d, movement_a];
+    var delta_t = event.timeStamp - time;
+    var vdva = calculateVelocities(delta, delta_t);
+    var direction = calculateDirection(delta);
+    return {
+      event: event,
+      da: [d, a],
+      movement: movement,
+      delta: delta,
+      offset: addV(offset, delta),
+      vdva: vdva,
+      direction: direction,
+      turns: newTurns,
+      previous: da,
+      time: event.timeStamp
+    };
+  };
+
+  _proto.getStartState = function getStartState(da, event) {
+    var initial = initialState[this.stateKey];
+    return _extends$1({}, initial, {
+      event: event,
+      da: da,
+      initial: da,
+      previous: da,
+      offset: this.state.offset,
+      origin: this.state.origin,
+      first: true,
+      active: true,
+      time: event.timeStamp,
+      args: this.args
+    });
+  };
+
+  return DistanceAngleRecognizer;
+}(Recognizer);
+
+var PinchRecognizer =
+/*#__PURE__*/
+function (_DistanceAngleRecogni) {
+  _inheritsLoose(PinchRecognizer, _DistanceAngleRecogni);
+
+  function PinchRecognizer(controller, args) {
+    var _this;
+
+    _this = _DistanceAngleRecogni.call(this, 'pinch', controller, args) || this;
+    _this.sharedStartState = {
+      pinching: true
+    };
+    _this.sharedEndState = {
+      pinching: false,
+      down: false,
+      touches: 0
+    };
+
+    _this.onPinchStart = function (event) {
+      if (!_this.enabled || event.touches.length !== 2) return;
+
+      _this.onStart(event, {
+        cancel: function cancel() {
+          return _this.onCancel(event);
+        }
+      });
+    };
+
+    _this.onPinchChange = function (event) {
+      var _this$state = _this.state,
+          canceled = _this$state.canceled,
+          active = _this$state.active,
+          time = _this$state.time;
+      if (canceled || !active || event.touches.length !== 2 || event.timeStamp === time) return;
+
+      _this.onChange(event, {
+        cancel: function cancel() {
+          return _this.onCancel(event);
+        }
+      });
+    };
+
+    return _this;
+  }
+
+  var _proto = PinchRecognizer.prototype;
+
+  _proto.getPayloadFromEvent = function getPayloadFromEvent(event) {
+    var _getTwoTouchesEventDa = getTwoTouchesEventData(event),
+        da = _getTwoTouchesEventDa.da,
+        origin = _getTwoTouchesEventDa.origin,
+        sharedPayload = _objectWithoutPropertiesLoose$1(_getTwoTouchesEventDa, ["da", "origin"]);
+
+    return {
+      values: da,
+      gesturePayload: {
+        origin: origin
+      },
+      sharedPayload: sharedPayload
+    };
+  };
+
+  _proto.getEventBindings = function getEventBindings() {
+    return [['onTouchStart', this.onPinchStart], ['onTouchMove', this.onPinchChange], [['onTouchEnd', 'onTouchCancel'], this.onEnd]];
+  };
+
+  return PinchRecognizer;
+}(DistanceAngleRecognizer);
+
+var PinchWheelRecognizer =
+/*#__PURE__*/
+function (_DistanceAngleRecogni) {
+  _inheritsLoose(PinchWheelRecognizer, _DistanceAngleRecogni);
+
+  function PinchWheelRecognizer(controller, args) {
+    var _this;
+
+    _this = _DistanceAngleRecogni.call(this, 'pinch', controller, args) || this;
+    _this.sharedStartState = {
+      pinching: true
+    };
+    _this.sharedEndState = {
+      pinching: false
+    };
+
+    _this.onWheel = function (event) {
+      if (!event.ctrlKey) return;
+      if (!_this.controller.config.passiveEvents) event.preventDefault();else if (process.env.NODE_ENV === 'development') console.warn('To support zoom on trackpads, try using the `domTarget` option and `config.event.passive` set to `false`. This message will only appear in development mode.');
+
+      _this.timeoutHandler(event);
+    };
+
+    return _this;
+  }
+
+  var _proto = PinchWheelRecognizer.prototype;
+
+  _proto.getPayloadFromEvent = function getPayloadFromEvent(event) {
+    var _getWheelEventData = getWheelEventData(event),
+        _getWheelEventData$xy = _getWheelEventData.xy,
+        delta_d = _getWheelEventData$xy[1],
+        sharedPayload = _objectWithoutPropertiesLoose$1(_getWheelEventData, ["xy"]);
+
+    var _this$state$da = this.state.da,
+        prev_d = _this$state$da[0],
+        prev_a = _this$state$da[1];
+    var d = prev_d - delta_d;
+    var a = prev_a !== void 0 ? prev_a : 0;
+    var origin = [event.clientX, event.clientY];
+    return {
+      values: [d, a],
+      gesturePayload: {
+        origin: origin
+      },
+      sharedPayload: sharedPayload
+    };
+  };
+
+  _proto.getEventBindings = function getEventBindings() {
+    return [['onWheel', this.onWheel]];
+  };
+
+  return PinchWheelRecognizer;
+}(DistanceAngleRecognizer);
+
+var SCALE_FACTOR = 260;
+
+var PinchWebKitGestureRecognizer =
+/*#__PURE__*/
+function (_DistanceAngleRecogni) {
+  _inheritsLoose(PinchWebKitGestureRecognizer, _DistanceAngleRecogni);
+
+  function PinchWebKitGestureRecognizer(controller, args) {
+    var _this;
+
+    _this = _DistanceAngleRecogni.call(this, 'pinch', controller, args) || this;
+    _this.sharedStartState = {
+      pinching: true,
+      down: true,
+      touches: 2
+    };
+    _this.sharedEndState = {
+      pinching: false,
+      down: false,
+      touches: 0
+    };
+
+    _this.onPinchStart = function (event) {
+      if (!_this.enabled) return;
+      event.preventDefault();
+      var origin = _this.origin ? _this.origin : [event.clientX, event.clientY];
+
+      _this.onStart(event, {
+        origin: origin,
+        cancel: function cancel() {
+          return _this.onCancel(event);
+        }
+      });
+    };
+
+    _this.onPinchChange = function (event) {
+      var _this$state = _this.state,
+          canceled = _this$state.canceled,
+          active = _this$state.active;
+      if (canceled || !active) return;
+      event.preventDefault();
+
+      _this.onChange(event, {
+        cancel: function cancel() {
+          return _this.onCancel(event);
+        }
+      });
+    };
+
+    _this.onGestureEnd = function (event) {
+      _this.onEnd(event);
+
+      event.preventDefault();
+      _this.origin = undefined;
+    };
+
+    _this.updateTouchData = function (event) {
+      if (!_this.enabled || event.touches.length !== 2) return;
+
+      var _getTwoTouchesEventDa = getTwoTouchesEventData(event),
+          origin = _getTwoTouchesEventDa.origin;
+
+      _this.origin = origin;
+    };
+
+    return _this;
+  }
+
+  var _proto = PinchWebKitGestureRecognizer.prototype;
+
+  _proto.getPayloadFromEvent = function getPayloadFromEvent(event) {
+    return {
+      values: [event.scale * SCALE_FACTOR, event.rotation]
+    };
+  };
+
+  _proto.getEventBindings = function getEventBindings() {
+    return [['onGestureStart', this.onPinchStart], ['onGestureChange', this.onPinchChange], [['onGestureEnd', 'onTouchCancel'], this.onGestureEnd], [['onTouchStart', 'onTouchMove'], this.updateTouchData]];
+  };
+
+  return PinchWebKitGestureRecognizer;
+}(DistanceAngleRecognizer);
+
+/**
+ * Gesture controller will create gesture recognizers (which handle the gesture logic)
+ * and keep track of the state for all gestures
+ *
+ * @template BinderType the type the bind function should return
+ */
+
+var GestureController = function GestureController(handlers, config) {
+  var _this = this;
+
+  this.handlers = handlers;
+  this.config = config;
+  this.state = initialState; // state for all gestures
+
+  this.timeouts = {}; // keeping track of timeouts for debounced gestures (such as move, scroll, wheel)
+
+  this.bindings = {}; // an object holding the handlers associated to the gestures
+
+  this.domListeners = []; // when config.domTarget is set, we attach events directly to the dom
+
+  this.windowListeners = {}; // keeps track of window listeners added by gestures (drag only at the moment)
+
+  /**
+   * Function run on component unmount
+   * Cleans timeouts and removes dom listeners set by the bind function
+   */
+
+  this.clean = function () {
+    _this.cleanOnBind();
+
+    Object.values(_this.timeouts).forEach(clearTimeout);
+    Object.keys(_this.windowListeners).forEach(function (stateKey) {
+      return _this.removeWindowListeners(stateKey);
+    });
+  };
+  /**
+   * Function run every time the bind function is run (ie on every render)
+   * Reset the binding object and remove dom listeners attached to config.domTarget
+   */
+
+
+  this.cleanOnBind = function () {
+    _this.bindings = {};
+    var domTarget = _this.config.domTarget;
+
+    if (domTarget) {
+      removeListeners(domTarget, _this.domListeners, _this.config.event);
+      _this.domListeners = [];
+    }
+  };
+  /**
+   * Commodity function to let gesture recognizer update global state
+   * @param sharedState shared partial state object
+   * @param gestureState partial gesture specific state object
+   * @param stateKey the state key ('drag', 'move'...)
+   */
+
+
+  this.updateState = function (sharedState, gestureState, stateKey) {
+    var _extends2;
+
+    _this.state = _extends$1({}, _this.state, (_extends2 = {
+      shared: _extends$1({}, _this.state.shared, {}, sharedState)
+    }, _extends2[stateKey] = _extends$1({}, _this.state[stateKey], {}, gestureState), _extends2));
+  }; // fire the gesture handler defined by the user
+
+
+  this.fireGestureHandler = function (gestureKey, gestureFlag) {
+    // gets the state key and handler key from the gesture key
+    // gestureKey: 'hover' -> stateKey: 'move', handlerKey: 'onHover'
+    var _mappedKeys$gestureKe = mappedKeys[gestureKey],
+        stateKey = _mappedKeys$gestureKe.stateKey,
+        handlerKey = _mappedKeys$gestureKe.handlerKey;
+
+    var state = _extends$1({}, _this.state.shared, {}, _this.state[stateKey]);
+
+    if (state.event) state.event.gesture = gestureKey;
+
+    if (gestureFlag === GestureFlag.OnStart) {
+      var handlerStart = handlerKey + "Start";
+      var _handler = _this.handlers[handlerStart];
+      _handler && _handler(state);
+    } // whenever a flag is set, we run the default on[Gesture] function
+    // i.e. GestureFlag.OnStart would trigger both onDragStart and onDrag
+
+
+    var handler = _this.handlers[handlerKey];
+
+    if (handler) {
+      var newMemo = handler(state);
+      _this.state[stateKey].memo = newMemo !== void 0 ? newMemo : _this.state[stateKey].memo;
+    }
+
+    if (gestureFlag === GestureFlag.OnEnd) {
+      var handlerEnd = handlerKey + "End";
+      var _handler2 = _this.handlers[handlerEnd];
+      _handler2 && _handler2(state);
+    }
+  };
+  /**
+   * Commodity function to let recognizers simply add listeners to config.window
+   * @param stateKey
+   * @param listeners
+   */
+
+
+  this.addWindowListeners = function (stateKey, listeners) {
+    if (!_this.config.window) return; // we use this.windowListeners to keep track of the listeners we add
+
+    _this.windowListeners[stateKey] = listeners;
+    addListeners(_this.config.window, listeners, _this.config.event);
+  }; // commodity function to let recognizers simply remove listeners from config.window
+
+
+  this.removeWindowListeners = function (stateKey) {
+    if (!_this.config.window) return;
+    var listeners = _this.windowListeners[stateKey];
+
+    if (listeners) {
+      removeListeners(_this.config.window, listeners, _this.config.event);
+      delete _this.windowListeners[stateKey];
+    }
+  };
+  /**
+   * Adds a recognizer to this.bindings
+   * @param recognizer
+   */
+
+
+  this.addRecognizer = function (recognizer) {
+    recognizer.getEventBindings().map(_this.addEventBindings);
+  };
+  /**
+   * this.bindings is an object which keys match ReactEventHandlerKeys (onMouseMove, onTouchStart...).
+   * Since a recognizer might want to bind a handler function to an event key already used by a previously
+   * added recognizer, we need to make sure that each event key is an array of all the functions mapped for
+   * that key.
+   */
+
+
+  this.addEventBindings = function (_ref) {
+    var eventNames = _ref[0],
+        fn = _ref[1];
+    var eventNamesArray = !Array.isArray(eventNames) ? [eventNames] : eventNames;
+    eventNamesArray.forEach(function (eventName) {
+      _this.bindings[eventName] = _this.bindings[eventName] ? [].concat(_this.bindings[eventName], [fn]) : [fn];
+    });
+  };
+  /**
+   * When config.domTarget is set, this function will add dom listeners to it
+   */
+
+
+  this.addDomTargetListeners = function () {
+    var domTarget = _this.config.domTarget; // we iterate on the entries of this.binding
+    // for each event, we chain the array of functions mapped to it
+    // and push it to this.domListeners
+
+    Object.entries(_this.bindings).forEach(function (_ref2) {
+      var event = _ref2[0],
+          fns = _ref2[1];
+
+      _this.domListeners.push([event.substr(2).toLowerCase(), chainFns.apply(void 0, fns)]);
+    });
+    addListeners(domTarget, _this.domListeners, _this.config.event);
+  };
+  /**
+   * getBindings will return an object that will be bound by users
+   * to the react component they want to interact with
+   */
+
+
+  this.getBindings = function () {
+    var output = {};
+    var captureString = _this.config.event.capture ? 'Capture' : '';
+    Object.entries(_this.bindings).forEach(function (_ref3) {
+      var event = _ref3[0],
+          fns = _ref3[1];
+      var fnsArray = Array.isArray(fns) ? fns : [fns];
+      var key = event + captureString;
+      output[key] = chainFns.apply(void 0, fnsArray);
+    });
+    return output;
+  };
+
+  this.bind = function () {
+    var domTarget = _this.config.domTarget;
+
+    var genuineHandlers = _extends$1({}, _this.handlers); // cleaning before adding
+
+
+    _this.cleanOnBind();
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    if (_this.actions.has('onDrag')) {
+      _this.addRecognizer(new DragRecognizer(_this, args));
+
+      delete genuineHandlers.onDrag;
+      delete genuineHandlers.onDragStart;
+      delete genuineHandlers.onDragEnd;
+    }
+
+    if (_this.actions.has('onScroll')) {
+      _this.addRecognizer(new ScrollRecognizer(_this, args));
+
+      delete genuineHandlers.onScroll;
+      delete genuineHandlers.onScrollStart;
+      delete genuineHandlers.onScrollEnd;
+    }
+
+    if (_this.actions.has('onWheel')) {
+      _this.addRecognizer(new WheelRecognizer(_this, args));
+
+      delete genuineHandlers.onWheel;
+      delete genuineHandlers.onWheelStart;
+      delete genuineHandlers.onWheelEnd;
+    }
+
+    if (_this.actions.has('onMove')) {
+      _this.addRecognizer(new MoveRecognizer(_this, args));
+
+      delete genuineHandlers.onMove;
+      delete genuineHandlers.onMoveStart;
+      delete genuineHandlers.onMoveEnd;
+    }
+
+    if (_this.actions.has('onHover')) {
+      _this.addRecognizer(new HoverRecognizer(_this, args));
+
+      delete genuineHandlers.onHover;
+    }
+
+    if (_this.actions.has('onPinch')) {
+      // since react doesn't have handlers for gesture events we can only use them
+      // domTarget is set (and when the browser supprots them).
+      if (domTarget && gestureEventSupported()) {
+        _this.addRecognizer(new PinchWebKitGestureRecognizer(_this, args));
+      } else {
+        _this.addRecognizer(new PinchRecognizer(_this, args));
+
+        _this.addRecognizer(new PinchWheelRecognizer(_this, args));
+      }
+
+      delete genuineHandlers.onPinch;
+      delete genuineHandlers.onPinchStart;
+      delete genuineHandlers.onPinchEnd;
+    } // we also add event bindings for genuine handlers
+
+
+    Object.entries(genuineHandlers).map(function (_ref4) {
+      var event = _ref4[0],
+          fn = _ref4[1];
+
+      // we're cheating when it comes to event type :(
+      _this.addEventBindings([event, fn]);
+    }); // if config.domTarget is set we add event listeners to it and return the clean function
+
+    if (domTarget) {
+      _this.addDomTargetListeners();
+
+      return _this.clean;
+    } // if not, we return an object that contains gesture handlers mapped to react handler event keys
+
+
+    return _this.getBindings();
+  }; // if handlers contains {onDragStart, onDrag, onDragEnd, onMoveStart, onMove}
+  // actions will include 'onDrag' and 'onMove'
+
+
+  this.actions = new Set(Object.keys(this.handlers).map(function (k) {
+    return k.replace(/End|Start/, '');
+  }));
+};
+
+function useGesture(handlers, config) {
+  // the gesture controller will keep track of all gesture states
+  var gestureController = React__default.useRef();
+
+  if (!gestureController.current) {
+    // we initialize the gesture controller once
+    gestureController.current = new GestureController(handlers, getDerivedConfig(config));
+  }
+
+  React__default.useEffect(function () {
+    // every time handlers or config change, we let the gesture controller compute
+    // them so that the gesture handlers functions are aware of the changes
+    gestureController.current.config = getDerivedConfig(config);
+    gestureController.current.handlers = handlers;
+  }, [handlers, config]); // when the user component unmounts, we run our gesture controller clean function
+
+  React__default.useEffect(function () {
+    return gestureController.current.clean;
+  }, []); // we return the bind function of our controller, which returns an binding object or
+  // a cleaning function depending on whether config.domTarget is set
+
+  return gestureController.current.bind;
+}
+/* SHORTHAND HANDLERS */
+
+var useDrag = function useDrag(handler, config) {
+  return useGesture({
+    onDrag: handler
+  }, config);
+};
+
+function getDerivedConfig(config) {
+  var derivedConfig = _extends$1({}, defaultConfig, {}, config);
+
+  var domTarget = derivedConfig.domTarget;
+  var realDomTarget = domTarget && 'current' in domTarget ? domTarget.current : domTarget;
+  derivedConfig.domTarget = realDomTarget;
+  var passive = derivedConfig.event.passive !== void 0 ? derivedConfig.event.passive : true; // TODO make test to check if passive is correctly passed to config
+  // if there isn't a domtarget or if event.passive is true, then passiveEvents is true
+
+  derivedConfig.passiveEvents = !derivedConfig.domTarget || passive;
+  return derivedConfig;
+}
+
 var useDragGesture = (function (set) {
   var _useStateContext = useStateContext(),
       _useStateContext2 = _slicedToArray(_useStateContext, 2),
       _useStateContext2$ = _useStateContext2[0],
-      dragging = _useStateContext2$.dragging,
       dragDistance = _useStateContext2$.dragDistance,
       width = _useStateContext2$.width,
-      pauseOnInteraction = _useStateContext2$.pauseOnInteraction,
+      pause = _useStateContext2$.pause,
       currentIndex = _useStateContext2$.currentIndex,
       dispatch = _useStateContext2[1];
 
-  var indexRef = React.useRef();
-  var draggingRef = React.useRef();
-  var widthRef = React.useRef();
-  var distanceRef = React.useRef();
-  React.useEffect(function () {
-    indexRef.current = currentIndex;
-    draggingRef.current = dragging;
-    widthRef.current = width;
-    distanceRef.current = dragDistance;
-  }, [currentIndex, dragging, dragDistance, width]);
-  var bind = reactWithGesture.useGesture(function (_ref) {
+  var bind = useDrag(function (_ref) {
     var down = _ref.down,
-        _ref$delta = _slicedToArray(_ref.delta, 1),
-        xDelta = _ref$delta[0],
+        _ref$movement = _slicedToArray(_ref.movement, 1),
+        xDelta = _ref$movement[0],
         _ref$direction = _slicedToArray(_ref.direction, 1),
         xDir = _ref$direction[0],
         distance = _ref.distance,
-        cancel = _ref.cancel;
+        cancel = _ref.cancel,
+        canceled = _ref.canceled;
 
-    if (!draggingRef.current) return;
+    if (canceled) return;
 
-    if (down && distance > distanceRef.current) {
+    if (down && distance > dragDistance) {
       dispatch({
         type: xDir > 0 ? 'PREV' : 'NEXT',
         pause: true
@@ -1533,12 +3142,18 @@ var useDragGesture = (function (set) {
     }
 
     set(function (i) {
-      var x = (i - indexRef.current) * widthRef.current + (down ? xDelta : 0); // const sc = down ? 1 - distance / widthRef.current / 2 : 1
+      if (i < currentIndex - 1 || i > currentIndex + 1) return {
+        display: 'none'
+      }; // const sc = down ? 1 - distance / window.innerWidth / 2 : 1
 
+      var x = (i - currentIndex) * width + (down ? xDelta : 0);
       return {
         x: x,
         immediate: false,
-        cursor: down ? 'grabbing' : 'grab'
+        display: 'block',
+        cursor: down ? 'grabbing' : 'grab',
+        onStart: undefined,
+        onRest: undefined
       };
     });
     dispatch({
@@ -1548,6 +3163,19 @@ var useDragGesture = (function (set) {
   });
   return bind;
 });
+
+function usePrevious(value) {
+  // The ref object is a generic container whose current property is mutable ...
+  // ... and can hold any value, similar to an instance property on a class
+  var ref = React.useRef(); // Store current value in ref
+
+  React.useEffect(function () {
+    ref.current = value;
+  }, [value]); // Only re-run if value changes
+  // Return previous value (happens before update in useEffect above)
+
+  return ref.current;
+}
 
 var useFocus = function useFocus(ref) {
   var _useStateContext = useStateContext(),
@@ -1628,6 +3256,7 @@ var SledSpring = function SledSpring(_ref) {
 var SledSprings = function SledSprings(_ref) {
   var onAnimationStart = _ref.onAnimationStart,
       onAnimationEnd = _ref.onAnimationEnd,
+      onSledEnd = _ref.onSledEnd,
       children = _ref.children;
 
   var _useStateContext = useStateContext(),
@@ -1635,101 +3264,81 @@ var SledSprings = function SledSprings(_ref) {
       _useStateContext2$ = _useStateContext2[0],
       currentIndex = _useStateContext2$.currentIndex,
       prevIndex = _useStateContext2$.prevIndex,
+      viewCount = _useStateContext2$.viewCount,
       width = _useStateContext2$.width,
       height = _useStateContext2$.height,
       dragging = _useStateContext2$.dragging,
       config = _useStateContext2$.config,
       dispatch = _useStateContext2[1];
 
-  React.useEffect(function () {
-    setX(true);
-  }, [width, height]);
-  React.useEffect(function () {
-    set(function () {
-      return {
-        cursor: dragging ? 'grab' : 'auto'
-      };
-    });
-  }, [dragging]);
-  React.useEffect(function () {
-    setX(prevIndex === undefined);
-  }, [currentIndex]);
-  React.useEffect(function () {
-    set(function (i) {
-      return {
-        config: config
-      };
-    });
-  }, [config]);
-
-  function callback(immediate, animationCallback) {
-    if (!immediate && typeof animationCallback === 'function') {
-      animationCallback();
-    }
-  }
-
-  function setX(immediate) {
-    set(function (i) {
-      return {
-        x: (i - currentIndex) * width,
-        immediate: immediate,
-        onStart: function onStart() {
-          if (i === children.length - 1) {
-            dispatch({
-              type: 'SET_PAUSE',
-              pause: true
-            });
-            callback(immediate, onAnimationStart);
-          }
-        },
-        onRest: function onRest() {
-          if (i === children.length - 1) {
-            dispatch({
-              type: 'SET_PAUSE',
-              pause: false
-            });
-            dispatch({
-              type: 'SET_RESTED_INDEX'
-            });
-            callback(immediate, onAnimationEnd);
-          }
-        }
-      };
-    });
-  }
-
   var _useSprings = reactSpring.useSprings(children.length, function (i) {
     return {
-      x: i * width,
+      x: (i - currentIndex) * width,
       sc: 1,
-      immediate: true,
       config: config,
-      cursor: 'auto',
-      onStart: function onStart() {
-        if (i === children.length - 1) {
-          dispatch({
-            type: 'SET_PAUSE',
-            pause: true
-          });
-        }
-      },
-      onRest: function onRest() {
-        if (i === children.length - 1) {
-          dispatch({
-            type: 'SET_PAUSE',
-            pause: false
-          });
-          dispatch({
-            type: 'SET_RESTED_INDEX'
-          });
-        }
-      }
+      cursor: 'auto'
     };
   }),
       _useSprings2 = _slicedToArray(_useSprings, 2),
       props = _useSprings2[0],
       set = _useSprings2[1];
 
+  var prevWidth = usePrevious(width);
+  var prevHeight = usePrevious(height);
+  React.useEffect(function () {
+    set(function () {
+      return {
+        cursor: dragging ? 'grab' : 'auto'
+      };
+    });
+  }, [dragging, set]);
+  React.useEffect(function () {
+    set(function (i) {
+      return {
+        x: (i - currentIndex) * width,
+        immediate: prevIndex === undefined,
+        onStart: function onStart() {
+          if (prevWidth !== width || prevHeight !== height) return; // prevent callbacks, if just the sled is resized
+
+          if (i === currentIndex) {
+            dispatch({
+              type: 'SET_PAUSE',
+              pause: true
+            });
+
+            if (!this.immediate) {
+              if (typeof onAnimationStart === 'function') onAnimationStart();
+            }
+          }
+        },
+        onRest: function onRest() {
+          if (prevWidth !== width || prevHeight !== height) return; // prevent callbacks, if just the sled is resized
+
+          if (i === currentIndex) {
+            dispatch({
+              type: 'SET_PAUSE',
+              pause: false
+            }); // dispatch({ type: 'SET_RESTED_INDEX' })
+
+            if (!this.immediate) {
+              if (typeof onAnimationEnd === 'function') onAnimationEnd();
+            }
+
+            if (currentIndex === viewCount - 1) {
+              if (typeof onSledEnd === 'function') onSledEnd();
+            }
+          }
+        }
+      };
+    });
+  }, [currentIndex, dispatch, height, onAnimationEnd, onAnimationStart, onSledEnd, prevHeight, prevIndex, prevWidth, set, viewCount, width]);
+  React.useEffect(function () {
+    set(function () {
+      return {
+        config: config
+      };
+    });
+  }, [config, set]);
   var bind = useDragGesture(set);
   return props.map(function (prop, index) {
     return React__default.createElement(SledSpring, {
@@ -2091,44 +3700,6 @@ var useStopOnInteraction = function useStopOnInteraction(stopOnInteraction) {
   }, [stopOnInteraction]);
 };
 
-var useSledEnd = (function (onSledEnd) {
-  var _useStateContext = useStateContext(),
-      _useStateContext2 = _slicedToArray(_useStateContext, 1),
-      _useStateContext2$ = _useStateContext2[0],
-      viewCount = _useStateContext2$.viewCount,
-      restedIndex = _useStateContext2$.restedIndex,
-      currentIndex = _useStateContext2$.currentIndex,
-      autoPlayInterval = _useStateContext2$.autoPlayInterval;
-
-  React.useEffect(function () {
-    if (typeof onSledEnd !== 'function') return;
-    var timeoutId;
-
-    if (viewCount && restedIndex + 1 === viewCount) {
-      if (autoPlayInterval) {
-        timeoutId = window.setTimeout(function () {
-          onSledEnd(); // clear timeoutId, that timeout does not get called a second time on cleanup
-
-          timeoutId = undefined;
-        }, autoPlayInterval);
-      } else {
-        onSledEnd();
-      }
-    }
-
-    return function () {
-      if (timeoutId) {
-        // if timeout is running, but sled is moved to next!
-        clearTimeout(timeoutId);
-
-        if (currentIndex === 0) {
-          onSledEnd();
-        }
-      }
-    };
-  }, [restedIndex, currentIndex]);
-});
-
 function _templateObject() {
   var data = _taggedTemplateLiteral(["\n  position: relative;\n  overflow: hidden;\n  width: ", ";\n  ", "\n  ", "\n  user-select: none;\n\n  :focus,\n  .sled-view:focus {\n    outline: none;\n  }\n"]);
 
@@ -2171,7 +3742,6 @@ var SledViews = function SledViews(_ref) {
   useViewCount(children);
   useRewind(rewind);
   usePause(pause);
-  useSledEnd(onSledEnd);
   useStopOnInteraction(stopOnInteraction);
   useMouseOver(pauseOnMouseOver, viewsRef);
   useGoto(_goto);
@@ -2188,7 +3758,8 @@ var SledViews = function SledViews(_ref) {
     tabIndex: 0
   }, React__default.createElement(SledSprings, {
     onAnimationStart: onAnimationStart,
-    onAnimationEnd: onAnimationEnd
+    onAnimationEnd: onAnimationEnd,
+    onSledEnd: onSledEnd
   }, children));
 };
 
