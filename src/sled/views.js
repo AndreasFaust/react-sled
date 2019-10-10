@@ -17,7 +17,6 @@ import useConfig from './hooks/useConfig'
 import useRewind from './hooks/useRewind'
 import usePause from './hooks/usePause'
 import useStopOnInteraction from './hooks/useStopOnInteraction'
-import useSledEnd from './hooks/useSledEnd'
 
 const StyledDiv = styled.div`
   position: relative;
@@ -59,7 +58,6 @@ const SledViews = ({
   useViewCount(children)
   useRewind(rewind)
   usePause(pause)
-  useSledEnd(onSledEnd)
 
   useStopOnInteraction(stopOnInteraction)
   useMouseOver(pauseOnMouseOver, viewsRef)
@@ -82,6 +80,7 @@ const SledViews = ({
       <Springs
         onAnimationStart={onAnimationStart}
         onAnimationEnd={onAnimationEnd}
+        onSledEnd={onSledEnd}
       >
         {children}
       </Springs>

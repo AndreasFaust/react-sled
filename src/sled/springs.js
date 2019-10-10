@@ -9,11 +9,13 @@ import SledSpring from './spring'
 const SledSprings = ({
   onAnimationStart,
   onAnimationEnd,
+  onSledEnd,
   children
 }) => {
   const [{
     currentIndex,
     prevIndex,
+    viewCount,
     width,
     height,
     dragging,
@@ -45,7 +47,7 @@ const SledSprings = ({
         if (i === currentIndex) {
           dispatch({ type: 'SET_PAUSE', pause: true })
           if (!this.immediate) {
-            if (typeof animationCallback === 'function') onAnimationStart()
+            if (typeof onAnimationStart === 'function') onAnimationStart()
           }
         }
       },
@@ -53,14 +55,17 @@ const SledSprings = ({
         if (prevWidth !== width || prevHeight !== height) return // prevent callbacks, if just the sled is resized
         if (i === currentIndex) {
           dispatch({ type: 'SET_PAUSE', pause: false })
-          dispatch({ type: 'SET_RESTED_INDEX' })
+          // dispatch({ type: 'SET_RESTED_INDEX' })
           if (!this.immediate) {
-            if (typeof animationCallback === 'function') onAnimationEnd()
+            if (typeof onAnimationEnd === 'function') onAnimationEnd()
+          }
+          if (currentIndex === viewCount - 1) {
+            if (typeof onSledEnd === 'function') onSledEnd()
           }
         }
       },
     }))
-  }, [currentIndex, dispatch, height, onAnimationEnd, onAnimationStart, prevHeight, prevIndex, prevWidth, set, width])
+  }, [currentIndex, dispatch, height, onAnimationEnd, onAnimationStart, onSledEnd, prevHeight, prevIndex, prevWidth, set, viewCount, width])
 
   useEffect(() => {
     set(() => ({ config }))
