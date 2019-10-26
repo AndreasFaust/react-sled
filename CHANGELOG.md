@@ -1,3 +1,9 @@
+#### 1.2.5 (2019-10-26)
+
+##### Bug Fixes
+
+*  fix dragging. fixes #5 (e4121bdf)
+
 #### 1.2.4 (2019-10-10)
 
 ##### Bug Fixes

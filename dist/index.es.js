@@ -3108,9 +3108,9 @@ var useDragGesture = (function (set) {
   var _useStateContext = useStateContext(),
       _useStateContext2 = _slicedToArray(_useStateContext, 2),
       _useStateContext2$ = _useStateContext2[0],
+      dragging = _useStateContext2$.dragging,
       dragDistance = _useStateContext2$.dragDistance,
       width = _useStateContext2$.width,
-      pause = _useStateContext2$.pause,
       currentIndex = _useStateContext2$.currentIndex,
       dispatch = _useStateContext2[1];
 
@@ -3154,7 +3154,7 @@ var useDragGesture = (function (set) {
       pause: true
     });
   });
-  return bind;
+  return dragging && bind;
 });
 
 function usePrevious(value) {
@@ -3226,7 +3226,7 @@ var SledSpring = function SledSpring(_ref) {
   var springRef = useRef();
   useFocus(springRef);
   var zIndex = useZIndex(index);
-  return React.createElement(animated.div, _extends({}, bind(), {
+  return React.createElement(animated.div, _extends({}, bind ? bind() : {}, {
     className: "sled-view",
     ref: springRef,
     style: {
@@ -3501,13 +3501,13 @@ var useDragging = (function (dragging, dragDistance) {
       type: 'SET_DRAG_DISTANCE',
       dragDistance: distance
     });
-  }, [dragDistance, width]);
+  }, [dispatch, dragDistance, width]);
   useEffect(function () {
     dispatch({
       type: 'SET_DRAGGING',
       dragging: dragging
     });
-  }, [dragging]);
+  }, [dispatch, dragging]);
 });
 
 var useMouseOver = (function (pauseOnMouseOver, ref) {
