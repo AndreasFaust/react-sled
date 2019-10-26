@@ -1,9 +1,8 @@
-import { useEffect, useRef } from 'react'
 import { useDrag } from 'react-use-gesture'
 import { useStateContext } from '../state'
 
 export default (set) => {
-  const [{ dragDistance, width, pause, currentIndex }, dispatch] = useStateContext()
+  const [{ dragging, dragDistance, width, currentIndex }, dispatch] = useStateContext()
 
   const bind = useDrag(({
     down,
@@ -34,5 +33,5 @@ export default (set) => {
     dispatch({ type: 'SET_PAUSE', pause: true })
   })
 
-  return bind
+  return dragging && bind
 }

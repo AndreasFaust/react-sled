@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useStateContext } from '../state'
 
-function getDistanceRef (distance, width) {
+function getDistanceRef(distance, width) {
   switch (typeof distance) {
     case 'number': return distance
     case 'string':
@@ -20,9 +20,9 @@ export default (dragging, dragDistance) => {
   useEffect(() => {
     const distance = getDistanceRef(dragDistance, width)
     dispatch({ type: 'SET_DRAG_DISTANCE', dragDistance: distance })
-  }, [dragDistance, width])
+  }, [dispatch, dragDistance, width])
 
   useEffect(() => {
     dispatch({ type: 'SET_DRAGGING', dragging })
-  }, [dragging])
+  }, [dispatch, dragging])
 }

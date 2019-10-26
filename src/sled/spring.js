@@ -12,7 +12,7 @@ const SledSpring = ({ values: { x, cursor }, index, bind, children }) => {
 
   return (
     <animated.div
-      {...bind()}
+      {...bind ? bind() : {}}
       className='sled-view'
       ref={springRef}
       style={{
