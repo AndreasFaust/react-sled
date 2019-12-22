@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useReducer } from 'react';
-export const StateContext = createContext();
+import React, { createContext, useContext, useReducer } from 'react'
+export const StateContext = createContext()
 
 const initialState = {
   goto: 0,
@@ -34,7 +34,7 @@ const reducer = (state, action) => {
     case 'mass': return { ...state, mass: action.value }
     case 'tension': return { ...state, tension: action.value }
     case 'friction': return { ...state, friction: action.value }
-    default: return state;
+    default: return state
   }
 }
 

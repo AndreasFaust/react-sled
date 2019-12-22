@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useSledStore } from '../sled'
 
+const defaultImage = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+
 const SledImage = ({ image, index }) => {
   const [{ currentIndex }] = useSledStore()
-  const [src, setSrc] = useState('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
+  const [src, setSrc] = useState(defaultImage)
   const [hasLoaded, setHasLoaded] = useState(false)
 
   useEffect(() => {
@@ -17,7 +19,9 @@ const SledImage = ({ image, index }) => {
   }, [currentIndex, image, index, src])
 
   function onLoad() {
-    setHasLoaded(true)
+    if (src !== defaultImage) {
+      setHasLoaded(true)
+    }
   }
 
   return (

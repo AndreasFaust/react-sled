@@ -1,20 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Sled, Views, Progress, Control } from '../sled'
 import { useStateValue } from './state'
 import SledImage from './SledImage'
 
-import image1 from '../images/image-1.jpg'
-import image2 from '../images/image-2.jpg'
-import image3 from '../images/image-3.jpg'
-import image4 from '../images/image-4.jpg'
-import image5 from '../images/image-5.jpg'
-
 const images = [
-  image1,
-  image2,
-  image3,
-  image4,
-  image5
+  'https://source.unsplash.com/ANCoz0JMhiQ/1600x900',
+  'https://source.unsplash.com/uR6dIgDnt38/1600x900',
+  'https://source.unsplash.com/E2_k8SsuS7s/1600x900',
+  'https://source.unsplash.com/mGy1Jjr2e6M/1600x900',
+  'https://source.unsplash.com/TMHL7wald8I/1600x900'
 ]
 
 const SledComponent = () => {
@@ -30,8 +24,7 @@ const SledComponent = () => {
           width={state.width}
           height={state.height}
           goto={state.goto}
-          autoPlay={undefined}
-          // autoPlay={state.autoPlay}
+          autoPlay={state.autoPlay}
           rewind={state.rewind}
           pauseOnMouseOver={state.pauseOnMouseOver}
           stopOnInteraction={state.stopOnInteraction}
