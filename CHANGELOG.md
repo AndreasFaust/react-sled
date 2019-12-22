@@ -1,3 +1,9 @@
+#### 1.2.6 (2019-12-22)
+
+##### Other Changes
+
+*  remove images from repo (5749455d)
+
 #### 1.2.5 (2019-10-26)
 
 ##### Bug Fixes
