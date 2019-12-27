@@ -1,34 +1,53 @@
-import babel from 'rollup-plugin-babel'
-import commonjs from 'rollup-plugin-commonjs'
+import typescript from 'rollup-plugin-typescript2'
+// import sass from 'rollup-plugin-sass'
+import commonjs from '@rollup/plugin-commonjs'
+import resolve from '@rollup/plugin-node-resolve'
 import external from 'rollup-plugin-peer-deps-external'
-import resolve from 'rollup-plugin-node-resolve'
-import url from 'rollup-plugin-url'
 
 import pkg from './package.json'
 
 export default {
-  input: 'src/sled/index.js',
+  input: 'sled/index.tsx',
   output: [
     {
       file: pkg.main,
       format: 'cjs',
+      exports: 'named',
       sourcemap: true
     },
     {
       file: pkg.module,
       format: 'es',
+      exports: 'named',
       sourcemap: true
     }
   ],
   plugins: [
     external(),
-    url({ exclude: ['**/*.svg'] }),
-    babel({
-      exclude: 'node_modules/**'
+    resolve({
+      browser: true
     }),
-    resolve(),
-    commonjs()
-  ],
-  external: ['styled-components'],
-  globals: { 'styled-components': 'styled' }
+    typescript({
+      tsconfig: 'tsconfig.rollup.json',
+      rollupCommonJSResolveHack: true,
+      exclude: '**/__tests__/**',
+      clean: true
+    }),
+    commonjs({
+      include: ['node_modules/**'],
+      exclude: ['**/*.stories.js'],
+      namedExports: {
+        'node_modules/react/react.js': [
+          'Children',
+          'Component',
+          'PropTypes',
+          'createElement'
+        ],
+        'node_modules/react-dom/index.js': ['render']
+      }
+    }),
+    // sass({
+    //   insert: true
+    // })
+  ]
 }
