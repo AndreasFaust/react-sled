@@ -1,6 +1,7 @@
 _local-assets
 /.vscode
 sled.code-workspace
+/dist
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
