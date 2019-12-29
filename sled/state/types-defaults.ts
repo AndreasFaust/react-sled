@@ -1,20 +1,28 @@
 import { SpringConfig } from 'react-spring'
 
+
+
+
 export interface IInternalState {
   currentIndex: number
   prevIndex?: number
   viewCount: number
   hasFocus: boolean
+  dimensions: {
+    width: number
+    height: number
+  }
 }
 
 interface IStateFromProps {
-  width: number | string
-  height: number | string
+  width?: number | string
+  height?: number | string
   goto?: number | string
+  proportion?: boolean | '1:1' | '1:2' | '2:1' | '3:1' | '3:2'
   keyboard: boolean
   dragging: boolean
   dragDistance: number | string
-  autoPlayInterval?: number | string
+  autoPlayInterval?: number
   pauseOnMouseOver: boolean
   rewind: boolean
   config: SpringConfig,
@@ -34,7 +42,7 @@ export interface IViewsProps extends IStateFromProps {
 
 const stateFromProps = {
   width: '100%',
-  height: '50ow',
+  proportion: null,
   goto: null,
   keyboard: true,
   dragging: true,
@@ -62,5 +70,9 @@ export const initialState: IState = {
   pause: false,
   viewCount: 0,
   hasFocus: false,
+  dimensions: {
+    width: 0,
+    height: 0
+  },
   ...stateFromProps
 }

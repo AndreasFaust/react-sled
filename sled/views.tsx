@@ -1,10 +1,9 @@
 import React, { useRef } from 'react'
-// import styled from 'styled-components'
 
 import Springs from './springs'
 import { IViewsProps, ViewsProps } from './state/types-defaults'
 
-import useCSSHeight from './hooks/useCSSHeight'
+import useProportion from './hooks/useProportion'
 import useDimensions from './hooks/useDimensions'
 import useKeyboard from './hooks/useKeyboard'
 import useDragging from './hooks/useDragging'
@@ -17,24 +16,14 @@ import useConfig from './hooks/useConfig'
 import useRewind from './hooks/useRewind'
 import usePause from './hooks/usePause'
 import useStopOnInteraction from './hooks/useStopOnInteraction'
-
-// const StyledDiv = styled.div`
-//   ${props => props.cssHeight}
-//   ${props => props.styles}
-//   user-select: none;
-
-//   :focus,
-//   .sled-view:focus {
-//     outline: none;
-//   }
-// `
-
+import './index.css'
 
 const SledViews: React.FC<IViewsProps> = ({
   children,
   style,
   width,
   height,
+  proportion,
   goto,
   keyboard,
   dragging,
@@ -50,9 +39,9 @@ const SledViews: React.FC<IViewsProps> = ({
   onAnimationEnd
 }) => {
 
-  const viewsRef = useRef()
-  const cssHeight = useCSSHeight(height)
-  useDimensions(viewsRef, width, height, cssHeight)
+  const viewsRef = useRef<HTMLDivElement>()
+  useDimensions(viewsRef, width, height)
+  const proportionClasses = useProportion(proportion)
   useFocus(viewsRef)
   useViewCount(children)
   useRewind(rewind)
@@ -69,13 +58,11 @@ const SledViews: React.FC<IViewsProps> = ({
 
   return (
     <div
-      className='sled'
+      className={`sled ${proportionClasses}`}
       ref={viewsRef}
       style={{
-        position: 'relative',
-        overflow: 'hidden',
         width: width || '100%',
-        height: '400px',
+        height,
         ...style,
       }}
       tabIndex={0}

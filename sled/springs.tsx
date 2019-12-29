@@ -23,8 +23,7 @@ const SledSprings: React.FC<IProps> = ({
     currentIndex,
     prevIndex,
     viewCount,
-    width,
-    height,
+    dimensions: { width, height },
     dragging,
     config
   }, dispatch] = useStateContext()

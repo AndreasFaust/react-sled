@@ -11,7 +11,7 @@ const initialState = {
   dragDistance: '25ow',
   autoPlayInterval: 3000,
   width: '100%',
-  height: '50ow',
+  proportion: '2:1',
   clamp: true,
   mass: 1,
   tension: 170,
@@ -21,6 +21,7 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case 'goto': return { ...state, goto: action.value }
+    case 'proportion': return { ...state, proportion: action.value }
     case 'rewind': return { ...state, rewind: action.value }
     case 'pauseOnMouseOver': return { ...state, pauseOnMouseOver: action.value }
     case 'stopOnInteraction': return { ...state, stopOnInteraction: action.value }

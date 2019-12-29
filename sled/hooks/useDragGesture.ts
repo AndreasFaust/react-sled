@@ -1,8 +1,15 @@
 import { useDrag } from 'react-use-gesture'
 import { useStateContext } from '../state'
+import { SpringsUpdateFn } from 'react-spring'
 
-export default (set) => {
-  const [{ dragging, dragDistance, width, currentIndex }, dispatch] = useStateContext()
+interface ISet {
+  x: number
+  scale: number
+  cursor: string
+}
+
+export default (set: SpringsUpdateFn<ISet>) => {
+  const [{ dragging, dragDistance, dimensions: { width }, currentIndex }, dispatch] = useStateContext()
 
   const bind = useDrag(({
     down,

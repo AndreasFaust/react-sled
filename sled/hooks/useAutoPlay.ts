@@ -1,8 +1,8 @@
 import { useRef, useEffect } from 'react'
 import { useStateContext } from '../state'
 
-const useInterval = (callback, interval) => {
-  const savedCallback = useRef()
+const useInterval = (callback: any, interval: number): void => {
+  const savedCallback = useRef(callback)
 
   useEffect(() => {
     savedCallback.current = callback
@@ -19,16 +19,11 @@ const useInterval = (callback, interval) => {
   }, [interval])
 }
 
-export default (autoPlayIntervalNew) => {
+export default (autoPlayIntervalNew: number): void => {
   const [{ pause, autoPlayInterval }, dispatch] = useStateContext()
 
   useEffect(() => {
-    const newInterval = parseInt(autoPlayIntervalNew, 10)
-    if (!isNaN(newInterval)) {
-      dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: newInterval })
-    } else {
-      dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: null })
-    }
+    dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: autoPlayIntervalNew })
   }, [autoPlayIntervalNew, dispatch])
 
   useInterval(() => {

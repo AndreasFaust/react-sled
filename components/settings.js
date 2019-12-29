@@ -28,13 +28,14 @@ const Settings = () => {
 
   const [width, setWidth] = useDebounce(state.width)
   const [height, setHeight] = useDebounce(state.height)
-  const [autoPlayInterval, setautoPlayInterval] = useDebounce(state.autoPlayInterval)
+  const [proportion, setProportion] = useDebounce(state.proportion)
+  const [_, setautoPlayInterval] = useDebounce(state.autoPlayInterval)
 
   useEffect(() => {
     dispatch({ type: 'width', value: width })
     dispatch({ type: 'height', value: height })
-    dispatch({ type: 'height', value: height })
-  }, [width, height, dispatch])
+    dispatch({ type: 'proportion', value: proportion })
+  }, [width, height, proportion, dispatch])
 
   return (
     <Wrapper>
@@ -63,6 +64,16 @@ const Settings = () => {
             className='settings__input'
             defaultValue={state.height}
             onChange={(event) => setHeight.current(event)}
+          />
+        </label>
+        <label className='settings__label'>
+          <h3 className='settings__h3'>proportion</h3>
+          <input
+            type='text'
+            size={3}
+            className='settings__input'
+            defaultValue={state.proportion}
+            onChange={(event) => setProportion.current(event)}
           />
         </label>
 

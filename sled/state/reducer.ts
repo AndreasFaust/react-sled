@@ -15,7 +15,7 @@ function getPrev(currentIndex: number, viewCount: number, rewind: boolean) {
   return (currentIndex - 1 + viewCount) % viewCount
 }
 
-type ActionType =
+export type ActionType =
   | { type: 'NEXT' }
   | { type: 'PREV' }
   | { type: 'GOTO', index: number }
@@ -23,7 +23,7 @@ type ActionType =
   | { type: 'SET_MOUSEOVER', pauseOnMouseOver: boolean }
   | { type: 'SET_VIEWCOUNT', count: number }
   | { type: 'SET_FOCUS', focus: boolean }
-  | { type: 'SET_DIMENSIONS', width: string, height: string }
+  | { type: 'SET_DIMENSIONS', dimensions: { width: number, height: number } }
   | { type: 'SET_DRAGGING', dragging: boolean }
   | { type: 'SET_DRAG_DISTANCE', dragDistance: string }
   | { type: 'SET_AUTOPLAY', autoPlayInterval?: number }
@@ -32,7 +32,7 @@ type ActionType =
   | { type: 'SET_STOPONINTERACTION', stopOnInteraction: boolean }
 
 
-function reducer(state: IState, action: ActionType): IState {
+export function reducer(state: IState, action: ActionType): IState {
   switch (action.type) {
     case 'NEXT': return {
       ...state,
@@ -67,8 +67,7 @@ function reducer(state: IState, action: ActionType): IState {
     }
     case 'SET_DIMENSIONS': return {
       ...state,
-      width: action.width,
-      height: action.height
+      dimensions: action.dimensions
     }
     case 'SET_DRAGGING': return {
       ...state,
@@ -98,4 +97,3 @@ function reducer(state: IState, action: ActionType): IState {
   }
 }
 
-export default reducer

@@ -15,7 +15,7 @@ function getDistanceRef(distance, width) {
 }
 
 export default (dragging, dragDistance) => {
-  const [{ width }, dispatch] = useStateContext()
+  const [{ dimensions: { width } }, dispatch] = useStateContext()
 
   useEffect(() => {
     const distance = getDistanceRef(dragDistance, width)

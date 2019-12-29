@@ -1,14 +1,13 @@
 import React from 'react'
 import { Sled, Views, Progress, Control } from '../sled'
 import { useStateValue } from './state'
-import SledImage from './SledImage'
 
 const images = [
-  'https://source.unsplash.com/ANCoz0JMhiQ/1600x900',
-  'https://source.unsplash.com/uR6dIgDnt38/1600x900',
-  'https://source.unsplash.com/E2_k8SsuS7s/1600x900',
-  'https://source.unsplash.com/mGy1Jjr2e6M/1600x900',
-  'https://source.unsplash.com/TMHL7wald8I/1600x900'
+  'id-1',
+  'id-2',
+  'id-3',
+  'id-4',
+  'id-5',
 ]
 
 const SledComponent = () => {
@@ -49,11 +48,15 @@ const SledComponent = () => {
           }}
         >
           {images.map((image, index) => (
-            <SledImage
+            <div
               key={image}
-              image={image}
-              index={index}
-            />
+              className="testContent"
+              style={{
+                background: `rgb(1${index}5, 1${index}0, 1${index}0)`
+              }}
+            >
+              {index + 1}
+            </div>
           ))}
         </Views>
         <Progress />
@@ -67,7 +70,7 @@ const SledComponent = () => {
           ))}
         </div>
       </Sled>
-    </div>
+    </div >
   )
 }
 export default SledComponent
