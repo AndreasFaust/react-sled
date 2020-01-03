@@ -23,7 +23,7 @@ const SledComponent = () => {
           width={state.width}
           height={state.height}
           proportion={state.proportion}
-          goto={state.goto}
+          select={state.select}
           autoPlayInterval={state.autoPlayInterval}
           rewind={state.rewind}
           pauseOnMouseOver={state.pauseOnMouseOver}
@@ -61,12 +61,12 @@ const SledComponent = () => {
         </Views>
         <Progress />
         <div className='controls'>
-          <Control goto='prev' />
-          <Control goto='next' />
+          <Control select='prev' />
+          <Control select='next' />
         </div>
         <div className='controls'>
           {images.map((image, index) => (
-            <Control key={image} goto={index} />
+            <Control key={image} select={index} />
           ))}
         </div>
       </Sled>

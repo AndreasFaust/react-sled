@@ -1,7 +1,7 @@
 import { SpringConfig } from 'react-spring'
+import CSS from 'csstype';
 
-
-
+export type TSelect = number | 'next' | 'prev'
 
 export interface IInternalState {
   currentIndex: number
@@ -17,7 +17,7 @@ export interface IInternalState {
 interface IStateFromProps {
   width?: number | string
   height?: number | string
-  goto?: number | string
+  select?: TSelect
   proportion?: boolean | '1:1' | '1:2' | '2:1' | '3:1' | '3:2'
   keyboard: boolean
   dragging: boolean
@@ -37,13 +37,13 @@ export interface IState extends IInternalState, IStateFromProps { }
 
 export interface IViewsProps extends IStateFromProps {
   children?: React.ReactNode
-  style?: object
+  style?: CSS.Properties
 }
 
 const stateFromProps = {
   width: '100%',
   proportion: null,
-  goto: null,
+  select: null,
   keyboard: true,
   dragging: true,
   dragDistance: '25ow',
@@ -59,8 +59,6 @@ const stateFromProps = {
 }
 
 export const ViewsProps: IViewsProps = {
-  children: null,
-  style: null,
   ...stateFromProps
 }
 

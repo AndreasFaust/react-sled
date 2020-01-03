@@ -1,24 +1,25 @@
 import { useEffect } from 'react'
 import { useStateContext } from '../state'
 
-function getDistanceRef(distance, width) {
+function getDistance(distance: string | number, width: number): number {
   switch (typeof distance) {
     case 'number': return distance
     case 'string':
-      if (distance.indexOf('ow') >= 0) {
-        return (width / 100) * +distance.replace('ow', '')
+      if (distance.indexOf('%') >= 0) {
+        return (width / 100) * +distance.replace('%', '')
       }
+      console.warn('Sled-Error: dragDistance must either be a String with unit % or a number.')
       return 40
     default:
       return 40
   }
 }
 
-export default (dragging, dragDistance) => {
+export default (dragging: boolean, dragDistance: string | number) => {
   const [{ dimensions: { width } }, dispatch] = useStateContext()
 
   useEffect(() => {
-    const distance = getDistanceRef(dragDistance, width)
+    const distance = getDistance(dragDistance, width)
     dispatch({ type: 'SET_DRAG_DISTANCE', dragDistance: distance })
   }, [dispatch, dragDistance, width])
 

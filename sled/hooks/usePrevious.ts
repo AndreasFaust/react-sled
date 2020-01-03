@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react'
 
-function usePrevious(value) {
+type TValue = boolean | number | null
+
+function usePrevious(value: TValue) {
   // The ref object is a generic container whose current property is mutable ...
   // ... and can hold any value, similar to an instance property on a class
-  const ref = useRef()
+  const ref = useRef<TValue>()
 
   // Store current value in ref
   useEffect(() => {

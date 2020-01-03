@@ -8,7 +8,7 @@ import useDimensions from './hooks/useDimensions'
 import useKeyboard from './hooks/useKeyboard'
 import useDragging from './hooks/useDragging'
 import useMouseOver from './hooks/useMouseOver'
-import useGoto from './hooks/useGoto'
+import useSelect from './hooks/useSelect'
 import useFocus from './hooks/useFocus'
 import useViewCount from './hooks/useViewCount'
 import useAutoPlay from './hooks/useAutoPlay'
@@ -24,7 +24,7 @@ const SledViews: React.FC<IViewsProps> = ({
   width,
   height,
   proportion,
-  goto,
+  select,
   keyboard,
   dragging,
   dragDistance,
@@ -49,7 +49,7 @@ const SledViews: React.FC<IViewsProps> = ({
 
   useStopOnInteraction(stopOnInteraction)
   useMouseOver(pauseOnMouseOver, viewsRef)
-  useGoto(goto)
+  useSelect(select)
   useKeyboard(keyboard)
   useDragging(dragging, dragDistance)
   useAutoPlay(autoPlayInterval)

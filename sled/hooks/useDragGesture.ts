@@ -4,8 +4,8 @@ import { SpringsUpdateFn } from 'react-spring'
 
 interface ISet {
   x: number
-  scale: number
-  cursor: string
+  // scale: number
+  // dr: string
 }
 
 export default (set: SpringsUpdateFn<ISet>) => {

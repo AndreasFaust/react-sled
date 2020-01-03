@@ -74,7 +74,7 @@ const SledProgressTrack = () => {
         left: 0,
         width: '100%',
         pointerEvents: 'none',
-        transform: props.x.interpolate(x => `translateX(-${x}%)`)
+        transform: props.x.to(x => `translateX(-${x}%)`)
       }}
     />
   )

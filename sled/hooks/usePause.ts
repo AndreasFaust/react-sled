@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { useStateContext } from '../state'
 
-export default (rewind) => {
+export default (pause: boolean) => {
   const [, dispatch] = useStateContext()
   useEffect(() => {
-    dispatch({ type: 'SET_REWIND', rewind })
-  }, [rewind])
+    dispatch({ type: 'SET_PAUSE', pause })
+  }, [pause])
 }

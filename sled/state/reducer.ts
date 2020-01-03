@@ -18,14 +18,14 @@ function getPrev(currentIndex: number, viewCount: number, rewind: boolean) {
 export type ActionType =
   | { type: 'NEXT' }
   | { type: 'PREV' }
-  | { type: 'GOTO', index: number }
+  | { type: 'SELECT', index: number }
   | { type: 'SET_PAUSE', pause: boolean }
   | { type: 'SET_MOUSEOVER', pauseOnMouseOver: boolean }
   | { type: 'SET_VIEWCOUNT', count: number }
   | { type: 'SET_FOCUS', focus: boolean }
   | { type: 'SET_DIMENSIONS', dimensions: { width: number, height: number } }
   | { type: 'SET_DRAGGING', dragging: boolean }
-  | { type: 'SET_DRAG_DISTANCE', dragDistance: string }
+  | { type: 'SET_DRAG_DISTANCE', dragDistance: string | number }
   | { type: 'SET_AUTOPLAY', autoPlayInterval?: number }
   | { type: 'SET_CONFIG', config: SpringConfig }
   | { type: 'SET_REWIND', rewind: boolean }
@@ -44,10 +44,14 @@ export function reducer(state: IState, action: ActionType): IState {
       currentIndex: getPrev(state.currentIndex, state.viewCount, state.rewind),
       prevIndex: state.currentIndex
     }
-    case 'GOTO': return {
+    case 'SELECT': return {
       ...state,
-      currentIndex: clamp(action.index, 0, state.viewCount - 1),
-      prevIndex: state.currentIndex
+      // currentIndex: action.index !== state.currentIndex
+      //   ? clamp(action.index, 0, state.viewCount - 1)
+      //   : state.currentIndex,
+      // prevIndex: action.index !== state.currentIndex
+      //   ? state.currentIndex
+      //   : state.prevIndex
     }
     case 'SET_PAUSE': return {
       ...state,

@@ -78,13 +78,13 @@ const Settings = () => {
         </label>
 
         <label className='settings__label'>
-          <h3 className='settings__h3'>goto</h3>
+          <h3 className='settings__h3'>select</h3>
           <input
             type='text'
             size={7}
             className='settings__input'
-            value={state.goto}
-            onChange={(event) => dispatch({ type: 'goto', value: event.target.value })}
+            value={state.select}
+            onChange={(event) => dispatch({ type: 'select', value: event.target.value })}
           />
         </label>
         <label className='settings__label'>

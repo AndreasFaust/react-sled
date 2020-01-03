@@ -1,0 +1,113 @@
+/* arrow */
+
+.sled-control-arrow-default {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  box-shadow: none;
+  border: none;
+  transition: opacity 0.5s, transform 0.5s;
+  opacity: 0.5;
+}
+
+.sled-control-arrow-default.sled-control-arrow-disabled {
+  pointer-events: none;
+}
+
+.sled-control-arrow-default.sled-control-arrow-prev {
+  transform-origin: right center;
+}
+.sled-control-arrow-default.sled-control-arrow-prev:before {
+  border-left: 3px solid black;
+  transform: rotate(-45deg);
+}
+
+.sled-control-arrow-default.sled-control-arrow-next {
+  transform-origin: left center;
+}
+.sled-control-arrow-default.sled-control-arrow-next:before {
+  border-right: 3px solid black;
+  transform: rotate(45deg);
+}
+
+.sled-control-arrow-default:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.sled-control-arrow-default:before {
+  content: '';
+  display: block;
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  border-top: 3px solid black;
+}
+
+.sled-control-arrow-default:focus {
+  opacity: 1;
+}
+
+.sled-control-arrow-default:hover, 
+.sled-control-arrow-default:active {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.sled-control-arrow-default:disabled {
+  opacity: 0.4;
+}
+
+/* dot */
+
+.sled-control-dot-default {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  box-shadow: none;
+  border: none;
+  transition: opacity 0.5s, transform 0.5s;
+  opacity: 0.4;
+}
+
+.sled-control-dot-default.sled-control-dot-disabled {
+  pointer-events: none;
+}
+
+.sled-control-dot-default:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.sled-control-dot-default:before {
+  content: '';
+  display: block;
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  background: grey;
+  border-radius: 50%;
+}
+
+.sled-control-dot-default:hover, 
+.sled-control-dot-default:focus {
+  transform: scale(1.2);
+}
+
+.sled-control-dot-default:hover, 
+.sled-control-dot-default:focus, 
+.sled-control-dot-default:active {
+  opacity: 0.6;
+}
+
+.sled-control-dot-default:disabled {
+  opacity: 1;
+}

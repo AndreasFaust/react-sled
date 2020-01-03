@@ -2,7 +2,7 @@ import React, { createContext, useContext, useReducer } from 'react'
 export const StateContext = createContext()
 
 const initialState = {
-  goto: 0,
+  select: 0,
   rewind: true,
   pauseOnMouseOver: true,
   stopOnInteraction: true,
@@ -20,7 +20,7 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'goto': return { ...state, goto: action.value }
+    case 'select': return { ...state, select: action.value }
     case 'proportion': return { ...state, proportion: action.value }
     case 'rewind': return { ...state, rewind: action.value }
     case 'pauseOnMouseOver': return { ...state, pauseOnMouseOver: action.value }

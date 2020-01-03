@@ -24,15 +24,15 @@ const SledProgressControls = ({ style }) => {
       {[...Array(viewCount || 1)].map((view, index) => (
         <Control
           key={index}
-          goto={index}
-          style={`
-            flex-grow: 1;
-            height: 100%;
-            cursor: pointer; 
-            background: none;
-            border: none;
-            outline: none;
-          `}
+          select={index}
+          style={{
+            flexGrow: 1,
+            height: '100%',
+            cursor: 'pointer',
+            background: 'none',
+            border: 'none',
+            outline: 'none',
+          }}
         />
       ))}
     </StyledControls>

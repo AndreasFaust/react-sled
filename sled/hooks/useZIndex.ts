@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useStateContext } from '../state'
 
-const useZIndex = (index) => {
+const useZIndex = (index: number) => {
   const [{ viewCount }] = useStateContext()
   const [zIndex, setZIndex] = useState()
 

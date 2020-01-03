@@ -43,12 +43,12 @@ const App = () => {
       </Views>
       <Progress />
       <div className="controls arrows">
-        <Control goto="prev" />
-        <Control goto="next">Go to next view!</Control>
+        <Control select="prev" />
+        <Control select="next">Go to next view!</Control>
       </div>
       <div className="controls dots">
         {images.map((null, index) => (
-          <Control goto={index} />
+          <Control select={index} />
         ))}
       </div>
     </Sled>
@@ -72,7 +72,7 @@ It takes these optional props:
 | :------------------- | :--------------- | :----------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **width**            | String           | `'100%'`                                               | Sets the viewpager’s width. Allowed units: all CSS-units and the custom `ow` ("own width": percent of viewpager’s width)                                         |
 | **height**           | String           | `50ow`                                                 | Sets the viewpager’s height. Allowed units: all CSS-units and the custom `ow` ("own width": percent of viewpager’s width)                                        |
-| **goto**             | Number           | `undefined`                                            | Got to view.                                                                                                                                                     |
+| **select**             | Number           | `undefined`                                            | Got to view.                                                                                                                                                     |
 | **style**            | String           | `''`                                                   | Add styles to the view-wrapper (via styled-components template-string).                                                                                          |
 | **keyboard**         | Boolean          | `true`                                                 | Set Keyboard controls.                                                                                                                                           |
 | **dragging**         | Boolean          | `true`                                                 | Set Mouse- and Touch-Dragging.                                                                                                                                   |
@@ -93,7 +93,7 @@ It takes these optional props:
 There is only one control-component for **Arrows** and **Dots**.
 
 - It is by default an empty `button`-tag, that has a default **styling-preset**.
-- There's the prop `goto`, that decides what the Control-element is: A string called `next` or `prev` will activate Arrow-functionality, a number Dot-functionality.
+- There's the prop `select`, that decides what the Control-element is: A string called `next` or `prev` will activate Arrow-functionality, a number Dot-functionality.
 
 **Available Presets:**
 
@@ -108,8 +108,8 @@ You can provide a preset of your choice via `preset` and extend and overwrite it
 
 | **Name**   | **Type**         | **Default**               | **Description**                                                                                                                                               |
 | :--------- | :--------------- | :------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **goto**   | String or Number | `'next'`                  | Defines, if the `Control` has arrow- or dot-functionality. A number is the index of the target-view. A string can be `'prev'` or `'next'`                     |
-| **preset** | String           | Default depends on `goto` | If you provide a preset, the default preset gets replaced.                                                                                                    |
+| **select**   | String or Number | `'next'`                  | Defines, if the `Control` has arrow- or dot-functionality. A number is the index of the target-view. A string can be `'prev'` or `'next'`                     |
+| **preset** | String           | Default depends on `select` | If you provide a preset, the default preset gets replaced.                                                                                                    |
 | **style**  | String           | `''`                      | If you provide a `style` and no `preset`, the default `preset` gets completely replaced. If you provide a `style` and a `preset`, the `preset` gets extended. |
 
 **Control Examples:**
@@ -118,7 +118,7 @@ You can provide a preset of your choice via `preset` and extend and overwrite it
 // Case 1: You want to style your arrow from scratch.
 //  – A style-prop overwrites the default preset.
 <Control
-  goto="next"
+  select="next"
   style={`
     background: red;
   `}
@@ -127,10 +127,10 @@ You can provide a preset of your choice via `preset` and extend and overwrite it
 </Control>
 
 // Case 2: You want to extend the default preset.
-//  – Because of goto={1} the Control has dot-functionality.
+//  – Because of select={1} the Control has dot-functionality.
 //  – The default preset 'dot' is explicitly called and extended with additional style.
 <Control
-  goto={1}
+  select={1}
   preset='dot'
   style={`
     background: red;

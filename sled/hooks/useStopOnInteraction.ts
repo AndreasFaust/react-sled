@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useStateContext } from '../state'
 
-const useStopOnInteraction = (stopOnInteraction) => {
+const useStopOnInteraction = (stopOnInteraction: boolean) => {
   const [, dispatch] = useStateContext()
 
   useEffect(() => {

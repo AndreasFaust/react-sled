@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useStateContext } from '../state'
 
-export default (pauseOnMouseOver, ref) => {
+export default (pauseOnMouseOver: boolean, ref: React.MutableRefObject<HTMLDivElement>) => {
   const [{ autoPlayInterval }, dispatch] = useStateContext()
   useEffect(() => {
     dispatch({ type: 'SET_PAUSE', pause: false })

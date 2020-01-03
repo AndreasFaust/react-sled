@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useStateContext } from '../../state'
+import { TSelect } from "../../state/types-defaults"
 
-const useArrow = (goto) => {
+const useArrow = (select: TSelect) => {
   const [{ rewind, currentIndex, viewCount }] = useStateContext()
-  const [disabled, setDisabled] = useState()
+  const [disabled, setDisabled] = useState<boolean>(false)
   useEffect(() => {
     if (rewind) {
       setDisabled(false)
       return
     }
-    if (goto === 'next' && currentIndex === viewCount - 1) {
+    if (select === 'next' && currentIndex === viewCount - 1) {
       setDisabled(true)
-    } else if (goto === 'prev' && currentIndex === 0) {
+    } else if (select === 'prev' && currentIndex === 0) {
       setDisabled(true)
     } else {
       setDisabled(false)
@@ -20,11 +21,11 @@ const useArrow = (goto) => {
   return disabled
 }
 
-const useDot = (goto) => {
+const useDot = (select: TSelect) => {
   const [{ currentIndex }] = useStateContext()
-  const [disabled, setDisabled] = useState()
+  const [disabled, setDisabled] = useState<boolean>(false)
   useEffect(() => {
-    if (goto === currentIndex) {
+    if (select === currentIndex) {
       setDisabled(true)
     } else {
       setDisabled(false)
@@ -33,11 +34,11 @@ const useDot = (goto) => {
   return disabled
 }
 
-export default (goto) => {
-  const arrow = useArrow(goto)
-  const dot = useDot(goto)
+export default (select: TSelect) => {
+  const arrow = useArrow(select)
+  const dot = useDot(select)
 
-  switch (typeof goto) {
+  switch (typeof select) {
     case 'number':
       return dot
     case 'string':

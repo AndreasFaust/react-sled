@@ -33,23 +33,24 @@ const SledSprings: React.FC<IProps> = ({
 
   const [props, set] = useSprings(React.Children.count(children), i => ({
     x: (i - currentIndex) * width,
-    scale: 1,
+    // scale: 1,
     config,
-    cursor: 'auto',
+    // cursor: 'auto',
     immediate: true
   }))
 
   useEffect(() => {
     set(() => ({
       config,
-      cursor: dragging ? 'grab' : 'auto'
+      // cursor: dragging ? 'grab' : 'auto'
     }))
-  }, [config, dragging, set])
+  }, [config, dragging])
 
   useEffect(() => {
+    console.log(currentIndex)
     set((i) => ({
       x: (i - currentIndex) * width,
-      immediate: prevIndex === undefined,
+      immediate: false,
       onStart() {
         if (prevWidth !== width || prevHeight !== height) return // prevent callbacks, if just the sled is resized
         if (i === currentIndex) {
@@ -68,7 +69,7 @@ const SledSprings: React.FC<IProps> = ({
         }
       },
     }))
-  }, [currentIndex, dispatch, height, onAnimationEnd, onAnimationStart, onSledEnd, prevHeight, prevIndex, prevWidth, set, viewCount, width])
+  }, [currentIndex])
 
   const bind = useDragGesture(set)
 

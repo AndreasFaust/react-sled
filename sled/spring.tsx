@@ -7,7 +7,7 @@ import useZIndex from './hooks/useZIndex'
 interface IProps {
   values: {
     x: SpringValue
-    cursor: SpringValue
+    // cursor: SpringValue
   }
   index: number
   bind: any
@@ -15,7 +15,7 @@ interface IProps {
 }
 
 const SledSpring: React.FC<IProps> = ({
-  values: { x, cursor }, index, bind, children
+  values: { x }, index, bind, children
 }) => {
   const springRef = useRef()
 
@@ -37,7 +37,7 @@ const SledSpring: React.FC<IProps> = ({
         height: '100%',
         willChange: 'transform',
         overflow: 'hidden',
-        cursor
+        // cursor
       }}
     >
       {children}
