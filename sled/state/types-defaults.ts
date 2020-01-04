@@ -1,5 +1,5 @@
 import { SpringConfig } from 'react-spring'
-import CSS from 'csstype';
+import CSS from 'csstype'
 
 export type TSelect = number | 'next' | 'prev'
 

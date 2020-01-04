@@ -46,12 +46,8 @@ export function reducer(state: IState, action: ActionType): IState {
     }
     case 'SELECT': return {
       ...state,
-      // currentIndex: action.index !== state.currentIndex
-      //   ? clamp(action.index, 0, state.viewCount - 1)
-      //   : state.currentIndex,
-      // prevIndex: action.index !== state.currentIndex
-      //   ? state.currentIndex
-      //   : state.prevIndex
+      currentIndex: clamp(action.index, 0, state.viewCount - 1),
+      prevIndex: state.currentIndex
     }
     case 'SET_PAUSE': return {
       ...state,

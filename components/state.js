@@ -2,13 +2,13 @@ import React, { createContext, useContext, useReducer } from 'react'
 export const StateContext = createContext()
 
 const initialState = {
-  select: 0,
+  select: 3,
   rewind: true,
   pauseOnMouseOver: true,
   stopOnInteraction: true,
   keyboard: true,
   dragging: true,
-  dragDistance: '25ow',
+  dragDistance: 100,
   autoPlayInterval: 3000,
   width: '100%',
   proportion: '2:1',

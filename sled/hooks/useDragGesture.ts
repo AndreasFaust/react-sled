@@ -9,7 +9,7 @@ interface ISet {
 }
 
 export default (set: SpringsUpdateFn<ISet>) => {
-  const [{ dragging, dragDistance, dimensions: { width }, currentIndex }, dispatch] = useStateContext()
+  const [{ dragging, dragDistance, dimensions: { width }, currentIndex, viewCount }, dispatch] = useStateContext()
 
   const bind = useDrag(({
     down,
@@ -24,14 +24,13 @@ export default (set: SpringsUpdateFn<ISet>) => {
       dispatch({ type: xDir > 0 ? 'PREV' : 'NEXT', pause: true })
       cancel()
     }
-    set(i => {
-      if (i < currentIndex - 1 || i > currentIndex + 1) return { display: 'none' }
+    set(() => {
+      // if (i < currentIndex - 1 || i > currentIndex + 1) return { display: 'none' }
       // const sc = down ? 1 - distance / window.innerWidth / 2 : 1
-      const x = (i - currentIndex) * width + (down ? xDelta : 0)
+      const x = (-currentIndex * width) + (down ? xDelta : 0)
       return {
         x,
         immediate: false,
-        display: 'block',
         cursor: down ? 'grabbing' : 'grab',
         onStart: undefined,
         onRest: undefined

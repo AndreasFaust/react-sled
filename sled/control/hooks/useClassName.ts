@@ -1,21 +1,49 @@
 import { TSelect } from "../../state/types-defaults"
+import { useStateContext } from '../../state'
+import { useDirectionDisabled } from './useDirectionDisabled'
 
-function isDisabled(type: 'dot' | 'arrow', disabled: boolean): string {
-  return disabled ? `sled-control-disabled sled-${type}-disabled` : ''
-}
-function getClassName(type: 'dot' | 'arrow', className: string, disabled: boolean): string {
-  return `sled-control-${type} sled-control-${className} sled-control-${type}-${className} ${isDisabled(type, disabled)}`
-}
-function getDirection(select: TSelect) {
-  return `sled-control-arrow-${select}`
+function getClassName(type: 'index' | 'direction', select: TSelect, className: string): string {
+  const [{ currentIndex }] = useStateContext()
+
+  const directionDisabled = useDirectionDisabled(select)
+
+  const baseClass: string = 'sled-control'
+  const typeClass: string = `${baseClass}-${type}`
+  const typeClassSpecific: string = `${typeClass}-${select}`
+  const distinctClass: string = `${baseClass}-${className || type + '-default'}`
+  const disabledClasses: string[] = [
+    `${baseClass}-disabled`,
+    `${typeClass}-disabled`,
+    `${distinctClass}-disabled`
+  ]
+  const activeClasses: string[] = [
+    `${baseClass}-active`,
+    `${typeClass}-active`,
+    `${distinctClass}-active`
+  ]
+
+  const classes: string[] = [
+    baseClass,
+    typeClass,
+    typeClassSpecific,
+    distinctClass,
+  ]
+
+  if (select === currentIndex) { // isActive
+    return [...classes, ...activeClasses].join(' ')
+  }
+  if (directionDisabled) {
+    return [...classes, ...disabledClasses].join(' ')
+  }
+  return classes.join(' ')
 }
 
-export default (select: TSelect, className: string, disabled: boolean) => {
+export default (select: TSelect, className: string) => {
   switch (typeof select) {
     case 'number':
-      return `sled-control ${getClassName('dot', className, disabled)}`
+      return getClassName('index', select, className)
     case 'string':
     default:
-      return `sled-control ${getClassName('arrow', className, disabled)} ${getDirection(select)}`
+      return getClassName('direction', select, className)
   }
 }

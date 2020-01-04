@@ -1,6 +1,6 @@
-/* arrow */
+/* direction */
 
-.sled-control-arrow-default {
+.sled-control-direction-default {
   cursor: pointer;
   width: 40px;
   height: 40px;
@@ -14,32 +14,32 @@
   opacity: 0.5;
 }
 
-.sled-control-arrow-default.sled-control-arrow-disabled {
+.sled-control-direction-default.sled-control-direction-disabled {
   pointer-events: none;
 }
 
-.sled-control-arrow-default.sled-control-arrow-prev {
+.sled-control-direction-default.sled-control-direction-prev {
   transform-origin: right center;
 }
-.sled-control-arrow-default.sled-control-arrow-prev:before {
+.sled-control-direction-default.sled-control-direction-prev:before {
   border-left: 3px solid black;
   transform: rotate(-45deg);
 }
 
-.sled-control-arrow-default.sled-control-arrow-next {
+.sled-control-direction-default.sled-control-direction-next {
   transform-origin: left center;
 }
-.sled-control-arrow-default.sled-control-arrow-next:before {
+.sled-control-direction-default.sled-control-direction-next:before {
   border-right: 3px solid black;
   transform: rotate(45deg);
 }
 
-.sled-control-arrow-default:focus {
+.sled-control-direction-default:focus {
   box-shadow: none;
   outline: none;
 }
 
-.sled-control-arrow-default:before {
+.sled-control-direction-default:before {
   content: '';
   display: block;
   flex-shrink: 0;
@@ -48,23 +48,23 @@
   border-top: 3px solid black;
 }
 
-.sled-control-arrow-default:focus {
+.sled-control-direction-default:focus {
   opacity: 1;
 }
 
-.sled-control-arrow-default:hover, 
-.sled-control-arrow-default:active {
+.sled-control-direction-default:hover, 
+.sled-control-direction-default:active {
   opacity: 1;
   transform: scale(1.2);
 }
 
-.sled-control-arrow-default:disabled {
-  opacity: 0.4;
+.sled-control-direction-default-disabled {
+  opacity: 0.25;
 }
 
-/* dot */
+/* index */
 
-.sled-control-dot-default {
+.sled-control-index-default {
   cursor: pointer;
   width: 40px;
   height: 40px;
@@ -78,16 +78,16 @@
   opacity: 0.4;
 }
 
-.sled-control-dot-default.sled-control-dot-disabled {
+.sled-control-index-default.sled-control-index-disabled {
   pointer-events: none;
 }
 
-.sled-control-dot-default:focus {
+.sled-control-index-default:focus {
   box-shadow: none;
   outline: none;
 }
 
-.sled-control-dot-default:before {
+.sled-control-index-default:before {
   content: '';
   display: block;
   flex-shrink: 0;
@@ -97,17 +97,22 @@
   border-radius: 50%;
 }
 
-.sled-control-dot-default:hover, 
-.sled-control-dot-default:focus {
+.sled-control-index-default:hover, 
+.sled-control-index-default:focus {
   transform: scale(1.2);
 }
 
-.sled-control-dot-default:hover, 
-.sled-control-dot-default:focus, 
-.sled-control-dot-default:active {
+.sled-control-index-default:hover, 
+.sled-control-index-default:focus, 
+.sled-control-index-default:active {
   opacity: 0.6;
 }
 
-.sled-control-dot-default:disabled {
+.sled-control-index-default:disabled {
+  pointer-events: none;
+}
+
+.sled-control-index-default-active {
   opacity: 1;
+  pointer-events: none;
 }

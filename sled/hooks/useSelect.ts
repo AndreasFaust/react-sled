@@ -4,13 +4,11 @@ import { useStateContext } from '../state'
 const useSelect = (select?: number | 'next' | 'prev') => {
   const [, dispatch] = useStateContext()
   useEffect(() => {
-    // switch (typeof select) {
-    //   case 'number':
-    //     dispatch({ type: 'SELECT', index: select })
-    //   case 'string':
-    //     dispatch({ type: select === 'next' ? 'NEXT' : 'PREV' })
-    //   default:
-    // }
+    if (typeof select === 'number') {
+      dispatch({ type: 'SELECT', index: select })
+    } else {
+      dispatch({ type: select === 'next' ? 'NEXT' : 'PREV' })
+    }
   }, [select])
 }
 

@@ -1,10 +1,11 @@
 import React, { useRef, ReactNode } from 'react'
 import CSS from 'csstype';
 import { TSelect } from "../state/types-defaults"
+import { useStateContext } from '../state'
+import { useDirectionDisabled } from './hooks/useDirectionDisabled'
 
 import './index.css'
 
-import useDisabled from './hooks/useDisabled'
 import useClassName from './hooks/useClassName'
 import useLabel from './hooks/useLabel'
 import useClick from './hooks/useClick'
@@ -19,26 +20,29 @@ interface IProps {
 }
 
 const SledControl: React.FC<IProps> = ({
-  children, select, style, className = 'default'
+  children, select, style, className
 }) => {
   const controlRef = useRef()
   useFocus(controlRef)
-  const disabled = useDisabled(select)
-  const classNames = useClassName(select, className, disabled)
-  // const label = useLabel(select)
+  const directionDisabled = useDirectionDisabled(select)
+  const classNames = useClassName(select, className)
+  const label = useLabel(select)
   const onClick = useClick(select)
+  const [{ currentIndex }] = useStateContext()
 
   return (
     <div
       className={classNames}
       style={style}
       ref={controlRef}
-      // ariaLabel={label}
+      role='button'
+      aria-label={label}
       tabIndex={0}
       onClick={onClick}
+      {...select === currentIndex || directionDisabled ? { 'aria-disabled': true } : {}}
     >
       {children}
-    </div>
+    </div >
   )
 }
 
