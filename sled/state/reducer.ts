@@ -1,5 +1,5 @@
 import clamp from '../utils/clamp'
-import { IState } from './types-defaults'
+import { IState, TDirection } from './types-defaults'
 import { SpringConfig } from 'react-spring'
 
 function getNext(currentIndex: number, viewCount: number, rewind: boolean) {
@@ -20,6 +20,7 @@ export type ActionType =
   | { type: 'PREV' }
   | { type: 'SELECT', index: number }
   | { type: 'SET_PAUSE', pause: boolean }
+  | { type: 'SET_DIRECTION', direction: TDirection }
   | { type: 'SET_MOUSEOVER', pauseOnMouseOver: boolean }
   | { type: 'SET_VIEWCOUNT', count: number }
   | { type: 'SET_FOCUS', focus: boolean }
@@ -48,6 +49,10 @@ export function reducer(state: IState, action: ActionType): IState {
       ...state,
       currentIndex: clamp(action.index, 0, state.viewCount - 1),
       prevIndex: state.currentIndex
+    }
+    case 'SET_DIRECTION': return {
+      ...state,
+      direction: action.direction
     }
     case 'SET_PAUSE': return {
       ...state,

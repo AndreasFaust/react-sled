@@ -30,7 +30,7 @@ const SledProgressTrack: React.FC = () => {
         reset: false
       })
     }
-  }, [config, currentIndex, pauseOnMouseOver, set, viewCount])
+  }, [pauseOnMouseOver])
 
   useEffect(() => {
     if (!viewCount) return
@@ -51,7 +51,7 @@ const SledProgressTrack: React.FC = () => {
         reset: false
       })
     }
-  }, [viewCount, currentIndex, autoPlayInterval, set, config, prevIndex])
+  }, [viewCount, currentIndex, autoPlayInterval])
 
   useEffect(() => {
     if (!autoPlayInterval) return
@@ -59,10 +59,11 @@ const SledProgressTrack: React.FC = () => {
       config: autoPlayInterval && !pause
         ? { duration: autoPlayInterval }
         : config,
+      from: { x: getX(viewCount, currentIndex) },
       x: getX(viewCount, currentIndex, !pause && 1),
-      reset: false
+      reset: true
     })
-  }, [pause, autoPlayInterval, set, config, viewCount, currentIndex])
+  }, [pause, autoPlayInterval, viewCount, currentIndex])
 
   return (
     <animated.div

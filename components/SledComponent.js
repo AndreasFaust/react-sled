@@ -1,17 +1,9 @@
 import React from 'react'
 import { Sled, Views, Progress, Control } from '../sled'
 import { useStateValue } from './state'
-import SledImage from './SledImage'
+import images from './images'
 
-const images = [
-  'https://source.unsplash.com/ANCoz0JMhiQ/1600x900',
-  'https://source.unsplash.com/uR6dIgDnt38/1600x900',
-  'https://source.unsplash.com/E2_k8SsuS7s/1600x900',
-  'https://source.unsplash.com/mGy1Jjr2e6M/1600x900',
-  'https://source.unsplash.com/TMHL7wald8I/1600x900'
-]
-
-const SledComponent = () => {
+const SledComponent = ({ children }) => {
   const [state] = useStateValue()
 
   return (
@@ -24,6 +16,7 @@ const SledComponent = () => {
           width={state.width}
           height={state.height}
           proportion={state.proportion}
+          direction={state.direction}
           select={state.select}
           autoPlayInterval={state.autoPlayInterval}
           rewind={state.rewind}
@@ -45,23 +38,17 @@ const SledComponent = () => {
             console.log('END Animation!')
           }}
           style={{
-            background: 'lightyellow'
+            background: 'red'
           }}
         >
-          {images.map((image, index) => (
-            <SledImage
-              key={image}
-              image={image}
-              index={index}
-            />
-          ))}
+          {children}
         </Views>
         <Progress />
-        <div className='controls'>
+        <div className='controls sled-controls-direction'>
           <Control select='prev' />
           <Control select='next' />
         </div>
-        <div className='controls'>
+        <div className='controls sled-controls-index'>
           {images.map((image, index) => (
             <Control key={image} select={index} />
           ))}

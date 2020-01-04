@@ -1,7 +1,12 @@
 import { SpringConfig } from 'react-spring'
 import CSS from 'csstype'
 
+export type TRef = React.MutableRefObject<HTMLDivElement>
+
 export type TSelect = number | 'next' | 'prev'
+export type TDirection = 'horizontal' | 'vertical' | null
+export type TProportion = boolean | '1:1' | '1:2' | '2:1' | '3:1' | '3:2' | null
+export type TDimension = string | number | null
 
 export interface IInternalState {
   currentIndex: number
@@ -17,8 +22,9 @@ export interface IInternalState {
 interface IStateFromProps {
   width?: number | string
   height?: number | string
+  direction?: TDirection
   select?: TSelect
-  proportion?: boolean | '1:1' | '1:2' | '2:1' | '3:1' | '3:2'
+  proportion?: TProportion
   keyboard: boolean
   dragging: boolean
   dragDistance: number | string
@@ -68,6 +74,7 @@ export const initialState: IState = {
   pause: false,
   viewCount: 0,
   hasFocus: false,
+  direction: 'horizontal',
   dimensions: {
     width: 0,
     height: 0

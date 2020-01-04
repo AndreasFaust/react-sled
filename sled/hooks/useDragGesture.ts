@@ -4,8 +4,6 @@ import { SpringsUpdateFn } from 'react-spring'
 
 interface ISet {
   x: number
-  // scale: number
-  // dr: string
 }
 
 export default (set: SpringsUpdateFn<ISet>) => {
@@ -25,8 +23,6 @@ export default (set: SpringsUpdateFn<ISet>) => {
       cancel()
     }
     set(() => {
-      // if (i < currentIndex - 1 || i > currentIndex + 1) return { display: 'none' }
-      // const sc = down ? 1 - distance / window.innerWidth / 2 : 1
       const x = (-currentIndex * width) + (down ? xDelta : 0)
       return {
         x,

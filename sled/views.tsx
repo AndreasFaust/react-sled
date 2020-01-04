@@ -4,6 +4,7 @@ import Springs from './springs'
 import { IViewsProps, ViewsProps } from './state/types-defaults'
 
 import useProportion from './hooks/useProportion'
+import useDirection from './hooks/useDirection'
 import useDimensions from './hooks/useDimensions'
 import useKeyboard from './hooks/useKeyboard'
 import useDragging from './hooks/useDragging'
@@ -24,6 +25,7 @@ const SledViews: React.FC<IViewsProps> = ({
   width,
   height,
   proportion,
+  direction,
   select,
   keyboard,
   dragging,
@@ -40,7 +42,8 @@ const SledViews: React.FC<IViewsProps> = ({
 }) => {
 
   const viewsRef = useRef<HTMLDivElement>()
-  useDimensions(viewsRef, width, height)
+  useDimensions(width, height, viewsRef)
+  useDirection(direction)
   const proportionClasses = useProportion(proportion)
   useFocus(viewsRef)
   useViewCount(children)

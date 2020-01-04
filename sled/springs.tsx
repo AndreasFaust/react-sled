@@ -5,6 +5,7 @@ import { useStateContext } from './state'
 import useDragGesture from './hooks/useDragGesture'
 import usePrevious from './hooks/usePrevious'
 import useFocus from './hooks/useFocus'
+import { useSliderStyles, useViewStyles } from './hooks/useContainerStyles'
 import dimensionsHaveChanged from './utils/dimensionsHaveChanged'
 
 
@@ -24,8 +25,8 @@ const SledSprings: React.FC<IProps> = ({
   const [{
     currentIndex,
     viewCount,
+    direction,
     dimensions: { width, height },
-    dragging,
     config,
   }, dispatch] = useStateContext()
 
@@ -36,7 +37,6 @@ const SledSprings: React.FC<IProps> = ({
     config,
     immediate: true
   }))
-
   const springRef = React.useRef()
 
   useFocus(springRef)
@@ -44,12 +44,9 @@ const SledSprings: React.FC<IProps> = ({
   useEffect(() => {
     set({
       config,
-    })
-  }, [config])
-
-  useEffect(() => {
-    set({
-      x: -currentIndex * width,
+      x: direction === 'horizontal'
+        ? -currentIndex * width
+        : -currentIndex * height,
       immediate: dimensionsHaveChanged(width, prevWidth, height, prevHeight),
       onStart() {
         dispatch({ type: 'SET_PAUSE', pause: true })
@@ -65,9 +62,12 @@ const SledSprings: React.FC<IProps> = ({
         }
       },
     })
-  }, [currentIndex, viewCount, width, prevWidth, height, prevHeight])
+  }, [currentIndex, viewCount, width, prevWidth, height, prevHeight, direction])
 
   const bind = useDragGesture(set)
+
+  const sliderStyles = useSliderStyles()
+  const viewStyles = useViewStyles()
 
   return (
     <animated.div
@@ -75,31 +75,25 @@ const SledSprings: React.FC<IProps> = ({
       className='sled-slider'
       ref={springRef}
       style={{
-        position: 'absolute',
-        top: 0,
-        transform: props.x.to((x) => `translate3d(${x}px,0,0)`),
-        width: width * viewCount,
-        height: '100%',
-        willChange: 'transform',
-        overflow: 'hidden',
-        display: 'flex',
-        cursor: dragging ? 'grab' : 'auto'
+        ...sliderStyles,
+        transform: direction === 'horizontal'
+          ? props.x.to((x) => `translate3d(${x}px,0,0)`)
+          : props.x.to((x) => `translate3d(0,${x}px,0)`)
       }}
     >
-      {React.Children.map(children, child => (
-        <div
-          className="sled-view"
-          style={{
-            width,
-            height: '100%',
-            position: 'relative',
-          }}
-        >
-          {child}
-        </div>
-      ))}
-    </animated.div>
+      {
+        React.Children.map(children, child => (
+          <div
+            className="sled-element"
+            style={viewStyles}
+          >
+            {child}
+          </div>
+        ))
+      }
+    </animated.div >
   )
 }
+
 
 export default SledSprings

@@ -9,6 +9,9 @@ import { StateProvider } from '../components/state'
 import SledComponent from '../components/SledComponent'
 import Header from '../components/header'
 import Settings from '../components/settings'
+import SledImage from './SledImage'
+
+import images from '../components/images'
 
 const App = () => {
   return (
@@ -16,7 +19,15 @@ const App = () => {
       <Header />
       <Settings />
       <div className='content'>
-        <SledComponent />
+        <SledComponent>
+          {images.map((image, index) => (
+            <SledImage
+              key={image}
+              image={image}
+              index={index}
+            />
+          ))}
+        </SledComponent>
       </div>
     </StateProvider>
   )

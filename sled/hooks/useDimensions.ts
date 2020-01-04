@@ -1,10 +1,8 @@
 
-import { useEffect } from 'react'
+import { useLayoutEffect, useEffect } from 'react'
 import { debounce } from '../utils/debounce'
 import { useStateContext } from '../state'
-
-type TRef = React.MutableRefObject<HTMLDivElement>
-type TDimension = string | number | null
+import { TRef, TDimension, TProportion } from '../state/types-defaults'
 
 function setDimensions(ref: TRef, dispatch) {
   const { offsetWidth, offsetHeight } = ref.current
@@ -17,12 +15,12 @@ function setDimensions(ref: TRef, dispatch) {
   })
 }
 
-export default (ref: TRef, width: TDimension, height: TDimension) => {
-  const [, dispatch] = useStateContext()
+export default (widthFromProps: TDimension, heightFromProps: TDimension, ref: TRef) => {
+  const [{ dimensions: { width, height } }, dispatch] = useStateContext()
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setDimensions(ref, dispatch)
-  }, [width, height, ref, dispatch])
+  }, [widthFromProps, heightFromProps, width, height, ref.current])
 
   useEffect(() => {
     function onResize() {
@@ -31,5 +29,5 @@ export default (ref: TRef, width: TDimension, height: TDimension) => {
     const dOnResize = debounce(onResize, 150)
     window.addEventListener('resize', dOnResize)
     return () => window.removeEventListener('resize', dOnResize)
-  }, [dispatch, ref])
+  }, [])
 }

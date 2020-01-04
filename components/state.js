@@ -4,6 +4,7 @@ export const StateContext = createContext()
 const initialState = {
   select: 3,
   rewind: true,
+  direction: 'horizontal',
   pauseOnMouseOver: true,
   stopOnInteraction: true,
   keyboard: true,
@@ -22,6 +23,7 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'select': return { ...state, select: action.value }
     case 'proportion': return { ...state, proportion: action.value }
+    case 'direction': return { ...state, direction: action.value }
     case 'rewind': return { ...state, rewind: action.value }
     case 'pauseOnMouseOver': return { ...state, pauseOnMouseOver: action.value }
     case 'stopOnInteraction': return { ...state, stopOnInteraction: action.value }

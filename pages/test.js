@@ -6,9 +6,11 @@ import './css/header.css'
 import './css/settings.css'
 import './css/menue.css'
 import { StateProvider } from '../components/state'
-import SledComponentBasic from '../components/SledComponentBasic'
+import SledComponent from '../components/SledComponent'
 import Header from '../components/header'
 import Settings from '../components/settings'
+
+import images from '../components/images'
 
 const App = () => {
   return (
@@ -16,7 +18,19 @@ const App = () => {
       <Header />
       <Settings />
       <div className='content'>
-        <SledComponentBasic />
+        <SledComponent>
+          {images.map((image, index) => (
+            <div
+              key={image}
+              className="testContent"
+              style={{
+                background: `rgb(1${index}5, 1${index}0, 1${index}0)`
+              }}
+            >
+              {index + 1}
+            </div>
+          ))}
+        </SledComponent>
       </div>
     </StateProvider>
   )

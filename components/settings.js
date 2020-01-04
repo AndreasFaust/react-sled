@@ -6,6 +6,46 @@ import 'rc-slider/assets/index.css'
 import { slide as Menu } from 'react-burger-menu'
 import { useStateValue } from './state'
 import useWindowSize from './useWindowSize'
+import Select from 'react-select'
+
+const customStyles = {
+  control: () => ({
+    width: 200,
+    display: 'flex'
+  }),
+  input: () => ({
+    color: '#fff'
+  }),
+  singleValue: () => ({
+    color: '#222',
+    fontSize: '14px'
+  }),
+  placeholder: () => ({
+    fontSize: '14px'
+  }),
+  menu: (provided) => ({
+    ...provided,
+    padding: 0,
+    margin: 0
+  }),
+  menuList: (provided) => ({
+    ...provided,
+    padding: 0,
+    margin: 0
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    borderBottom: '1px solid #111',
+    background: '#222',
+    fontSize: '14px',
+    color: state.isSelected ? '#888' : '#fff',
+    margin: 0,
+    borderRadius: 0,
+    cursor: 'pointer',
+    pointerEvents: state.isSelected ? 'none' : 'auto',
+    ':hover': { background: '#111' }
+  })
+}
 
 const useDebounce = (defaultValue) => {
   const [value, setValue] = useState(defaultValue)
@@ -29,13 +69,18 @@ const Settings = () => {
   const [width, setWidth] = useDebounce(state.width)
   const [height, setHeight] = useDebounce(state.height)
   const [proportion, setProportion] = useDebounce(state.proportion)
+  const [direction, setDirection] = React.useState(state.direction)
   const [_, setautoPlayInterval] = useDebounce(state.autoPlayInterval)
+
+  function onDirectionChange(option) {
+    setDirection(option.value)
+  }
 
   useEffect(() => {
     dispatch({ type: 'width', value: width })
     dispatch({ type: 'height', value: height })
-    dispatch({ type: 'proportion', value: proportion })
-  }, [width, height, proportion, dispatch])
+    dispatch({ type: 'direction', value: direction })
+  }, [width, height, proportion, direction, dispatch])
 
   return (
     <Wrapper>
@@ -75,6 +120,21 @@ const Settings = () => {
             defaultValue={state.proportion}
             onChange={(event) => setProportion.current(event)}
           />
+        </label>
+
+        <label className='settings__label'>
+          <h3 className='settings__h3'>direction</h3>
+          <Select
+            className='settings__select'
+            placeholder='horizontal'
+            onChange={onDirectionChange}
+            options={[
+              { value: 'horizontal', label: 'horizontal' },
+              { value: 'vertical', label: 'vertical' }
+            ]}
+            styles={customStyles}
+          />
+
         </label>
 
         <label className='settings__label'>
