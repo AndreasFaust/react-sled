@@ -3,7 +3,6 @@ import React, { useRef } from 'react'
 import Springs from './springs'
 import { IViewsProps, ViewsProps } from './state/types-defaults'
 
-import useProportion from './hooks/useProportion'
 import useDirection from './hooks/useDirection'
 import useDimensions from './hooks/useDimensions'
 import useKeyboard from './hooks/useKeyboard'
@@ -17,6 +16,10 @@ import useConfig from './hooks/useConfig'
 import useRewind from './hooks/useRewind'
 import usePause from './hooks/usePause'
 import useStopOnInteraction from './hooks/useStopOnInteraction'
+import useShowSlides from './hooks/useShowSlides'
+import useSlideBy from './hooks/useSlideBy'
+import useSlideSteps from './hooks/useSlideSteps'
+import useSliderSize from './hooks/useSliderSize'
 import './index.css'
 
 const SledViews: React.FC<IViewsProps> = ({
@@ -27,6 +30,8 @@ const SledViews: React.FC<IViewsProps> = ({
   proportion,
   direction,
   select,
+  slideBy,
+  showSlides,
   keyboard,
   dragging,
   dragDistance,
@@ -42,13 +47,18 @@ const SledViews: React.FC<IViewsProps> = ({
 }) => {
 
   const viewsRef = useRef<HTMLDivElement>()
-  useDimensions(width, height, viewsRef)
+  const dimensions = useDimensions(width, height, proportion, viewsRef)
   useDirection(direction)
-  const proportionClasses = useProportion(proportion)
+  // const proportionClasses = useProportion(proportion)
   useFocus(viewsRef)
   useViewCount(children)
   useRewind(rewind)
   usePause(pause)
+
+  useShowSlides(showSlides)
+  useSlideBy(slideBy)
+  useSliderSize()
+  useSlideSteps()
 
   useStopOnInteraction(stopOnInteraction)
   useMouseOver(pauseOnMouseOver, viewsRef)
@@ -61,22 +71,27 @@ const SledViews: React.FC<IViewsProps> = ({
 
   return (
     <div
-      className={`sled ${proportionClasses}`}
+      className='sled'
       ref={viewsRef}
       style={{
-        width: width || '100%',
+        width,
         height,
         ...style,
       }}
       tabIndex={0}
     >
-      <Springs
-        onAnimationStart={onAnimationStart}
-        onAnimationEnd={onAnimationEnd}
-        onSledEnd={onSledEnd}
+      <div
+        className='sled-sizer'
+        style={dimensions}
       >
-        {children}
-      </Springs>
+        <Springs
+          onAnimationStart={onAnimationStart}
+          onAnimationEnd={onAnimationEnd}
+          onSledEnd={onSledEnd}
+        >
+          {children}
+        </Springs>
+      </div>
     </div>
   )
 }

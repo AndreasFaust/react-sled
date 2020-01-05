@@ -3,12 +3,10 @@ import { useSpring, animated } from 'react-spring'
 
 import { useStateContext } from './state'
 import useDragGesture from './hooks/useDragGesture'
-import usePrevious from './hooks/usePrevious'
 import useFocus from './hooks/useFocus'
 import useCursor from './hooks/useCursor'
+import useX from './hooks/useX'
 import { useSliderStyles, useViewStyles } from './hooks/useContainerStyles'
-import dimensionsHaveChanged from './utils/dimensionsHaveChanged'
-
 
 interface IProps {
   onAnimationStart(): void
@@ -31,14 +29,12 @@ const SledSprings: React.FC<IProps> = ({
     config,
   }, dispatch] = useStateContext()
 
-  const prevWidth = usePrevious(width)
-  const prevHeight = usePrevious(height)
-
   const cursor = useCursor()
+  const x = useX()
 
   const [props, set] = useSpring(() => ({
     x: 0,
-    cursor: cursor,
+    cursor,
     config,
     immediate: true
   }))
@@ -46,29 +42,43 @@ const SledSprings: React.FC<IProps> = ({
 
   useFocus(springRef)
 
+  const [dimensionsUpdated, setDimensionsUpdated] = React.useState(false)
+
   useEffect(() => {
+    setDimensionsUpdated(true)
+  }, [width, height])
+
+  useEffect(() => {
+    if (!dimensionsUpdated) return
+    setDimensionsUpdated(false)
+    set({
+      x,
+      immediate: true,
+      onStart: null,
+      onRest: null,
+    })
+  }, [x, dimensionsUpdated])
+
+  useEffect(() => {
+    if (dimensionsUpdated) return
     set({
       config,
-      x: direction === 'horizontal'
-        ? -currentIndex * width
-        : -currentIndex * height,
-      cursor: cursor,
-      immediate: dimensionsHaveChanged(width, prevWidth, height, prevHeight),
+      x,
+      cursor,
+      immediate: false,
       onStart() {
         dispatch({ type: 'SET_PAUSE', pause: true })
-        if (dimensionsHaveChanged(width, prevWidth, height, prevHeight)) return
         if (typeof onAnimationStart === 'function') onAnimationStart()
       },
       onRest() {
         dispatch({ type: 'SET_PAUSE', pause: false })
-        if (dimensionsHaveChanged(width, prevWidth, height, prevHeight)) return
         if (typeof onAnimationEnd === 'function') onAnimationEnd()
         if (currentIndex === viewCount - 1) {
           if (typeof onSledEnd === 'function') onSledEnd()
         }
       },
     })
-  }, [currentIndex, viewCount, width, prevWidth, height, prevHeight, direction, cursor])
+  }, [x, currentIndex, dimensionsUpdated, viewCount, cursor])
 
   const bind = useDragGesture(set)
 

@@ -2,17 +2,17 @@ import clamp from '../utils/clamp'
 import { IState, TDirection } from './types-defaults'
 import { SpringConfig } from 'react-spring'
 
-function getNext(currentIndex: number, viewCount: number, rewind: boolean) {
-  if (currentIndex === viewCount - 1 && !rewind) {
-    return clamp(currentIndex, 0, viewCount - 1)
+function getNext(currentIndex: number, slideSteps: number, rewind: boolean) {
+  if (currentIndex === slideSteps - 1 && !rewind) {
+    return clamp(currentIndex, 0, slideSteps - 1)
   }
-  return (currentIndex + 1) % viewCount
+  return (currentIndex + 1) % slideSteps
 }
-function getPrev(currentIndex: number, viewCount: number, rewind: boolean) {
+function getPrev(currentIndex: number, slideSteps: number, rewind: boolean) {
   if (currentIndex === 0 && !rewind) {
-    return clamp(currentIndex, 0, viewCount - 1)
+    return clamp(currentIndex, 0, slideSteps - 1)
   }
-  return (currentIndex - 1 + viewCount) % viewCount
+  return (currentIndex - 1 + slideSteps) % slideSteps
 }
 
 export type ActionType =
@@ -31,23 +31,27 @@ export type ActionType =
   | { type: 'SET_CONFIG', config: SpringConfig }
   | { type: 'SET_REWIND', rewind: boolean }
   | { type: 'SET_STOPONINTERACTION', stopOnInteraction: boolean }
+  | { type: 'SET_SHOWSLIDES', showSlides: number }
+  | { type: 'SET_SLIDEBY', slideBy: number }
+  | { type: 'SET_SLIDESTEPS', slideSteps: number }
+  | { type: 'SET_SLIDERSIZE', sliderSize: number }
 
 
 export function reducer(state: IState, action: ActionType): IState {
   switch (action.type) {
     case 'NEXT': return {
       ...state,
-      currentIndex: getNext(state.currentIndex, state.viewCount, state.rewind),
+      currentIndex: getNext(state.currentIndex, state.slideSteps, state.rewind),
       prevIndex: state.currentIndex
     }
     case 'PREV': return {
       ...state,
-      currentIndex: getPrev(state.currentIndex, state.viewCount, state.rewind),
+      currentIndex: getPrev(state.currentIndex, state.slideSteps, state.rewind),
       prevIndex: state.currentIndex
     }
     case 'SELECT': return {
       ...state,
-      currentIndex: clamp(action.index, 0, state.viewCount - 1),
+      currentIndex: clamp(action.index, 0, state.slideSteps - 1),
       prevIndex: state.currentIndex
     }
     case 'SET_DIRECTION': return {
@@ -97,6 +101,22 @@ export function reducer(state: IState, action: ActionType): IState {
     case 'SET_STOPONINTERACTION': return {
       ...state,
       stopOnInteraction: action.stopOnInteraction
+    }
+    case 'SET_SLIDEBY': return {
+      ...state,
+      slideBy: action.slideBy
+    }
+    case 'SET_SLIDESTEPS': return {
+      ...state,
+      slideSteps: action.slideSteps
+    }
+    case 'SET_SHOWSLIDES': return {
+      ...state,
+      showSlides: action.showSlides
+    }
+    case 'SET_SLIDERSIZE': return {
+      ...state,
+      sliderSize: action.sliderSize
     }
     default: return state
   }

@@ -3,7 +3,7 @@ import { useStateContext } from '../state'
 import CSS from 'csstype'
 
 export function useSliderStyles() {
-  const [{ dimensions: { width, height }, viewCount, direction, dragging }] = useStateContext()
+  const [{ sliderSize, direction, dragging }] = useStateContext()
   const [styles, setStyles] = React.useState({})
 
   React.useEffect(() => {
@@ -19,24 +19,24 @@ export function useSliderStyles() {
       setStyles({
         ...defaultStyles,
         width: '100%',
-        height: height * viewCount,
+        height: sliderSize || 0,
       })
     } else {
       setStyles({
         ...defaultStyles,
-        width: width * viewCount,
+        width: sliderSize || 0,
         height: '100%',
         display: 'flex',
       })
     }
-  }, [width, height, viewCount, direction, dragging])
+  }, [direction, dragging, sliderSize])
 
   return styles
 }
 
 
 export function useViewStyles(): CSS.Properties {
-  const [{ dimensions: { width, height }, viewCount, direction }] = useStateContext()
+  const [{ dimensions: { width, height }, viewCount, direction, showSlides }] = useStateContext()
   const [styles, setStyles] = React.useState({})
 
   React.useEffect(() => {
@@ -47,16 +47,16 @@ export function useViewStyles(): CSS.Properties {
       setStyles({
         ...defaultStyles,
         width: '100%',
-        height: height
+        height: height / showSlides
       })
     } else {
       setStyles({
         ...defaultStyles,
-        width: width,
+        width: width / showSlides,
         height: '100%'
       })
     }
-  }, [width, height, direction, viewCount])
+  }, [width, height, direction, viewCount, showSlides])
 
   return styles
 }

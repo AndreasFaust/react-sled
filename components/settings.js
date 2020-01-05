@@ -9,42 +9,19 @@ import useWindowSize from './useWindowSize'
 import Select from 'react-select'
 
 const customStyles = {
-  control: () => ({
-    width: 200,
-    display: 'flex'
-  }),
-  input: () => ({
-    color: '#fff'
-  }),
-  singleValue: () => ({
-    color: '#222',
-    fontSize: '14px'
+
+  container: () => ({
+    width: 150,
+    position: 'relative',
   }),
   placeholder: () => ({
-    fontSize: '14px'
+    fontSize: '0.9rem'
   }),
-  menu: (provided) => ({
+  option: (provided) => ({
     ...provided,
-    padding: 0,
-    margin: 0
+    fontSize: '0.9rem',
   }),
-  menuList: (provided) => ({
-    ...provided,
-    padding: 0,
-    margin: 0
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    borderBottom: '1px solid #111',
-    background: '#222',
-    fontSize: '14px',
-    color: state.isSelected ? '#888' : '#fff',
-    margin: 0,
-    borderRadius: 0,
-    cursor: 'pointer',
-    pointerEvents: state.isSelected ? 'none' : 'auto',
-    ':hover': { background: '#111' }
-  })
+
 }
 
 const useDebounce = (defaultValue) => {
@@ -66,22 +43,31 @@ const Wrapper = ({ children }) => {
 const Settings = () => {
   const [state, dispatch] = useStateValue()
 
+  const [proportion, setProportion] = React.useState(state.proportion)
+  const [direction, setDirection] = React.useState(state.direction)
+
   const [width, setWidth] = useDebounce(state.width)
   const [height, setHeight] = useDebounce(state.height)
-  const [proportion, setProportion] = useDebounce(state.proportion)
-  const [direction, setDirection] = React.useState(state.direction)
   const [autoPlayInterval, setAutoPlayInterval] = useDebounce(state.autoPlayInterval)
+  const [select, setSelect] = useDebounce(state.select)
 
-  function onDirectionChange(option) {
-    setDirection(option.value)
-  }
 
   useEffect(() => {
     dispatch({ type: 'width', value: width })
     dispatch({ type: 'height', value: height })
     dispatch({ type: 'direction', value: direction })
     dispatch({ type: 'autoPlayInterval', value: +autoPlayInterval })
-  }, [width, height, proportion, direction, dispatch, autoPlayInterval])
+    dispatch({ type: 'proportion', value: proportion })
+  }, [width, height, direction, autoPlayInterval, proportion])
+
+  useEffect(() => {
+    if (parseInt(select, 10)) {
+      dispatch({ type: 'select', value: parseInt(select, 10) })
+    }
+    if (select === 'prev' || select === 'next') {
+      dispatch({ type: 'select', value: select })
+    }
+  }, [select])
 
   return (
     <Wrapper>
@@ -109,33 +95,40 @@ const Settings = () => {
             size={7}
             className='settings__input'
             defaultValue={state.height}
+            placeholder='auto'
             onChange={(event) => setHeight.current(event)}
           />
         </label>
-        <label className='settings__label'>
+        <label className={`settings__label`}>
           <h3 className='settings__h3'>proportion</h3>
-          <input
-            type='text'
-            size={3}
-            className='settings__input'
-            defaultValue={state.proportion}
-            onChange={(event) => setProportion.current(event)}
+          <Select
+            className='settings__select'
+            placeholder='2:1'
+            onChange={(option) => setProportion(option.value)}
+            options={[
+              { value: '1:1', label: '1:1' },
+              { value: '1:2', label: '1:2' },
+              { value: '2:1', label: '2:1' },
+              { value: '3:1', label: '3:1' },
+              { value: '3:2', label: '3:2' },
+            ]}
+            styles={customStyles}
           />
+
         </label>
 
-        <label className='settings__label'>
+        <label className='settings__label settings__label--select'>
           <h3 className='settings__h3'>direction</h3>
           <Select
             className='settings__select'
             placeholder='horizontal'
-            onChange={onDirectionChange}
+            onChange={(option) => setDirection(option.value)}
             options={[
               { value: 'horizontal', label: 'horizontal' },
               { value: 'vertical', label: 'vertical' }
             ]}
             styles={customStyles}
           />
-
         </label>
 
         <label className='settings__label'>
@@ -144,15 +137,35 @@ const Settings = () => {
             type='text'
             size={7}
             className='settings__input'
-            value={state.select}
-            onChange={(event) => dispatch({ type: 'select', value: event.target.value })}
+            placeholder={state.select}
+            onChange={(event) => setSelect.current(event)}
+          />
+        </label>
+        <label className='settings__label'>
+          <h3 className='settings__h3'>showSlides</h3>
+          <input
+            type='number'
+            size={1}
+            className='settings__input'
+            value={state.showSlides}
+            onChange={(event) => dispatch({ type: 'showSlides', value: event.target.value })}
+          />
+        </label>
+        <label className='settings__label'>
+          <h3 className='settings__h3'>slideBy</h3>
+          <input
+            type='number'
+            size={1}
+            className='settings__input'
+            value={state.slideBy}
+            onChange={(event) => dispatch({ type: 'slideBy', value: event.target.value })}
           />
         </label>
         <label className='settings__label'>
           <h3 className='settings__h3'>autoPlayInterval</h3>
           <input
-            type='text'
-            size={7}
+            type='number'
+            size={5}
             className='settings__input'
             defaultValue={state.autoPlayInterval}
             onChange={(event) => setAutoPlayInterval.current(event)}

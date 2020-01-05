@@ -23,8 +23,12 @@ export default (autoPlayIntervalNew: number): void => {
   const [{ pause, autoPlayInterval }, dispatch] = useStateContext()
 
   useEffect(() => {
-    dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: autoPlayIntervalNew })
-  }, [autoPlayIntervalNew, dispatch])
+    if (typeof autoPlayIntervalNew === 'number') {
+      dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: autoPlayIntervalNew })
+    } else {
+      console.warn(`Sled-Error: "autoplay" must be of type "number", not "${typeof autoPlayIntervalNew}".`)
+    }
+  }, [autoPlayIntervalNew])
 
   useInterval(() => {
     dispatch({ type: 'NEXT' })

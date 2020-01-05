@@ -3,15 +3,15 @@ import { useSpring, animated } from 'react-spring'
 
 import { useStateContext } from '../state'
 
-function getX(viewCount: number, currentIndex: number, goPrevNext: number = 0): number {
-  return 100 - ((100 / viewCount) * (currentIndex + goPrevNext))
+function getX(slideSteps: number, currentIndex: number, goPrevNext: number = 0): number {
+  return 100 - ((100 / slideSteps) * (currentIndex + goPrevNext))
 }
 
 const SledProgressTrack: React.FC = () => {
   const [{
     currentIndex,
     prevIndex,
-    viewCount,
+    slideSteps,
     autoPlayInterval,
     pause,
     pauseOnMouseOver,
@@ -26,21 +26,21 @@ const SledProgressTrack: React.FC = () => {
     if (pauseOnMouseOver) {
       set({
         config,
-        x: getX(viewCount, currentIndex),
+        x: getX(slideSteps, currentIndex),
         reset: false
       })
     }
   }, [pauseOnMouseOver])
 
   useEffect(() => {
-    if (!viewCount) return
-    const xCalc = getX(viewCount, currentIndex, !autoPlayInterval && 1)
+    if (!slideSteps) return
+    const xCalc = getX(slideSteps, currentIndex, !autoPlayInterval && 1)
     if (currentIndex === 0) {
       set({
         config,
         from: { x: 100 },
         x: xCalc,
-        reset: viewCount > 2
+        reset: slideSteps > 2
           ? prevIndex !== 1
           : true
       })
@@ -51,7 +51,7 @@ const SledProgressTrack: React.FC = () => {
         reset: false
       })
     }
-  }, [viewCount, currentIndex, autoPlayInterval])
+  }, [slideSteps, currentIndex, autoPlayInterval])
 
   useEffect(() => {
     if (!autoPlayInterval) return
@@ -59,11 +59,11 @@ const SledProgressTrack: React.FC = () => {
       config: autoPlayInterval && !pause
         ? { duration: autoPlayInterval }
         : config,
-      from: { x: getX(viewCount, currentIndex) },
-      x: getX(viewCount, currentIndex, !pause && 1),
+      from: { x: getX(slideSteps, currentIndex) },
+      x: getX(slideSteps, currentIndex, !pause && 1),
       reset: true
     })
-  }, [pause, autoPlayInterval, viewCount, currentIndex])
+  }, [pause, autoPlayInterval, slideSteps, currentIndex])
 
   return (
     <animated.div

@@ -13,7 +13,9 @@ export default (set: SpringsUpdateFn<ISet>) => {
     dimensions: { width, height },
     currentIndex,
     direction,
-    stopOnInteraction
+    stopOnInteraction,
+    showSlides,
+    slideBy
   }, dispatch] = useStateContext()
 
   const bind = useDrag(({
@@ -22,14 +24,13 @@ export default (set: SpringsUpdateFn<ISet>) => {
     direction: [xDir, yDir],
     distance,
     cancel,
-    canceled
+    canceled,
   }) => {
     if (canceled) return
 
     if (stopOnInteraction) {
       dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: undefined })
     }
-
     if (down && distance > dragDistance) {
       const dirValue = direction === 'horizontal' ? xDir : yDir
       dispatch({
@@ -42,8 +43,8 @@ export default (set: SpringsUpdateFn<ISet>) => {
     }
     set(() => {
       const x = direction === 'horizontal'
-        ? (-currentIndex * width) + (down ? xDelta : 0)
-        : (-currentIndex * height) + (down ? yDelta : 0)
+        ? (-currentIndex * (width / showSlides * slideBy)) + (down ? xDelta : 0)
+        : (-currentIndex * (height / showSlides * slideBy)) + (down ? yDelta : 0)
       return {
         x,
         immediate: false,

@@ -2,13 +2,12 @@ import React from 'react'
 import { useStateContext } from '../state'
 
 const SledProgressSeparators: React.FC = () => {
-  const [{ viewCount }] = useStateContext()
-
-  return (
+  const [{ slideSteps }] = useStateContext()
+  return slideSteps && (
     <div
       className='sled-progress-separators'
     >
-      {[...Array(viewCount ? viewCount - 1 : 1)].map((_, index) => (
+      {[...Array(slideSteps - 1)].map((_, index) => (
         <div
           key={index}
           className='sled-progress-separator'

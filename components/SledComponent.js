@@ -5,7 +5,6 @@ import images from './images'
 
 const SledComponent = ({ children }) => {
   const [state] = useStateValue()
-
   return (
     <div className='sled-wrapper'>
       <Sled>
@@ -25,6 +24,8 @@ const SledComponent = ({ children }) => {
           keyboard={state.keyboard}
           dragging={state.dragging}
           dragDistance={state.dragDistance}
+          showSlides={state.showSlides}
+          slideBy={state.slideBy}
           config={{
             mass: state.mass,
             tension: state.tension,

@@ -22,18 +22,13 @@ body {
 }
 
 .content {
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;  
-  margin-top: 8rem;
+  margin: 8rem 0;
   width: 100%;
 }
 @media (min-width: 1025px) {
   .content {
     width: calc(100% - 300px);
     margin-left: 300px;
-    z-index: 10000;
   }  
 }
 

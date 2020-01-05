@@ -9,7 +9,7 @@ import { StateProvider } from '../components/state'
 import SledComponent from '../components/SledComponent'
 import Header from '../components/header'
 import Settings from '../components/settings'
-import SledImage from './SledImage'
+import SledImage from '../components/SledImage'
 
 import images from '../components/images'
 

@@ -8,12 +8,12 @@ interface IProps {
 }
 
 const SledProgressControls: React.FC<IProps> = () => {
-  const [{ viewCount }] = useStateContext()
+  const [{ slideSteps }] = useStateContext()
 
   return (
     <div className='sled-progress-controls'>
       {
-        [...Array(viewCount || 1)].map((view, index) => (
+        [...Array(slideSteps ? slideSteps || 1 : 1)].map((view, index) => (
           <Control
             key={index}
             select={index}

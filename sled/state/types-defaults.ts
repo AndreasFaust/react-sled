@@ -5,13 +5,15 @@ export type TRef = React.MutableRefObject<HTMLDivElement>
 
 export type TSelect = number | 'next' | 'prev'
 export type TDirection = 'horizontal' | 'vertical' | null
-export type TProportion = boolean | '1:1' | '1:2' | '2:1' | '3:1' | '3:2' | null
+export type TProportion = string | null
 export type TDimension = string | number | null
 
 export interface IInternalState {
   currentIndex: number
   prevIndex?: number
   viewCount: number
+  slideSteps: number
+  sliderSize: number
   hasFocus: boolean
   dimensions: {
     width: number
@@ -25,6 +27,8 @@ interface IStateFromProps {
   direction?: TDirection
   select?: TSelect
   proportion?: TProportion
+  showSlides?: number,
+  slideBy?: number,
   keyboard: boolean
   dragging: boolean
   dragDistance: number | string
@@ -75,6 +79,10 @@ export const initialState: IState = {
   viewCount: 0,
   hasFocus: false,
   direction: 'horizontal',
+  showSlides: 1,
+  slideBy: 1,
+  slideSteps: 1,
+  sliderSize: 0,
   dimensions: {
     width: 0,
     height: 0
