@@ -7,23 +7,43 @@ interface ISet {
 }
 
 export default (set: SpringsUpdateFn<ISet>) => {
-  const [{ dragging, dragDistance, dimensions: { width }, currentIndex, viewCount }, dispatch] = useStateContext()
+  const [{
+    dragging,
+    dragDistance,
+    dimensions: { width, height },
+    currentIndex,
+    direction,
+    stopOnInteraction
+  }, dispatch] = useStateContext()
 
   const bind = useDrag(({
     down,
-    movement: [xDelta],
-    direction: [xDir],
+    movement: [xDelta, yDelta],
+    direction: [xDir, yDir],
     distance,
     cancel,
     canceled
   }) => {
     if (canceled) return
+
+    if (stopOnInteraction) {
+      dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: undefined })
+    }
+
     if (down && distance > dragDistance) {
-      dispatch({ type: xDir > 0 ? 'PREV' : 'NEXT', pause: true })
+      const dirValue = direction === 'horizontal' ? xDir : yDir
+      dispatch({
+        type: dirValue > 0
+          ? 'PREV'
+          : 'NEXT',
+        pause: true
+      })
       cancel()
     }
     set(() => {
-      const x = (-currentIndex * width) + (down ? xDelta : 0)
+      const x = direction === 'horizontal'
+        ? (-currentIndex * width) + (down ? xDelta : 0)
+        : (-currentIndex * height) + (down ? yDelta : 0)
       return {
         x,
         immediate: false,

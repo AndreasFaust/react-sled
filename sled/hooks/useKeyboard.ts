@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useStateContext } from '../state'
 
 const useKeyboard = (keyboard: boolean) => {
-  const [{ hasFocus }, dispatch] = useStateContext()
+  const [{ hasFocus, stopOnInteraction }, dispatch] = useStateContext()
   const hasFocusRef = useRef<boolean>(false)
 
   useEffect(() => {
@@ -12,6 +12,11 @@ const useKeyboard = (keyboard: boolean) => {
   useEffect(() => {
     function onKeyup(event: KeyboardEvent) {
       if (!hasFocusRef.current) return
+
+      if (stopOnInteraction) {
+        dispatch({ type: 'SET_AUTOPLAY', autoPlayInterval: undefined })
+      }
+
       switch (event.keyCode) {
         case 37:
           dispatch({ type: 'PREV' })
@@ -25,7 +30,7 @@ const useKeyboard = (keyboard: boolean) => {
       document.addEventListener('keyup', onKeyup)
       return () => document.removeEventListener('keyup', onKeyup)
     }
-  }, [keyboard])
+  }, [keyboard, stopOnInteraction])
 }
 
 export default useKeyboard

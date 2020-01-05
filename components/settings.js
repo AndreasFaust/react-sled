@@ -70,7 +70,7 @@ const Settings = () => {
   const [height, setHeight] = useDebounce(state.height)
   const [proportion, setProportion] = useDebounce(state.proportion)
   const [direction, setDirection] = React.useState(state.direction)
-  const [_, setautoPlayInterval] = useDebounce(state.autoPlayInterval)
+  const [autoPlayInterval, setAutoPlayInterval] = useDebounce(state.autoPlayInterval)
 
   function onDirectionChange(option) {
     setDirection(option.value)
@@ -80,7 +80,8 @@ const Settings = () => {
     dispatch({ type: 'width', value: width })
     dispatch({ type: 'height', value: height })
     dispatch({ type: 'direction', value: direction })
-  }, [width, height, proportion, direction, dispatch])
+    dispatch({ type: 'autoPlayInterval', value: +autoPlayInterval })
+  }, [width, height, proportion, direction, dispatch, autoPlayInterval])
 
   return (
     <Wrapper>
@@ -154,7 +155,7 @@ const Settings = () => {
             size={7}
             className='settings__input'
             defaultValue={state.autoPlayInterval}
-            onChange={(event) => setautoPlayInterval.current(event)}
+            onChange={(event) => setAutoPlayInterval.current(event)}
           />
         </label>
         <label className='settings__label'>

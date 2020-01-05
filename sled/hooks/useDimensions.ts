@@ -1,8 +1,8 @@
 
-import { useLayoutEffect, useEffect } from 'react'
+import { useEffect } from 'react'
 import { debounce } from '../utils/debounce'
 import { useStateContext } from '../state'
-import { TRef, TDimension, TProportion } from '../state/types-defaults'
+import { TRef, TDimension } from '../state/types-defaults'
 
 function setDimensions(ref: TRef, dispatch) {
   const { offsetWidth, offsetHeight } = ref.current
@@ -18,7 +18,7 @@ function setDimensions(ref: TRef, dispatch) {
 export default (widthFromProps: TDimension, heightFromProps: TDimension, ref: TRef) => {
   const [{ dimensions: { width, height } }, dispatch] = useStateContext()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setDimensions(ref, dispatch)
   }, [widthFromProps, heightFromProps, width, height, ref.current])
 

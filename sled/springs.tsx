@@ -5,6 +5,7 @@ import { useStateContext } from './state'
 import useDragGesture from './hooks/useDragGesture'
 import usePrevious from './hooks/usePrevious'
 import useFocus from './hooks/useFocus'
+import useCursor from './hooks/useCursor'
 import { useSliderStyles, useViewStyles } from './hooks/useContainerStyles'
 import dimensionsHaveChanged from './utils/dimensionsHaveChanged'
 
@@ -32,8 +33,12 @@ const SledSprings: React.FC<IProps> = ({
 
   const prevWidth = usePrevious(width)
   const prevHeight = usePrevious(height)
+
+  const cursor = useCursor()
+
   const [props, set] = useSpring(() => ({
     x: 0,
+    cursor: cursor,
     config,
     immediate: true
   }))
@@ -47,6 +52,7 @@ const SledSprings: React.FC<IProps> = ({
       x: direction === 'horizontal'
         ? -currentIndex * width
         : -currentIndex * height,
+      cursor: cursor,
       immediate: dimensionsHaveChanged(width, prevWidth, height, prevHeight),
       onStart() {
         dispatch({ type: 'SET_PAUSE', pause: true })
@@ -62,7 +68,7 @@ const SledSprings: React.FC<IProps> = ({
         }
       },
     })
-  }, [currentIndex, viewCount, width, prevWidth, height, prevHeight, direction])
+  }, [currentIndex, viewCount, width, prevWidth, height, prevHeight, direction, cursor])
 
   const bind = useDragGesture(set)
 
@@ -78,7 +84,8 @@ const SledSprings: React.FC<IProps> = ({
         ...sliderStyles,
         transform: direction === 'horizontal'
           ? props.x.to((x) => `translate3d(${x}px,0,0)`)
-          : props.x.to((x) => `translate3d(0,${x}px,0)`)
+          : props.x.to((x) => `translate3d(0,${x}px,0)`),
+        cursor: props.cursor,
       }}
     >
       {
