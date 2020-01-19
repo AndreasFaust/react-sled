@@ -142,13 +142,13 @@ const Settings = () => {
           />
         </label>
         <label className='settings__label'>
-          <h3 className='settings__h3'>showSlides</h3>
+          <h3 className='settings__h3'>showElements</h3>
           <input
             type='number'
             size={1}
             className='settings__input'
-            value={state.showSlides}
-            onChange={(event) => dispatch({ type: 'showSlides', value: event.target.value })}
+            value={state.showElements}
+            onChange={(event) => dispatch({ type: 'showElements', value: event.target.value })}
           />
         </label>
         <label className='settings__label'>

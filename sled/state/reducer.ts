@@ -31,7 +31,7 @@ export type ActionType =
   | { type: 'SET_CONFIG', config: SpringConfig }
   | { type: 'SET_REWIND', rewind: boolean }
   | { type: 'SET_STOPONINTERACTION', stopOnInteraction: boolean }
-  | { type: 'SET_SHOWSLIDES', showSlides: number }
+  | { type: 'SET_SHOWELEMENTS', showElements: number }
   | { type: 'SET_SLIDEBY', slideBy: number }
   | { type: 'SET_SLIDESTEPS', slideSteps: number }
   | { type: 'SET_SLIDERSIZE', sliderSize: number }
@@ -110,9 +110,9 @@ export function reducer(state: IState, action: ActionType): IState {
       ...state,
       slideSteps: action.slideSteps
     }
-    case 'SET_SHOWSLIDES': return {
+    case 'SET_SHOWELEMENTS': return {
       ...state,
-      showSlides: action.showSlides
+      showElements: action.showElements
     }
     case 'SET_SLIDERSIZE': return {
       ...state,

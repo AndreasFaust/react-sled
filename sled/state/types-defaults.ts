@@ -27,7 +27,7 @@ interface IStateFromProps {
   direction?: TDirection
   select?: TSelect
   proportion?: TProportion
-  showSlides?: number,
+  showElements?: number,
   slideBy?: number,
   keyboard: boolean
   dragging: boolean
@@ -79,7 +79,7 @@ export const initialState: IState = {
   viewCount: 0,
   hasFocus: false,
   direction: 'horizontal',
-  showSlides: 1,
+  showElements: 1,
   slideBy: 1,
   slideSteps: 1,
   sliderSize: 0,

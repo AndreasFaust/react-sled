@@ -36,7 +36,7 @@ export function useSliderStyles() {
 
 
 export function useViewStyles(): CSS.Properties {
-  const [{ dimensions: { width, height }, viewCount, direction, showSlides }] = useStateContext()
+  const [{ dimensions: { width, height }, viewCount, direction, showElements }] = useStateContext()
   const [styles, setStyles] = React.useState({})
 
   React.useEffect(() => {
@@ -47,16 +47,16 @@ export function useViewStyles(): CSS.Properties {
       setStyles({
         ...defaultStyles,
         width: '100%',
-        height: height / showSlides
+        height: height / showElements
       })
     } else {
       setStyles({
         ...defaultStyles,
-        width: width / showSlides,
+        width: width / showElements,
         height: '100%'
       })
     }
-  }, [width, height, direction, viewCount, showSlides])
+  }, [width, height, direction, viewCount, showElements])
 
   return styles
 }

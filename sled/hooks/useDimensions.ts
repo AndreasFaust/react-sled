@@ -4,7 +4,6 @@ import { debounce } from '../utils/debounce'
 import { useStateContext } from '../state'
 import { TRef, TDimension } from '../state/types-defaults'
 
-
 interface IDimensions {
   width: TDimension
   height: TDimension
@@ -51,12 +50,9 @@ function getDimensions(width: TDimension, height: TDimension, proportion: string
     type: 'SET_DIMENSIONS',
     dimensions
   })
-  console.log(dimensions)
-  console.log(returnDimensions)
+
   return returnDimensions
 }
-
-// type TState = { width: number, height: number }
 
 export default (width: TDimension, height: TDimension, proportion: string, ref: TRef): IDimensions => {
   const [{ }, dispatch] = useStateContext()

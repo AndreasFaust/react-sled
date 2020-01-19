@@ -16,7 +16,7 @@ import useConfig from './hooks/useConfig'
 import useRewind from './hooks/useRewind'
 import usePause from './hooks/usePause'
 import useStopOnInteraction from './hooks/useStopOnInteraction'
-import useShowSlides from './hooks/useShowSlides'
+import useShowElements from './hooks/useShowElements'
 import useSlideBy from './hooks/useSlideBy'
 import useSlideSteps from './hooks/useSlideSteps'
 import useSliderSize from './hooks/useSliderSize'
@@ -31,7 +31,7 @@ const SledViews: React.FC<IViewsProps> = ({
   direction,
   select,
   slideBy,
-  showSlides,
+  showElements,
   keyboard,
   dragging,
   dragDistance,
@@ -55,7 +55,7 @@ const SledViews: React.FC<IViewsProps> = ({
   useRewind(rewind)
   usePause(pause)
 
-  useShowSlides(showSlides)
+  useShowElements(showElements)
   useSlideBy(slideBy)
   useSliderSize()
   useSlideSteps()

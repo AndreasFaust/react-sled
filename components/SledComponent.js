@@ -24,7 +24,7 @@ const SledComponent = ({ children }) => {
           keyboard={state.keyboard}
           dragging={state.dragging}
           dragDistance={state.dragDistance}
-          showSlides={state.showSlides}
+          showElements={state.showElements}
           slideBy={state.slideBy}
           config={{
             mass: state.mass,

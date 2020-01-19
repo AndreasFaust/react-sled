@@ -14,7 +14,7 @@ export default (set: SpringsUpdateFn<ISet>) => {
     currentIndex,
     direction,
     stopOnInteraction,
-    showSlides,
+    showElements,
     slideBy
   }, dispatch] = useStateContext()
 
@@ -43,8 +43,8 @@ export default (set: SpringsUpdateFn<ISet>) => {
     }
     set(() => {
       const x = direction === 'horizontal'
-        ? (-currentIndex * (width / showSlides * slideBy)) + (down ? xDelta : 0)
-        : (-currentIndex * (height / showSlides * slideBy)) + (down ? yDelta : 0)
+        ? (-currentIndex * (width / showElements * slideBy)) + (down ? xDelta : 0)
+        : (-currentIndex * (height / showElements * slideBy)) + (down ? yDelta : 0)
       return {
         x,
         immediate: false,

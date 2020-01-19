@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { useStateContext } from '../state'
 
-const useShowElements = (slideBy: number) => {
+const useShowElements = (showElements: number) => {
   const [, dispatch] = useStateContext()
   useEffect(() => {
-    if (slideBy) {
-      dispatch({ type: 'SET_SLIDEBY', slideBy })
+    if (showElements) {
+      dispatch({ type: 'SET_SHOWELEMENTS', showElements })
     }
-  }, [slideBy])
+  }, [showElements])
 }
 
 export default useShowElements

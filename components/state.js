@@ -5,7 +5,7 @@ const initialState = {
   select: 3,
   rewind: true,
   direction: 'horizontal',
-  showSlides: 1,
+  showElements: 1,
   slideBy: 1,
   pauseOnMouseOver: true,
   stopOnInteraction: true,
@@ -39,7 +39,7 @@ const reducer = (state, action) => {
     case 'mass': return { ...state, mass: action.value }
     case 'tension': return { ...state, tension: action.value }
     case 'friction': return { ...state, friction: action.value }
-    case 'showSlides': return { ...state, showSlides: action.value }
+    case 'showElements': return { ...state, showElements: action.value }
     case 'slideBy': return { ...state, slideBy: action.value }
     default: return state
   }

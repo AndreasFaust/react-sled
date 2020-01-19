@@ -7,21 +7,34 @@
 - Super-smooth spring animations (thanks to **react-spring**)
 - Lightweight and performant architecture
 - Touch- and Mousedrag (thanks to **react-with-gesture**)
-- Easy to style (thanks to **styled-components**)
+- Easy to style
 - Ready for server-side-rendering
 - All props are dynamically changeable
 - (Should be) Compatible with older Browsers from Internet Explorer 11 (Needs testing!)
 
 🛷 [Have a look at the example!](https://andreasfaust.github.io/react-sled/)
 
-**This Project is still under development. Please join and contribute!**
+## New Major release 2.0
+
+**Breaking Changes:**
+- Removed styled-components
+- Removed custom `ow`-unit
+- Use `react-spring` 9 and `react-with-gesture` 7
+
+**New Features:**
+- Full Type-Script support
+- Vertical Sliding
+- Set fixed proportion
+- Show multiple elements at once (`showElements`)
+- Move by multiple elements (`slideBy`)
+
 
 ## Install
 
 Install all dependencies via Yarn or NPM.
 
 ```bash
-yarn add react-sled react-spring react-use-gesture styled-components react react-dom
+yarn add react-sled react-spring react-use-gesture react react-dom
 ```
 
 ## Usage
@@ -35,8 +48,7 @@ const images = ["my-image-1.jpg", "my-image-2.jpg"];
 const App = () => {
   return (
     <Sled>
-      // 'ow' is percent of the sled's own width. So the ratio is 2:1.
-      <Views height="50ow">
+      <Views>
         {images.map(image => (
           <img src={image} alt="My Image" />
         ))}
@@ -70,13 +82,16 @@ It takes these optional props:
 
 | **Name**             | **Type**         | **Default**                                            | **Description**                                                                                                                                                  |
 | :------------------- | :--------------- | :----------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **width**            | String           | `'100%'`                                               | Sets the viewpager’s width. Allowed units: all CSS-units and the custom `ow` ("own width": percent of viewpager’s width)                                         |
-| **height**           | String           | `50ow`                                                 | Sets the viewpager’s height. Allowed units: all CSS-units and the custom `ow` ("own width": percent of viewpager’s width)                                        |
-| **select**             | Number           | `undefined`                                            | Got to view.                                                                                                                                                     |
-| **style**            | String           | `''`                                                   | Add styles to the view-wrapper (via styled-components template-string).                                                                                          |
+| **width**            | String           | `'100%'`                                               | Sets the viewpager’s width. Allowed units: all CSS-units                                     |
+| **height**           | String           | `null`                                                 | Sets the viewpager’s height.                                        |
+| **proportion**           | String           | `2:1`                                                 | Provide either a width or height and set the other dimension proportional to it. If you provide a height and a width `proportion` is disabled.                              |
+| **showElements**             | Number           | `1`                                            | Determines how many Slides/Views fit in the Sled’s viewport.                                                                                                                                                     |
+| **slideBy**             | Number           | `1`                                            | Determines how many Slides/Views the Sled’s slides with one movement .                                                                                                                                                     |
+| **select**             | Number           | `undefined`                                            | Select certain view.                                                                                                                                                     |
+| **style**            | Object           | `null`                                                   | Add inline styles to the view-wrapper.                                                                                          |
 | **keyboard**         | Boolean          | `true`                                                 | Set Keyboard controls.                                                                                                                                           |
 | **dragging**         | Boolean          | `true`                                                 | Set Mouse- and Touch-Dragging.                                                                                                                                   |
-| **dragDistance**     | Number or String | `'25ow'`                                               | Distance the user has to drag the slider to trigger action. A number is calculated in Pixel. A string has to have the custom unit `ow` (own width of the sled).  |
+| **dragDistance**     | Number or String | `40`                                               | Distance the user has to drag the slider to trigger action. A number is calculated in Pixel. A string is converted to a number unless it has the unit `%`, which means "percent of Sled’s width".  |
 | **autoPlay**         | Number           | `undefined`                                            | Activates automatic Sliding-Interval in Milliseconds.                                                                                                            |
 | **config**           | Number           | `{ mass: 1, tension: 210, friction: 20, clamp: true }` | react-spring animation-settings.                                                                                                                                 |
 | **pause** | Boolean          | `false`                                                 | `autoPlay` (if activated) gets paused.                                                                                 |
@@ -192,7 +207,6 @@ It returns an `Array` with 2 elements:
 
 - [ ] Control animation by frame on drag
 - [ ] Infinity-Mode
-- [ ] Vertical-Mode
 - [ ] Nice documentation with live examples (using Docz)
 - [ ] automated testing
 
