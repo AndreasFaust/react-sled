@@ -1,4 +1,4 @@
-.sled-progress {
+.sled-progress-default {
   position: relative;
   width: 100%;
   display: flex;
@@ -7,7 +7,7 @@
   height: 20px;
 }
 
-.sled-progress-rail {
+.sled-progress-default-rail {
   position: absolute;
   left: 0;
   width: 100%;
@@ -16,12 +16,12 @@
   height: 4px;
 }
 
-.sled-progress-track {
+.sled-progress-default-track {
   background: red;
   height: 4px;
 }
 
-.sled-progress-separators {
+.sled-progress-default-separators {
   position: absolute;
   z-index: 200;
   top: 0;
@@ -33,20 +33,20 @@
   pointer-events: none;  
 }
 
-.sled-progress-separator {
+.sled-progress-default-separator {
   width: 4px;
   background: white;
 }
 
 /* Mimic "justify-content: space-evenly;" */
-.sled-progress-separators:before,
-.sled-progress-separators:after {
+.sled-progress-default-separators:before,
+.sled-progress-default-separators:after {
   content: '';
   display: block;
   height: 100%;
 }
 
-.sled-progress-controls {
+.sled-progress-default-controls {
   position: absolute;
   z-index: 100;
   top: 0;
@@ -56,7 +56,7 @@
   display: flex;
 }
 
-.sled-progress-control {
+.sled-progress-default-control {
   position: absolute;
   z-index: 100;
   top: 0;

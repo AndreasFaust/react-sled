@@ -34,7 +34,7 @@
 Install all dependencies via Yarn or NPM.
 
 ```bash
-yarn add react-sled react-spring react-use-gesture react react-dom
+yarn add react-sled react-spring@next react-use-gesture@beta react react-dom
 ```
 
 ## Usage
@@ -42,6 +42,7 @@ yarn add react-sled react-spring react-use-gesture react react-dom
 ```jsx
 import React from "react";
 import { Sled, Views, Progress, Control } from "react-sled";
+import "react-sled/dist/styles.css";
 
 const images = ["my-image-1.jpg", "my-image-2.jpg"];
 
@@ -56,7 +57,7 @@ const App = () => {
       <Progress />
       <div className="controls arrows">
         <Control select="prev" />
-        <Control select="next">Go to next view!</Control>
+        <Control select="next" />
       </div>
       <div className="controls dots">
         {images.map((null, index) => (
@@ -105,90 +106,68 @@ It takes these optional props:
 
 ## Controls
 
-There is only one control-component for **Arrows** and **Dots**.
+There is only one control-component for **Arrows** and **Selecting-Dots**.
+The prop `select` decides what the Control-element is: A string called `next` or `prev` will activate Arrow-functionality, a number Select-functionality.
 
-- It is by default an empty `button`-tag, that has a default **styling-preset**.
-- There's the prop `select`, that decides what the Control-element is: A string called `next` or `prev` will activate Arrow-functionality, a number Dot-functionality.
+You can easily style it via CSS. The default-styles are scoped to the class-name `sled-progress-default`. They are contained in the file `dist/index.css`. 
+If you give it a custom `className`-prop, the default-class will be overridden and the Progress will be completely unstyled. Then you can copy The default-styles from [here](https://raw.github.com/andreasfaust/react-sled/master/sled/control/index.css) as a starting-point.
 
-**Available Presets:**
-
-- [dot](https://github.com/AndreasFaust/react-sled/blob/master/src/control/presets/dot.js) (default preset of Dot )
-- [arrowLeft](https://github.com/AndreasFaust/react-sled/blob/master/src/control/presets/arrowLeft.js) (default preset of Arrow-Left )
-- [arrowRight](https://github.com/AndreasFaust/react-sled/blob/master/src/control/presets/arrowRight.js) (default preset of Arrow-Right )
-
-If you provide your own styles via `style`, the default-preset gets deleted.
-You can provide a preset of your choice via `preset` and extend and overwrite it with `style`.
 
 **Control Props Overview:**
 
 | **Name**   | **Type**         | **Default**               | **Description**                                                                                                                                               |
 | :--------- | :--------------- | :------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **select**   | String or Number | `'next'`                  | Defines, if the `Control` has arrow- or dot-functionality. A number is the index of the target-view. A string can be `'prev'` or `'next'`                     |
-| **preset** | String           | Default depends on `select` | If you provide a preset, the default preset gets replaced.                                                                                                    |
+| **className** | String           | Default depends on `select` |                                                                                                     |
 | **style**  | String           | `''`                      | If you provide a `style` and no `preset`, the default `preset` gets completely replaced. If you provide a `style` and a `preset`, the `preset` gets extended. |
 
-**Control Examples:**
-
+**Arrow:**
+Default-Design:
 ```jsx
-// Case 1: You want to style your arrow from scratch.
-//  – A style-prop overwrites the default preset.
 <Control
   select="next"
-  style={`
-    background: red;
-  `}
->
-  Go to next view!
-</Control>
+/>
+```
 
-// Case 2: You want to extend the default preset.
-//  – Because of select={1} the Control has dot-functionality.
-//  – The default preset 'dot' is explicitly called and extended with additional style.
+Your Custom-Design:
+```jsx
+<Control
+  select="next"
+  className="custom"
+  style={{
+    background: 'red'
+  }}
+>
+  My custom arrow!
+</Control>
+```
+
+**Selection-Dot:**
+```jsx
 <Control
   select={1}
-  preset='dot'
-  style={`
-    background: red;
-  `}
 />
-
-
 ```
 
 ## Progress
 
 react-sled has an Instagram-like progress-bar.
-You can easily style it via the `style`-prop.
-Here's the default, you can extend and overwrite:
+You can easily style it via CSS.
+The default-styles are scoped to the class-name `sled-progress-default`.
+If you give it a custom `className`-prop, the Progress will be completely unstyled. You can copy The default-styles from [here](https://raw.github.com/andreasfaust/react-sled/master/sled/progress/index.css) as a starting-point.
+
+
+**Progress Props Overview:**
+
+| **Name**   | **Type**         | **Default**               | **Description**                                                                                                                                               |
+| :--------- | :--------------- | :------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **className** | String           | Default depends on `select` |                                                                                                     |
+| **style**  | String           | `''`                      | If you provide a `style` and no `preset`, the default `preset` gets completely replaced. If you provide a `style` and a `preset`, the `preset` gets extended. |
 
 ```jsx
 <Progress
-  style={`
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    height: 20px;
-
-    .sled-progress-rail {
-      background: black;
-      height: 4px;
-    }
-    .sled-progress-track {
-      background: red;
-      height: 4px;
-    }
-    .sled-progress-separator {
-      width: 4px;
-      background: white;
-    }
-    .sled-control {
-      :focus {
-        background: hsla(0, 0%, 100%, 0.5)
-      }
-    }
-  `}
+  className="my-progress"
+  style={{ background: 'red' }}
 />
 ```
 

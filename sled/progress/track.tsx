@@ -7,7 +7,11 @@ function getX(slideSteps: number, currentIndex: number, goPrevNext: number = 0):
   return 100 - ((100 / slideSteps) * (currentIndex + goPrevNext))
 }
 
-const SledProgressTrack: React.FC = () => {
+interface IProps {
+  className: string
+}
+
+const SledProgressTrack: React.FC<IProps> = ({ className }) => {
   const [{
     currentIndex,
     prevIndex,
@@ -67,7 +71,7 @@ const SledProgressTrack: React.FC = () => {
 
   return (
     <animated.div
-      className='sled-progress-track'
+      className={`sled-progress-${className}-track`}
       style={{
         position: 'absolute',
         left: 0,

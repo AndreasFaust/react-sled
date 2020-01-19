@@ -7,20 +7,26 @@ import CSS from 'csstype'
 import './index.css'
 
 interface IProps {
+  className?: string
   style?: CSS.Properties
 }
 
-const SledProgress: React.FC<IProps> = ({ style }) => {
+const SledProgress: React.FC<IProps> = ({ className, style }) => {
+  const [defaultClass, setDefaultClass] = React.useState<string>(className || ' default')
+  React.useEffect(() => {
+    setDefaultClass(className || 'default')
+  }, [className])
+
   return (
     <div
-      className='sled-progress'
+      className={`sled-progress-${defaultClass}`}
       style={style}
       role='progressBar'
     >
-      <div className='sled-progress-rail' />
-      <SledProgressTrack />
-      <SledProgressSeparators />
-      <SledProgressControls />
+      <div className={`sled-progress-${defaultClass}-rail`} />
+      <SledProgressTrack className={defaultClass} />
+      <SledProgressSeparators className={defaultClass} />
+      <SledProgressControls className={defaultClass} />
     </div>
   )
 }

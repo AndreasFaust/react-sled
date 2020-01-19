@@ -7,7 +7,7 @@ import external from 'rollup-plugin-peer-deps-external'
 import pkg from './package.json'
 
 export default {
-  input: 'sled/index.tsx',
+  input: 'sled/index.ts',
   output: [
     {
       file: pkg.main,
@@ -46,6 +46,6 @@ export default {
         'node_modules/react-dom/index.js': ['render']
       }
     }),
-    css({ output: 'main.css' })
+    css({ output: './dist/main.css' })
   ]
 }

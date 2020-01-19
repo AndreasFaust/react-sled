@@ -1,16 +1,18 @@
 import React from 'react'
 import { useStateContext } from '../state'
 
-const SledProgressSeparators: React.FC = () => {
+interface IProps {
+  className: string
+}
+
+const SledProgressSeparators: React.FC<IProps> = ({ className }) => {
   const [{ slideSteps }] = useStateContext()
   return slideSteps && (
-    <div
-      className='sled-progress-separators'
-    >
+    <div className={`sled-progress-${className}-separators`}>
       {[...Array(slideSteps - 1)].map((_, index) => (
         <div
           key={index}
-          className='sled-progress-separator'
+          className={`sled-progress-${className}-separator`}
           style={{
             position: 'relative',
             height: '100%'
