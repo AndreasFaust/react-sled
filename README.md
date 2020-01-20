@@ -42,7 +42,7 @@ yarn add react-sled react-spring@next react-use-gesture@beta react react-dom
 ```jsx
 import React from "react";
 import { Sled, Views, Progress, Control } from "react-sled";
-import "react-sled/dist/styles.css";
+import "react-sled/dist/main.css";
 
 const images = ["my-image-1.jpg", "my-image-2.jpg"];
 
@@ -50,8 +50,8 @@ const App = () => {
   return (
     <Sled>
       <Views>
-        {images.map(image => (
-          <img src={image} alt="My Image" />
+        {images.map((image, index) => (
+          <img key={image} src={image} alt={`My Image #${index}`} />
         ))}
       </Views>
       <Progress />
@@ -60,8 +60,8 @@ const App = () => {
         <Control select="next" />
       </div>
       <div className="controls dots">
-        {images.map((null, index) => (
-          <Control select={index} />
+        {images.map((image, index) => (
+          <Control key={image} select={index} />
         ))}
       </div>
     </Sled>
