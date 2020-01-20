@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["static/development/pages/test.js"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["static/development/pages/index.js"],{
 
 /***/ "./components/SledComponent.js":
 /*!*************************************!*\
@@ -129,6 +129,91 @@ var SledComponent = function SledComponent(_ref) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (SledComponent);
+
+/***/ }),
+
+/***/ "./components/SledImage.js":
+/*!*********************************!*\
+  !*** ./components/SledImage.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/slicedToArray */ "./node_modules/@babel/runtime-corejs2/helpers/esm/slicedToArray.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _sled__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../sled */ "./sled/index.ts");
+
+var _jsxFileName = "/Users/andreasfaust/components/react-sled/components/SledImage.js";
+var __jsx = react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement;
+
+
+var defaultImage = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+var SledImage = function SledImage(_ref) {
+  var image = _ref.image,
+      index = _ref.index;
+
+  var _useSledStore = Object(_sled__WEBPACK_IMPORTED_MODULE_2__["useSledStore"])(),
+      _useSledStore2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useSledStore, 1),
+      currentIndex = _useSledStore2[0].currentIndex;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(defaultImage),
+      src = _useState[0],
+      setSrc = _useState[1];
+
+  var _useState2 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      hasLoaded = _useState2[0],
+      setHasLoaded = _useState2[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
+    if (image === src) return;
+
+    switch (index) {
+      case currentIndex:
+      case currentIndex - 1:
+      case currentIndex + 1:
+        setSrc(image);
+        break;
+
+      default:
+    }
+  }, [currentIndex, image, index, src]);
+
+  function onLoad() {
+    if (src !== defaultImage) {
+      setHasLoaded(true);
+    }
+  }
+
+  return __jsx("img", {
+    alt: 'This is an interesting thing.',
+    src: src,
+    onLoad: onLoad,
+    style: {
+      position: 'absolute',
+      background: '#fff',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      objectFit: 'cover',
+      objectPosition: 'center',
+      transition: 'opacity 1s',
+      opacity: hasLoaded ? 1 : 0,
+      pointerEvents: 'none'
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 30
+    },
+    __self: this
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (SledImage);
 
 /***/ }),
 
@@ -6998,7 +7083,7 @@ exports.createStringInterpolator = function (config) {
 /*!*************************************************!*\
   !*** ./node_modules/@react-spring/web/index.js ***!
   \*************************************************/
-/*! exports provided: Globals, createInterpolator, interpolate, isAnimated, to, Controller, FrameLoop, Spring, Trail, Transition, config, update, useChain, useSpring, useSprings, useTrail, useTransition, a, animated */
+/*! exports provided: a, animated, Globals, createInterpolator, interpolate, isAnimated, to, Controller, FrameLoop, Spring, Trail, Transition, config, update, useChain, useSpring, useSprings, useTrail, useTransition */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13749,21 +13834,21 @@ module.exports = (__webpack_require__(/*! dll-reference dll_5f137288facb1107b491
 
 /***/ }),
 
-/***/ "./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2Ftest&absolutePagePath=%2FUsers%2Fandreasfaust%2Fcomponents%2Freact-sled%2Fpages%2Ftest.js!./":
-/*!************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2Ftest&absolutePagePath=%2FUsers%2Fandreasfaust%2Fcomponents%2Freact-sled%2Fpages%2Ftest.js ***!
-  \************************************************************************************************************************************************************************************/
+/***/ "./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=%2FUsers%2Fandreasfaust%2Fcomponents%2Freact-sled%2Fpages%2Findex.js!./":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=%2FUsers%2Fandreasfaust%2Fcomponents%2Freact-sled%2Fpages%2Findex.js ***!
+  \*********************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-    (window.__NEXT_P=window.__NEXT_P||[]).push(["/test", function() {
-      var mod = __webpack_require__(/*! ./pages/test.js */ "./pages/test.js")
+    (window.__NEXT_P=window.__NEXT_P||[]).push(["/", function() {
+      var mod = __webpack_require__(/*! ./pages/index.js */ "./pages/index.js")
       if(true) {
-        module.hot.accept(/*! ./pages/test.js */ "./pages/test.js", function() {
-          if(!next.router.components["/test"]) return
-          var updatedPage = __webpack_require__(/*! ./pages/test.js */ "./pages/test.js")
-          next.router.update("/test", updatedPage)
+        module.hot.accept(/*! ./pages/index.js */ "./pages/index.js", function() {
+          if(!next.router.components["/"]) return
+          var updatedPage = __webpack_require__(/*! ./pages/index.js */ "./pages/index.js")
+          next.router.update("/", updatedPage)
         })
       }
       return mod
@@ -27347,12 +27432,16 @@ var index = Object(_chunk_b36baf1a_browser_esm_js__WEBPACK_IMPORTED_MODULE_23__[
 /*!******************************************!*\
   !*** ./node_modules/react-spring/web.js ***!
   \******************************************/
-/*! exports provided: Globals, createInterpolator, interpolate, isAnimated, to, Controller, FrameLoop, Spring, Trail, Transition, config, update, useChain, useSpring, useSprings, useTrail, useTransition, a, animated */
+/*! exports provided: a, animated, Globals, createInterpolator, interpolate, isAnimated, to, Controller, FrameLoop, Spring, Trail, Transition, config, update, useChain, useSpring, useSprings, useTrail, useTransition */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _react_spring_web__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @react-spring/web */ "./node_modules/@react-spring/web/index.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _react_spring_web__WEBPACK_IMPORTED_MODULE_0__["a"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "animated", function() { return _react_spring_web__WEBPACK_IMPORTED_MODULE_0__["animated"]; });
+
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Globals", function() { return _react_spring_web__WEBPACK_IMPORTED_MODULE_0__["Globals"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createInterpolator", function() { return _react_spring_web__WEBPACK_IMPORTED_MODULE_0__["createInterpolator"]; });
@@ -27386,10 +27475,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "useTrail", function() { return _react_spring_web__WEBPACK_IMPORTED_MODULE_0__["useTrail"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "useTransition", function() { return _react_spring_web__WEBPACK_IMPORTED_MODULE_0__["useTransition"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _react_spring_web__WEBPACK_IMPORTED_MODULE_0__["a"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "animated", function() { return _react_spring_web__WEBPACK_IMPORTED_MODULE_0__["animated"]; });
 
 
 
@@ -38661,10 +38746,10 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./pages/test.js":
-/*!***********************!*\
-  !*** ./pages/test.js ***!
-  \***********************/
+/***/ "./pages/index.js":
+/*!************************!*\
+  !*** ./pages/index.js ***!
+  \************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -38688,9 +38773,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_SledComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/SledComponent */ "./components/SledComponent.js");
 /* harmony import */ var _components_header__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/header */ "./components/header.js");
 /* harmony import */ var _components_settings__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/settings */ "./components/settings.js");
-/* harmony import */ var _components_images__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/images */ "./components/images.js");
-var _jsxFileName = "/Users/andreasfaust/components/react-sled/pages/test.js";
+/* harmony import */ var _components_SledImage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/SledImage */ "./components/SledImage.js");
+/* harmony import */ var _components_images__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/images */ "./components/images.js");
+var _jsxFileName = "/Users/andreasfaust/components/react-sled/pages/index.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
 
 
 
@@ -38708,47 +38795,45 @@ var App = function App() {
   return __jsx(_components_state__WEBPACK_IMPORTED_MODULE_7__["StateProvider"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 17
+      lineNumber: 18
     },
     __self: this
   }, __jsx(_components_header__WEBPACK_IMPORTED_MODULE_9__["default"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 18
+      lineNumber: 19
     },
     __self: this
   }), __jsx(_components_settings__WEBPACK_IMPORTED_MODULE_10__["default"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 19
+      lineNumber: 20
     },
     __self: this
   }), __jsx("div", {
     className: "content",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 20
+      lineNumber: 21
     },
     __self: this
   }, __jsx(_components_SledComponent__WEBPACK_IMPORTED_MODULE_8__["default"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 21
+      lineNumber: 22
     },
     __self: this
-  }, _components_images__WEBPACK_IMPORTED_MODULE_11__["default"].map(function (image, index) {
-    return __jsx("div", {
+  }, _components_images__WEBPACK_IMPORTED_MODULE_12__["default"].map(function (image, index) {
+    return __jsx(_components_SledImage__WEBPACK_IMPORTED_MODULE_11__["default"], {
       key: image,
-      className: "testContent",
-      style: {
-        background: "rgb(1".concat(index, "5, 1").concat(index, "0, 1").concat(index, "0)")
-      },
+      image: image,
+      index: index,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 23
+        lineNumber: 24
       },
       __self: this
-    }, index + 1);
+    });
   }))));
 };
 
@@ -41308,14 +41393,14 @@ SledViews.defaultProps = _state_types_defaults__WEBPACK_IMPORTED_MODULE_10__["Vi
 
 /***/ }),
 
-/***/ 5:
-/*!****************************************************************************************************************************************!*\
-  !*** multi next-client-pages-loader?page=%2Ftest&absolutePagePath=%2FUsers%2Fandreasfaust%2Fcomponents%2Freact-sled%2Fpages%2Ftest.js ***!
-  \****************************************************************************************************************************************/
+/***/ 0:
+/*!*************************************************************************************************************************************!*\
+  !*** multi next-client-pages-loader?page=%2F&absolutePagePath=%2FUsers%2Fandreasfaust%2Fcomponents%2Freact-sled%2Fpages%2Findex.js ***!
+  \*************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! next-client-pages-loader?page=%2Ftest&absolutePagePath=%2FUsers%2Fandreasfaust%2Fcomponents%2Freact-sled%2Fpages%2Ftest.js! */"./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2Ftest&absolutePagePath=%2FUsers%2Fandreasfaust%2Fcomponents%2Freact-sled%2Fpages%2Ftest.js!./");
+module.exports = __webpack_require__(/*! next-client-pages-loader?page=%2F&absolutePagePath=%2FUsers%2Fandreasfaust%2Fcomponents%2Freact-sled%2Fpages%2Findex.js! */"./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2F&absolutePagePath=%2FUsers%2Fandreasfaust%2Fcomponents%2Freact-sled%2Fpages%2Findex.js!./");
 
 
 /***/ }),
@@ -41331,5 +41416,5 @@ module.exports = dll_5f137288facb1107b491;
 
 /***/ })
 
-},[[5,"static/runtime/webpack.js","styles"]]]);
-//# sourceMappingURL=test.js.map
+},[[0,"static/runtime/webpack.js","styles"]]]);
+//# sourceMappingURL=index.js.map
