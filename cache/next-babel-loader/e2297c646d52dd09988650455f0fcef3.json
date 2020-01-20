@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { useEffect } from 'react';\nimport { useStateContext } from '../state';\nexport default (pause => {\n  const [, dispatch] = useStateContext();\n  useEffect(() => {\n    dispatch({\n      type: 'SET_PAUSE',\n      pause\n    });\n  }, [pause]);\n});","map":null,"metadata":{},"sourceType":"module"}

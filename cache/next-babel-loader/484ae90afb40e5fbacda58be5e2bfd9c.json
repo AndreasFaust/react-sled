@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { useEffect } from 'react';\nimport { useStateContext } from '../state';\nexport default (config => {\n  const [, dispatch] = useStateContext();\n  useEffect(() => {\n    dispatch({\n      type: 'SET_CONFIG',\n      config\n    });\n  }, [config, dispatch]);\n});","map":null,"metadata":{},"sourceType":"module"}
