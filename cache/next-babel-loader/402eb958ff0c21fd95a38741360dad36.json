@@ -1,0 +1,1 @@
+{"ast":null,"code":"var __jsx = React.createElement;\nimport React from 'react';\n\nconst NotFoundPage = () => __jsx(\"div\", null, __jsx(\"h1\", null, \"I AM CUSTOM 404\"), __jsx(\"p\", null, \"You just hit a route that doesn't exist... the sadness.\"));\n\nexport default NotFoundPage;","map":null,"metadata":{},"sourceType":"module"}

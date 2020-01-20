@@ -1,0 +1,1 @@
+{"ast":null,"code":"var __jsx = React.createElement;\nimport React from 'react';\nimport { StateProvider } from './state';\n\nconst Sled = props => {\n  const {\n    children\n  } = props;\n  return __jsx(StateProvider, null, children);\n};\n\nexport default Sled;","map":null,"metadata":{},"sourceType":"module"}

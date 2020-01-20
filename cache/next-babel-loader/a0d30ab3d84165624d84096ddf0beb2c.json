@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default (select => {\n  switch (typeof select) {\n    case 'number':\n      return `Slide to view with index ${select}.`;\n\n    case 'string':\n    default:\n      return `Slide to ${select === 'next' ? 'next' : 'previous'} view.`;\n  }\n});","map":null,"metadata":{},"sourceType":"module"}

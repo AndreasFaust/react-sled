@@ -1,0 +1,56 @@
+{
+  "devFiles": [],
+  "pages": {
+    "/": [
+      "static/runtime/webpack-4b444dab214c6491079c.js",
+      "static/css/commons.373506a6.chunk.css",
+      "static/chunks/commons.fb03d3603d7a3ecf94ff.js",
+      "static/css/styles.2d462a0d.chunk.css",
+      "static/chunks/styles.b89c0092ca6f8989379c.js",
+      "static/runtime/main-f72c47d6dd111d111197.js"
+    ],
+    "/_app": [
+      "static/runtime/webpack-4b444dab214c6491079c.js",
+      "static/css/commons.373506a6.chunk.css",
+      "static/chunks/commons.fb03d3603d7a3ecf94ff.js",
+      "static/runtime/main-f72c47d6dd111d111197.js"
+    ],
+    "/_error": [
+      "static/runtime/webpack-4b444dab214c6491079c.js",
+      "static/css/commons.373506a6.chunk.css",
+      "static/chunks/commons.fb03d3603d7a3ecf94ff.js",
+      "static/runtime/main-f72c47d6dd111d111197.js"
+    ],
+    "/_polyfills": [
+      "static/runtime/polyfills-0638c93e5165546c7715.js"
+    ],
+    "/custom": [
+      "static/runtime/webpack-4b444dab214c6491079c.js",
+      "static/css/commons.373506a6.chunk.css",
+      "static/chunks/commons.fb03d3603d7a3ecf94ff.js",
+      "static/runtime/main-f72c47d6dd111d111197.js"
+    ],
+    "/index": [
+      "static/runtime/webpack-4b444dab214c6491079c.js",
+      "static/css/commons.373506a6.chunk.css",
+      "static/chunks/commons.fb03d3603d7a3ecf94ff.js",
+      "static/css/styles.2d462a0d.chunk.css",
+      "static/chunks/styles.b89c0092ca6f8989379c.js",
+      "static/runtime/main-f72c47d6dd111d111197.js"
+    ],
+    "/test": [
+      "static/runtime/webpack-4b444dab214c6491079c.js",
+      "static/css/commons.373506a6.chunk.css",
+      "static/chunks/commons.fb03d3603d7a3ecf94ff.js",
+      "static/css/styles.2d462a0d.chunk.css",
+      "static/chunks/styles.b89c0092ca6f8989379c.js",
+      "static/runtime/main-f72c47d6dd111d111197.js"
+    ],
+    "/test-basic": [
+      "static/runtime/webpack-4b444dab214c6491079c.js",
+      "static/css/commons.373506a6.chunk.css",
+      "static/chunks/commons.fb03d3603d7a3ecf94ff.js",
+      "static/runtime/main-f72c47d6dd111d111197.js"
+    ]
+  }
+}

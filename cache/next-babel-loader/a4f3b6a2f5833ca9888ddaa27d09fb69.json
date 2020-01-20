@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { useEffect } from 'react';\nimport { useStateContext } from '../state';\nexport default (rewind => {\n  const [, dispatch] = useStateContext();\n  useEffect(() => {\n    dispatch({\n      type: 'SET_REWIND',\n      rewind\n    });\n  }, [rewind]);\n});","map":null,"metadata":{},"sourceType":"module"}
