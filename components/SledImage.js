@@ -27,24 +27,40 @@ const SledImage = ({ image, index }) => {
   }
 
   return (
-    <img
-      alt={'This is an interesting thing.'}
-      src={src}
-      onLoad={onLoad}
+    <div
       style={{
         position: 'absolute',
-        background: '#fff',
+        background: `rgb(1${index}5, 1${index}0, 1${index}0)`,
         top: 0,
         bottom: 0,
         left: 0,
         right: 0,
-        objectFit: 'cover',
-        objectPosition: 'center',
-        transition: 'opacity 1s',
-        opacity: hasLoaded ? 1 : 0,
-        pointerEvents: 'none'
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
       }}
-    />
+    >
+      <h3>{index}</h3>
+      <img
+        alt={'This is an interesting thing.'}
+        src={src}
+        onLoad={onLoad}
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          objectFit: 'cover',
+          objectPosition: 'center',
+          transition: 'opacity 1s',
+          opacity: hasLoaded ? 1 : 0,
+          pointerEvents: 'none'
+        }}
+      />
+    </div>
   )
 }
 

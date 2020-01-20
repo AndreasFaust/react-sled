@@ -110,7 +110,7 @@ There is only one control-component for **Arrows** and **Selecting-Dots**.
 The prop `select` decides what the Control-element is: A string called `next` or `prev` will activate Arrow-functionality, a number Select-functionality.
 
 You can easily style it via CSS. The default-styles are scoped to the class-name `sled-progress-default`. They are contained in the file `dist/index.css`. 
-If you give it a custom `className`-prop, the default-class will be overridden and the Progress will be completely unstyled. Then you can copy The default-styles from [here](https://raw.github.com/andreasfaust/react-sled/master/sled/control/index.css) as a starting-point.
+If you give it a custom `className`-prop, the default-class will be overridden and the Progress will be completely unstyled. Then you can copy the default-styles from **[here](https://raw.github.com/andreasfaust/react-sled/master/sled/control/index.css)** as a starting-point.
 
 
 **Control Props Overview:**
@@ -154,7 +154,7 @@ Your Custom-Design:
 react-sled has an Instagram-like progress-bar.
 You can easily style it via CSS.
 The default-styles are scoped to the class-name `sled-progress-default`.
-If you give it a custom `className`-prop, the Progress will be completely unstyled. You can copy The default-styles from [here](https://raw.github.com/andreasfaust/react-sled/master/sled/progress/index.css) as a starting-point.
+If you give it a custom `className`-prop, the Progress will be completely unstyled. You can copy the default-styles from **[here](https://raw.github.com/andreasfaust/react-sled/master/sled/progress/index.css)** as a starting-point.
 
 
 **Progress Props Overview:**
