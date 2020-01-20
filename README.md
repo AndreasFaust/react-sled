@@ -12,7 +12,7 @@
 - All props are dynamically changeable
 - (Should be) Compatible with older Browsers from Internet Explorer 11 (Needs testing!)
 
-🛷 [Have a look at the example!](https://andreasfaust.github.io/react-sled/)
+🛷 [Have a look at the example!](https://react-sled.andreasfaust.com/)
 
 ## New Major release 2.0
 
