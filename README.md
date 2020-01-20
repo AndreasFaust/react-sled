@@ -19,7 +19,7 @@
 **Breaking Changes:**
 - Removed styled-components
 - Removed custom `ow`-unit
-- Use `react-spring` 9 and `react-with-gesture` 7
+- Use `react-spring` Version 9 and `react-with-gesture` Version 7
 
 **New Features:**
 - Full Type-Script support
@@ -174,7 +174,7 @@ If you give it a custom `className`-prop, the Progress will be completely unstyl
 ## useSledStore
 
 A hook, that exposes the plugin’s state-management.
-Unfortunately it is currently not possible to use `useSledStore` outside of `SledProvider`.
+`useSledStore` is only useable inside the `Sled`-Component.
 It returns an `Array` with 2 elements:
 
 1.  **state** of type `object`

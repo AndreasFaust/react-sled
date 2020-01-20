@@ -1,5 +1,5 @@
 import clamp from '../utils/clamp'
-import { IState, TDirection } from './types-defaults'
+import { IState, TDirection, TDimension } from './types-defaults'
 import { SpringConfig } from 'react-spring'
 
 function getNext(currentIndex: number, slideSteps: number, rewind: boolean) {
@@ -25,6 +25,8 @@ export type ActionType =
   | { type: 'SET_VIEWCOUNT', count: number }
   | { type: 'SET_FOCUS', focus: boolean }
   | { type: 'SET_DIMENSIONS', dimensions: { width: number, height: number } }
+  | { type: 'SET_DIMENSIONS_DOM', dimensionsDOM: { width: TDimension, height: TDimension } }
+  | { type: 'SET_PROPORTION', proportion?: string }
   | { type: 'SET_DRAGGING', dragging: boolean }
   | { type: 'SET_DRAG_DISTANCE', dragDistance: string | number }
   | { type: 'SET_AUTOPLAY', autoPlayInterval?: number }
@@ -77,6 +79,14 @@ export function reducer(state: IState, action: ActionType): IState {
     case 'SET_DIMENSIONS': return {
       ...state,
       dimensions: action.dimensions
+    }
+    case 'SET_DIMENSIONS_DOM': return {
+      ...state,
+      dimensionsDOM: action.dimensionsDOM
+    }
+    case 'SET_PROPORTION': return {
+      ...state,
+      proportion: action.proportion
     }
     case 'SET_DRAGGING': return {
       ...state,

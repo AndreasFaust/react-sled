@@ -1,16 +1,14 @@
 
 import React from 'react'
+import { useStateContext, TDimension } from '../state'
 
-export default (proportion: string | boolean): string => {
-  const [classes, setClasses] = React.useState<string>('')
+export default (width: TDimension, height: TDimension, proportion?: string): void => {
+  const [, dispatch] = useStateContext()
   React.useEffect(() => {
-    if (!proportion) return
-    if (typeof proportion === 'string') {
-      setClasses(`sled-proportion sled-proportion-${proportion.replace(':', '-')}`)
+    if (!height && !proportion) {
+      dispatch({ type: 'SET_PROPORTION', proportion: '2:1' })
+    } else {
+      dispatch({ type: 'SET_PROPORTION', proportion })
     }
-    if (typeof proportion === 'boolean') {
-      setClasses(`sled-proportion`)
-    }
-  }, [proportion])
-  return classes
+  }, [width, height, proportion])
 }

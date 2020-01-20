@@ -4,70 +4,71 @@ import { debounce } from '../utils/debounce'
 import { useStateContext } from '../state'
 import { TRef, TDimension } from '../state/types-defaults'
 
+interface IProportion {
+  width: TDimension
+  height: TDimension
+  offsetWidth: number
+  offsetHeight: number
+  proportion: string
+  dispatch
+}
+
 interface IDimensions {
   width: TDimension
   height: TDimension
 }
 
-function getDimensions(width: TDimension, height: TDimension, proportion: string, ref: TRef, dispatch): IDimensions {
-  const { offsetWidth, offsetHeight } = ref.current
-  let dimensions: IDimensions = { width: offsetWidth, height: offsetHeight }
-  let returnDimensions: IDimensions = { width, height }
+function getProportion({
+  width,
+  height,
+  offsetWidth,
+  offsetHeight,
+  proportion,
+  dispatch
+}: IProportion) {
+  if (!proportion) return
 
-  if (!width && !height) {
-    const heightValue = offsetWidth / 2
-    dimensions = { width: offsetWidth, height: heightValue }
-    returnDimensions = { width: '100%', height: heightValue }
-    console.warn('Sled-Error: You need to provide either a width or a height. Falling back to "width: 100%" and proportion "2:1".')
-  }
+  const [proportionWidth, proportionHeight] = proportion.split(':')
+  let dimensions: IDimensions = { width: 0, height: 0 }
 
-  if (proportion) {
-    const [proportionWidth, proportionHeight] = proportion.split(':')
-    if (width) {
-      const heightValue = (offsetWidth * +proportionHeight) / +proportionWidth
-      dimensions = {
-        width: offsetWidth,
-        height: heightValue
-      }
-      returnDimensions = {
-        width,
-        height: heightValue
-      }
-    } else {
-      const widthValue = (offsetHeight * +proportionWidth) / +proportionHeight
-      dimensions = {
-        width: widthValue,
-        height: offsetHeight
-      }
-      returnDimensions = {
-        width: widthValue,
-        height
-      }
+  if (width) {
+    const heightValue = (offsetWidth * +proportionHeight) / +proportionWidth
+    dimensions = {
+      width: offsetWidth,
+      height: heightValue
+    }
+  } else {
+    const widthValue = (offsetHeight * +proportionWidth) / +proportionHeight
+    dimensions = {
+      width: widthValue,
+      height: offsetHeight
     }
   }
-
   dispatch({
     type: 'SET_DIMENSIONS',
-    dimensions
+    dimensions: dimensions
   })
-
-  return returnDimensions
 }
 
-export default (width: TDimension, height: TDimension, proportion: string, ref: TRef): IDimensions => {
-  const [{ }, dispatch] = useStateContext()
-
-  const [dimensions, setDimensions] = React.useState<IDimensions>({ width: 0, height: 0 })
+export default (ref: TRef) => {
+  const [{ dimensionsDOM, proportion }, dispatch] = useStateContext()
 
   React.useEffect(() => {
-    setDimensions(() => getDimensions(width, height, proportion, ref, dispatch))
     function onResize() {
-      setDimensions(() => getDimensions(width, height, proportion, ref, dispatch))
+      const { offsetWidth, offsetHeight } = ref.current
+      getProportion({
+        ...dimensionsDOM,
+        offsetWidth,
+        offsetHeight,
+        proportion,
+        dispatch
+      })
     }
+    onResize()
     const dOnResize = debounce(onResize, 200)
     window.addEventListener('resize', dOnResize)
     return () => window.removeEventListener('resize', dOnResize)
-  }, [width, height, proportion, ref.current])
 
-  return dimensions
+  }, [dimensionsDOM, proportion])
+
 }

@@ -26,4 +26,4 @@ export const useStateContext = (): [IState, React.Dispatch<ActionType>] => {
   return [state, dispatch]
 }
 
-export { initialState } from './types-defaults'
+export * from './types-defaults'

@@ -4,7 +4,9 @@ import Springs from './springs'
 import { IViewsProps, ViewsProps } from './state/types-defaults'
 
 import useDirection from './hooks/useDirection'
+import useDimensionsDOM from './hooks/useDimensionsDOM'
 import useDimensions from './hooks/useDimensions'
+import useProportion from './hooks/useProportion'
 import useKeyboard from './hooks/useKeyboard'
 import useDragging from './hooks/useDragging'
 import useMouseOver from './hooks/useMouseOver'
@@ -20,6 +22,7 @@ import useShowElements from './hooks/useShowElements'
 import useSlideBy from './hooks/useSlideBy'
 import useSlideSteps from './hooks/useSlideSteps'
 import useSliderSize from './hooks/useSliderSize'
+import { useStateContext } from './state'
 import './index.css'
 
 const SledViews: React.FC<IViewsProps> = ({
@@ -47,9 +50,15 @@ const SledViews: React.FC<IViewsProps> = ({
 }) => {
 
   const viewsRef = useRef<HTMLDivElement>()
-  const dimensions = useDimensions(width, height, proportion, viewsRef)
+  const [{ dimensions, dimensionsDOM }] = useStateContext()
+
+
+  useProportion(width, height, proportion)
+  useDimensionsDOM(width, height)
+  useDimensions(viewsRef)
+
   useDirection(direction)
-  // const proportionClasses = useProportion(proportion)
+
   useFocus(viewsRef)
   useViewCount(children)
   useRewind(rewind)
@@ -74,8 +83,7 @@ const SledViews: React.FC<IViewsProps> = ({
       className='sled'
       ref={viewsRef}
       style={{
-        width,
-        height,
+        ...dimensionsDOM,
         ...style,
       }}
       tabIndex={0}

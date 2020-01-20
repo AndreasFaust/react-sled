@@ -19,6 +19,10 @@ export interface IInternalState {
     width: number
     height: number
   }
+  dimensionsDOM: {
+    width: TDimension
+    height: TDimension
+  }
 }
 
 interface IStateFromProps {
@@ -51,7 +55,7 @@ export interface IViewsProps extends IStateFromProps {
 }
 
 const stateFromProps = {
-  width: '100%',
+  width: null,
   proportion: null,
   select: null,
   keyboard: true,
@@ -83,9 +87,7 @@ export const initialState: IState = {
   slideBy: 1,
   slideSteps: 1,
   sliderSize: 0,
-  dimensions: {
-    width: 0,
-    height: 0
-  },
+  dimensions: { width: 0, height: 0 },
+  dimensionsDOM: { width: 0, height: 0 },
   ...stateFromProps
 }
