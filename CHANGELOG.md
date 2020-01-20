@@ -1,3 +1,10 @@
+#### 2.0.2 (2020-01-20)
+
+##### Documentation Changes
+
+*  correct changelog (b707cf88)
+*  corrections (35d6ee18)
+
 #### 2.0.1 (2020-01-20)
 
 ##### Documentation Changes
