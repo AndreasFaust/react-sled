@@ -48,7 +48,7 @@
     "react-select": "^3.0.8",
     "react-spring": "^9.0.0-beta.34",
     "react-toggle": "^4.1.1",
-    "react-use-gesture": "^7.0.0-beta.9",
+    "react-use-gesture": "^7.0.1",
     "rollup": "^1.28.0",
     "rollup-plugin-css-only": "^2.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
@@ -59,7 +59,7 @@
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-spring": "^9.0.0-beta.34",
-    "react-use-gesture": "^7.0.0-beta.9"
+    "react-use-gesture": "^7.0.0"
   },
   "keywords": [
     "React",
@@ -67,9 +67,11 @@
     "Carousel",
     "Gallery",
     "Slideshow",
+    "Slider",
     "Spring",
     "Animation",
-    "react-spring"
+    "react-spring",
+    "react-use-gesture"
   ],
   "scripts": {
     "dev": "next dev",

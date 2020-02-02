@@ -34,7 +34,7 @@
 Install all dependencies via Yarn or NPM.
 
 ```bash
-yarn add react-sled react-spring@next react-use-gesture@beta react react-dom
+yarn add react-sled react-spring@next react-use-gesture react react-dom
 ```
 
 ## Usage
