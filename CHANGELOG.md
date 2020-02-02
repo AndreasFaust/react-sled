@@ -1,3 +1,9 @@
+#### 2.0.4 (2020-02-02)
+
+##### Bug Fixes
+
+*  update react-use-gesture (3050ce3f)
+
 #### 2.0.3 (2020-01-20)
 
 ##### Documentation Changes
